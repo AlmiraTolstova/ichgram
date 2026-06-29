@@ -1,14 +1,17 @@
-import HomeFilledIcon from "@mui/icons-material/HomeFilled";
-import SearchIcon from "@mui/icons-material/Search";
-
 import ExploreIcon from "@mui/icons-material/Explore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import {
   CreateSvgOutline,
+  ExploreSvgFill,
   ExploreSvgOutline,
+  HomeSvgFill,
   HomeSvgOutline,
   MessagesSvgOutline,
   NotificationSvgOutline,
+  SearchSvgFill,
   SearchSvgOutline,
+  MessageSvgFill,
 } from "../icons";
 export const menu = [
   {
@@ -16,41 +19,44 @@ export const menu = [
     title: "Home",
     path: "/",
     outline: HomeSvgOutline,
-    fill: HomeFilledIcon,
+    fill: HomeSvgFill,
   },
+
   {
     id: 2,
     title: "Search",
     path: "/search",
     outline: SearchSvgOutline,
-    fill: SearchIcon,
+    fill: SearchSvgFill,
   },
+
   {
     id: 3,
     title: "Explore",
     path: "/explore",
     outline: ExploreSvgOutline,
-    fill: ExploreIcon,
+    fill: ExploreSvgFill,
   },
+
   {
     id: 4,
     title: "Messages",
     path: "/messages",
     outline: MessagesSvgOutline,
-    fill: ExploreIcon,
+    fill: MessageSvgFill,
   },
   {
     id: 5,
     title: "Notification",
     path: "/notification",
     outline: NotificationSvgOutline,
-    fill: ExploreIcon,
+    fill: FavoriteIcon,
   },
   {
     id: 6,
     title: "Create",
     path: "/create",
     outline: CreateSvgOutline,
-    fill: ExploreIcon,
+    fill: AddBoxIcon,
   },
 ];

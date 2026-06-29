@@ -8,14 +8,7 @@ import { login, resetState } from "../../redux/slices/authSlice";
 import { Status } from "../../utils/Status";
 import BtnLogin from "../../components/btnLogin";
 import BtnOr from "../../components/btnOr";
-import {
-  CreateSvgOutline,
-  ExploreSvgOutline,
-  HomeSvgOutline,
-  MessagesSvgOutline,
-  NotificationSvgOutline,
-  SearchSvgOutline,
-} from "../../components/icons";
+
 import Sidebar from "../../components/sidebar";
 
 function Login() {
@@ -72,6 +65,7 @@ function Login() {
           width: "11.875rem",
         }}
       ></Box>
+
       <Box>
         <Sidebar></Sidebar>
       </Box>
