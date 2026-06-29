@@ -1,0 +1,21 @@
+.sidebar {
+  width: 244px;
+  height: 100vh;
+
+  border-right: 1px solid #dbdbdb;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 12px;
+}
+
+.logo {
+  margin-bottom: 32px;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

@@ -3,11 +3,20 @@ import { useForm } from "react-hook-form";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-
+import Logo from "../../assets/ICHGRAM.png";
 import { login, resetState } from "../../redux/slices/authSlice";
 import { Status } from "../../utils/Status";
 import BtnLogin from "../../components/btnLogin";
 import BtnOr from "../../components/btnOr";
+import {
+  CreateSvgOutline,
+  ExploreSvgOutline,
+  HomeSvgOutline,
+  MessagesSvgOutline,
+  NotificationSvgOutline,
+  SearchSvgOutline,
+} from "../../components/icons";
+import Sidebar from "../../components/sidebar";
 
 function Login() {
   const dispatch = useDispatch();
@@ -55,6 +64,17 @@ function Login() {
         gap: 2,
       }}
     >
+      <Box
+        component="img"
+        src={Logo}
+        alt="logo"
+        sx={{
+          width: "11.875rem",
+        }}
+      ></Box>
+      <Box>
+        <Sidebar></Sidebar>
+      </Box>
       <TextField
         label="Username or Email"
         fullWidth

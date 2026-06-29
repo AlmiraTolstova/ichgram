@@ -55,7 +55,6 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
       variant={variants[variantType].variant}
       sx={{
         minWidth: "268px",
-        // height: "32px",
         paddingTop: "7px",
         paddingBottom: "7px",
         borderRadius: "8px",

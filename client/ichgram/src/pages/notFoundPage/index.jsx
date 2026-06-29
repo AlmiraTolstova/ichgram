@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import Img from "../../assets/404.png";
+// import Img from "../../assets/404.png";
 function NotFoundPage() {
   return (
     <Box
