@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       unique: true,
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 30,
     },
-    fullName: {
+    fullname: {
       type: String,
       required: true,
       trim: true,
