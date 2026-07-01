@@ -16,6 +16,7 @@ import {
 export const menu = [
   {
     id: 1,
+    type: "link",
     title: "Home",
     path: "/",
     outline: HomeSvgOutline,
@@ -24,6 +25,7 @@ export const menu = [
 
   {
     id: 2,
+    type: "link",
     title: "Search",
     path: "/search",
     outline: SearchSvgOutline,
@@ -32,6 +34,7 @@ export const menu = [
 
   {
     id: 3,
+    type: "link",
     title: "Explore",
     path: "/explore",
     outline: ExploreSvgOutline,
@@ -40,6 +43,7 @@ export const menu = [
 
   {
     id: 4,
+    type: "link",
     title: "Messages",
     path: "/messages",
     outline: MessagesSvgOutline,
@@ -47,6 +51,7 @@ export const menu = [
   },
   {
     id: 5,
+    type: "link",
     title: "Notification",
     path: "/notification",
     outline: NotificationSvgOutline,
@@ -54,6 +59,8 @@ export const menu = [
   },
   {
     id: 6,
+    type: "action",
+    action: "createPost",
     title: "Create",
     path: "/create",
     outline: CreateSvgOutline,

@@ -62,6 +62,7 @@ const userProfileSlice = createSlice({
   initialState: {
     ownPostsList: [],
     lastPost: {},
+    openModal: false,
     message: "",
     status: {
       ownPostsList: Status.NO_STATUS,
@@ -69,15 +70,11 @@ const userProfileSlice = createSlice({
     },
   },
   reducers: {
-    resetState: (state) => {
-      state.status.register = Status.NO_STATUS;
-      state.status.login = Status.NO_STATUS;
-      state.message = "";
+    openCreatePostModal: (state) => {
+      state.openModal = true;
     },
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
-      localStorage.removeItem("token");
+    closeCreatePostModal: (state) => {
+      state.openModal = false;
     },
   },
   extraReducers: (builder) => {
@@ -128,6 +125,7 @@ export const checkTokenExpirationMiddleware = (store) => (next) => (action) => {
   return result;
 };
 
-export const { resetState, logout } = userProfileSlice.actions;
+export const { resetState, logout, openCreatePostModal, closeCreatePostModal } =
+  userProfileSlice.actions;
 export const selectUserProfile = (state) => state.profile;
 export default userProfileSlice.reducer;

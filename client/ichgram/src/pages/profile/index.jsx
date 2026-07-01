@@ -15,11 +15,15 @@ import {
 } from "../../redux/slices/userProfileSlice";
 import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
+import Footer from "../../components/footer";
+import CreatePostModal from "../../components/postModal";
+import { selectAuth } from "../../redux/slices/authSlice";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
   const userProfileSelector = useSelector(selectUserProfile);
-  const posts = useSelector((state) => state.profile.ownPostsList);
+  const authSelector = useSelector(selectAuth);
+  const { ownPostsList } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,74 +40,110 @@ function UserProfile() {
 
   return (
     <Box>
-      <Sidebar></Sidebar>
-      <Box>
-        <Button
-          onClick={() => {
-            dispatch(getOwnPostsByUserID());
+      <Box sx={{ display: "flex", border: "2px solid green" }}>
+        <Sidebar></Sidebar>
+
+        <Box
+          sx={{
+            border: "1px solid red",
+            p: "38px 95px 216px 170px",
           }}
         >
-          Обновить ленту
-        </Button>
-        <Button
-          onClick={() => {
-            console.log(userProfileSelector);
-          }}
-        >
-          Reducer to console
-        </Button>
-      </Box>
-      <Box>
-        {status === Status.LOADING ? (
-          <Box display="flex" justifyContent="center" mt={4}>
-            <CircularProgress />
+          <Box>
+            <Button
+              onClick={() => {
+                dispatch(getOwnPostsByUserID());
+              }}
+            >
+              Обновить ленту
+            </Button>
+            <Button
+              onClick={() => {
+                console.log(userProfileSelector);
+              }}
+            >
+              Reducer userProfile to console
+            </Button>
+            <Button
+              onClick={() => {
+                console.log(authSelector);
+              }}
+            >
+              Reducer Auth to console
+            </Button>
           </Box>
-        ) : (
-          posts.map((post) => <PostCard key={post._id} post={post} />)
-        )}
+          <Box
+            // elevation={3}
+            sx={{
+              // maxWidth: 400,
+              // mx: "auto",
+              mb: "55px",
+              border: "1px solid red",
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ pr: "86px" }}>
+              <Avatar sx={{ width: "168px", height: "168px" }}>
+                {user.fullname?.[0]?.toUpperCase()}
+              </Avatar>
+            </Box>
+
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {/* <Typography variant="h6">{user.fullname}</Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Username
+              </Typography> */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: "20px",
+                    lineheight: "25px",
+                    color: "#000000",
+                  }}
+                >
+                  {user.username}
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Email
+              </Typography>
+              <Typography>{user.email}</Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                ID
+              </Typography>
+              <Typography fontSize={12} color="text.secondary">
+                {user.id}
+              </Typography>
+            </Box>
+          </Box>
+          {/* POSTS */}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 2,
+            }}
+          >
+            {status === Status.LOADING ? (
+              <Box display="flex" justifyContent="center" mt={4}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              ownPostsList.map((post) => (
+                <PostCard key={post._id} post={post} />
+              ))
+            )}
+          </Box>
+        </Box>
       </Box>
-      <Paper
-        elevation={3}
-        sx={{
-          maxWidth: 400,
-          mx: "auto",
-          mt: 5,
-          p: 3,
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ width: 80, height: 80 }}>
-          {user.fullname?.[0]?.toUpperCase()}
-        </Avatar>
-
-        <Typography variant="h6">{user.fullname}</Typography>
-
-        <Box sx={{ width: "100%" }}>
-          <Typography variant="body2" color="text.secondary">
-            Username
-          </Typography>
-          <Typography>{user.username}</Typography>
-        </Box>
-
-        <Box sx={{ width: "100%" }}>
-          <Typography variant="body2" color="text.secondary">
-            Email
-          </Typography>
-          <Typography>{user.email}</Typography>
-        </Box>
-
-        <Box sx={{ width: "100%" }}>
-          <Typography variant="body2" color="text.secondary">
-            ID
-          </Typography>
-          <Typography fontSize={12} color="text.secondary">
-            {user.id}
-          </Typography>
-        </Box>
-      </Paper>
+      <Footer></Footer>
+      <CreatePostModal />
     </Box>
   );
 }

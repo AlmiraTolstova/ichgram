@@ -125,4 +125,5 @@ export const checkTokenExpirationMiddleware = (store) => (next) => (action) => {
 };
 
 export const { resetState, logout } = authSlice.actions;
+export const selectAuth = (state) => state.auth;
 export default authSlice.reducer;
