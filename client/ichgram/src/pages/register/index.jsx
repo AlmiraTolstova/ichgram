@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { Box, Button, TextField, Typography, Link } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Logo from "../../assets/ICHGRAM.png";
 
 import {
   register as registerUser,
   resetState,
 } from "../../redux/slices/authSlice";
 import { Status } from "../../utils/Status";
+import BtnLogin from "../../components/btnLogin";
 
 function Register() {
   const dispatch = useDispatch();
@@ -58,118 +60,190 @@ function Register() {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
-        maxWidth: 400,
-        mx: "auto",
-        mt: 4,
+        marginTop: "5.375rem",
         display: "flex",
+        justifyContent: "center",
         flexDirection: "column",
-        gap: 2,
+        alignItems: "center",
       }}
     >
-      <Typography variant="h4" sx={{ textAlign: "center" }}>
-        Register
-      </Typography>
-
-      <TextField
-        label="Email"
-        type="email"
-        fullWidth
-        {...register("email", {
-          required: "Email is required",
-          pattern: {
-            value: /^\S+@\S+\.\S+$/,
-            message: "Invalid email format",
-          },
-        })}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
-
-      <TextField
-        label="Full Name"
-        fullWidth
-        {...register("fullname", {
-          required: "Full name is required",
-          minLength: {
-            value: 2,
-            message: "Full name must contain at least 2 characters",
-          },
-        })}
-        error={!!errors.fullname}
-        helperText={errors.fullname?.message}
-      />
-
-      <TextField
-        label="User Name"
-        fullWidth
-        {...register("username", {
-          required: "User name is required",
-          minLength: {
-            value: 2,
-            message: "User name must contain at least 2 characters",
-          },
-        })}
-        error={!!errors.username}
-        helperText={errors.username?.message}
-      />
-
-      <TextField
-        label="Password"
-        type="password"
-        fullWidth
-        {...register("password", {
-          required: "Password is required",
-          minLength: {
-            value: 6,
-            message: "Password must be at least 6 characters",
-          },
-        })}
-        error={!!errors.password}
-        helperText={errors.password?.message}
-      />
-
-      <TextField
-        label="Confirm Password"
-        type="password"
-        fullWidth
-        {...register("confirmPassword", {
-          required: "Please confirm your password",
-          validate: (value) => value === password || "Passwords do not match",
-        })}
-        error={!!errors.confirmPassword}
-        helperText={errors.confirmPassword?.message}
-      />
-
-      <Button
-        type="submit"
-        variant="contained"
-        size="large"
-        disabled={status.register === Status.LOADING}
-      >
-        {status.register === Status.LOADING ? "Loading..." : "Register"}
-      </Button>
-
-      {isErrorRegister && <Typography color="error">{message}</Typography>}
-
-      {isSuccessRegister && (
-        <Typography color="success.main">Registration successful</Typography>
-      )}
-
       <Box
         sx={{
+          border: "1px solid #DBDBDB",
           display: "flex",
-          justifyContent: "center",
-          gap: 0.5,
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "1.875rem 2.5rem 1.4375rem",
         }}
       >
-        <Typography>Already have an account?</Typography>
+        <Box
+          component="img"
+          src={Logo}
+          alt="logo"
+          sx={{
+            width: "11.875rem",
+          }}
+        ></Box>
+        <Typography
+          variant="h6"
+          sx={{
+            maxWidth: "15.94rem",
+            // font-family: 'Roboto';
+            // fontStyle: "normal",
+            fontWeight: 600,
+            fontSize: "16px",
+            lineHeight: "20px",
+            display: "flex",
+            alignItems: "center",
+            textAlign: "center",
+            color: "#737373",
+            marginBottom: "36px",
+          }}
+        >
+          Sign up to see photos and videos from your friends.
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            minWidth: "16.75rem",
+          }}
+        >
+          <TextField
+            label="Email"
+            type="email"
+            fullWidth
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: "Invalid email format",
+              },
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
 
-        <Link component={RouterLink} to="/">
+          <TextField
+            label="Full Name"
+            fullWidth
+            {...register("fullname", {
+              required: "Full name is required",
+              minLength: {
+                value: 2,
+                message: "Full name must contain at least 2 characters",
+              },
+            })}
+            error={!!errors.fullname}
+            helperText={errors.fullname?.message}
+          />
+
+          <TextField
+            label="User Name"
+            fullWidth
+            {...register("username", {
+              required: "User name is required",
+              minLength: {
+                value: 2,
+                message: "User name must contain at least 2 characters",
+              },
+            })}
+            error={!!errors.username}
+            helperText={errors.username?.message}
+          />
+
+          <TextField
+            label="Password"
+            type="password"
+            fullWidth
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+
+          <TextField
+            label="Confirm Password"
+            type="password"
+            fullWidth
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "Passwords do not match",
+            })}
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword?.message}
+          />
+
+          <BtnLogin
+            type="submit"
+            variant="contained"
+            disabled={status.register === Status.LOADING}
+          >
+            {status.register === Status.LOADING ? "Loading..." : "Sign up"}
+          </BtnLogin>
+
+          {/* <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={status.register === Status.LOADING}
+          >
+            {status.register === Status.LOADING ? "Loading..." : "Register"}
+          </Button> */}
+
+          {isErrorRegister && <Typography color="error">{message}</Typography>}
+
+          {isSuccessRegister && (
+            <Typography color="success.main">
+              Registration successful
+            </Typography>
+          )}
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          maxWidth: "21.875rem",
+          marginTop: "1rem",
+          border: "1px solid  #DBDBDB",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "1.625rem 3.48rem 1.625rem",
+          gap: "0.5rem",
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: "14px",
+            lineHeight: "18px",
+            color: "#000000",
+          }}
+        >
+          Already have an account?
+        </Typography>
+
+        {/* <Link component={RouterLink} to="/">
           Sign in
-        </Link>
+        </Link> */}
+        <BtnLogin
+          component={RouterLink}
+          to="/"
+          variantType="underline"
+          sx={{ minWidth: "4.25rem" }}
+        >
+          Log in
+        </BtnLogin>
       </Box>
     </Box>
   );
