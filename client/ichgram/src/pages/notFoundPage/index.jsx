@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-// import Img from "../../assets/404.png";
+import Img from "../../assets/404.png";
 function NotFoundPage() {
   return (
     <Box
@@ -22,31 +22,35 @@ function NotFoundPage() {
       ></Box>
       <Typography
         sx={{
-          fontFamily: "Montserrat",
           fontStyle: "normal",
-          fontWeight: 700,
-          fontSize: "64px",
-          lineHeight: "110%",
+          fontEeight: 700,
+          fontSize: "36px",
+          lineHeight: "20px",
+          display: "flex",
+          alignItems: "center",
+          color: "#000000",
           pt: 4,
         }}
       >
-        Page Not Found
+        Oops! Page Not Found (404 Error)
       </Typography>
       <Typography
         sx={{
-          fontFamily: "Montserrat",
           fontStyle: "normal",
-          fontWeight: 500,
-          fontSize: "20px",
-          lineHeight: "130%",
-          color: "#8B8B8B",
+          fontWeight: 600,
+          fontSize: "16px",
+          lineHeight: "20px",
+          display: "flex",
+          alignItems: "center",
+          color: "#737373",
           maxWidth: "664px",
           pt: 2,
           pb: 4,
         }}
       >
-        We’re sorry, the page you requested could not be found. Please go back
-        to the homepage.
+        We're sorry, but the page you're looking for doesn't seem to exist. If
+        you typed the URL manually, please double-check the spelling. If you
+        clicked on a link, it may be outdated or broken.
       </Typography>
       {/* <BtnCard sx={{ pl: 7, pr: 7 }}>Go Home</BtnCard> */}
     </Box>

@@ -10,6 +10,7 @@ import BtnLogin from "../../components/btnLogin";
 import BtnOr from "../../components/btnOr";
 
 import Sidebar from "../../components/sidebar";
+import Footer from "../../components/footer";
 
 function Login() {
   const dispatch = useDispatch();
@@ -45,100 +46,94 @@ function Login() {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        maxWidth: 400,
-        mx: "auto",
-        mt: 4,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-      }}
-    >
+    <Box>
       <Box
-        component="img"
-        src={Logo}
-        alt="logo"
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
-          width: "11.875rem",
+          maxWidth: 400,
+          mx: "auto",
+          mt: 4,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
         }}
-      ></Box>
-
-      <Box>
-        <Sidebar></Sidebar>
-      </Box>
-      <TextField
-        label="Username or Email"
-        fullWidth
-        {...register("login", {
-          required: "Username or email is required",
-          validate: (value) => {
-            const emailRegex = /^\S+@\S+\.\S+$/;
-            const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-
-            return (
-              emailRegex.test(value) ||
-              usernameRegex.test(value) ||
-              "Enter a valid email or username"
-            );
-          },
-        })}
-        error={!!errors.login}
-        helperText={errors.login?.message}
-      />
-
-      <TextField
-        label="Password"
-        type="password"
-        fullWidth
-        {...register("password", {
-          required: "Password is required",
-          minLength: {
-            value: 6,
-            message: "Password must contain at least 6 characters",
-          },
-        })}
-        error={!!errors.password}
-        helperText={errors.password?.message}
-      />
-
-      {/* <Button
-        type="submit"
-        variant="contained"
-        disabled={status.login.isLoading === Status.LOADING}
       >
-        {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
-      </Button> */}
-      <BtnLogin
-        type="submit"
-        variant="contained"
-        disabled={status.login.isLoading === Status.LOADING}
-      >
-        {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
-      </BtnLogin>
+        <Box
+          component="img"
+          src={Logo}
+          alt="logo"
+          sx={{
+            width: "11.875rem",
+          }}
+        ></Box>
 
-      {isErrorLogin && <Typography color="error">{message}</Typography>}
+        <TextField
+          label="Username or Email"
+          fullWidth
+          {...register("login", {
+            required: "Username or email is required",
+            validate: (value) => {
+              const emailRegex = /^\S+@\S+\.\S+$/;
+              const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 
-      {isSuccessLogin && (
-        <Typography color="success.main">Login successful</Typography>
-      )}
-      <BtnOr></BtnOr>
+              return (
+                emailRegex.test(value) ||
+                usernameRegex.test(value) ||
+                "Enter a valid email or username"
+              );
+            },
+          })}
+          error={!!errors.login}
+          helperText={errors.login?.message}
+        />
 
-      <BtnLogin variantType="text">Forgot password?</BtnLogin>
+        <TextField
+          label="Password"
+          type="password"
+          fullWidth
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must contain at least 6 characters",
+            },
+          })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+        />
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-        <Typography>Don't have an account, </Typography>
-        {/* <Link >sing up</Link> */}
         <BtnLogin
-          to="/register"
-          variantType="underline"
-          sx={{ padding: "0px" }}
+          type="submit"
+          variant="contained"
+          disabled={status.login.isLoading === Status.LOADING}
         >
-          Sign up
+          {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
         </BtnLogin>
+
+        {isErrorLogin && <Typography color="error">{message}</Typography>}
+
+        {isSuccessLogin && (
+          <Typography color="success.main">Login successful</Typography>
+        )}
+        <BtnOr></BtnOr>
+
+        <BtnLogin variantType="text">Forgot password?</BtnLogin>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Typography>Don't have an account, </Typography>
+
+          <BtnLogin
+            component={Link}
+            to="/register"
+            variantType="underline"
+            sx={{ padding: "0px" }}
+          >
+            Sign up
+          </BtnLogin>
+        </Box>
       </Box>
+      <Footer></Footer>
     </Box>
   );
 }
