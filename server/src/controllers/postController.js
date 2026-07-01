@@ -3,16 +3,18 @@ import Post from "../models/Post.js";
 // Create Post
 export const createPost = async (req, res) => {
   try {
-    const { description, image } = req.body;
+    const { description } = req.body;
     const author = req.user.id;
+    const image = req.file.filename;
+    console.log(req.file);
 
-    const Post = await Post.create({
+    const post = await Post.create({
       author,
-      image,
+      image: `/uploads/images/${req.file.filename}`,
       description,
     });
 
-    res.status(201).json(Post);
+    res.status(201).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -62,9 +64,9 @@ export const deletePost = async (req, res) => {
 //Get Posts by user id
 export const getPostsByUserID = async (req, res) => {
   try {
-    const { userId } = req.query;
+    const { id } = req.params;
 
-    let filter = { author: userId };
+    let filter = { author: id };
 
     // // фильтр по статусу
     // if (status) {
