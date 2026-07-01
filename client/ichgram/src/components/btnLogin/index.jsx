@@ -5,7 +5,15 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
     primary: {
       variant: "contained",
       sx: {
+        minWidth: "268px",
         backgroundColor: "#0095F6",
+        fontStyle: "normal",
+        fontWeight: 600,
+        fontSize: "14px",
+        lineHeight: "18px",
+
+        color: "#FFFFFF",
+
         "&:hover": {
           backgroundColor: "#048be5",
         },
@@ -28,6 +36,9 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
         fontSize: "12px",
         lineHeight: "16px",
         color: "#00376B",
+        textDecoration: "underline",
+        textUnderlineOffset: "2px",
+        width: "168px",
       },
     },
 
@@ -35,13 +46,12 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
       variant: "text",
       sx: {
         fontStyle: "normal",
-        fontWeight: 400,
-        fontSize: "12px",
+        fontWeight: 600,
+        fontSize: "14px",
         lineHeight: "16px",
         textDecoration: "underline",
         textUnderlineOffset: "2px",
         color: "#0095F6",
-
         "&:hover": {
           backgroundColor: "transparent",
           textDecoration: "underline",
@@ -60,9 +70,8 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
         borderRadius: "8px",
         textTransform: "none",
         fontFamily: "Roboto",
-        fontStyle: "normal",
-        fontSize: "14px",
-        lineHeight: "18px",
+        // fontSize: "14px",
+        // lineHeight: "18px",
         display: "flex",
         alignItems: "center",
         textAlign: "center",
