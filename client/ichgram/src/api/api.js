@@ -10,7 +10,7 @@ export const API = {
     createPost: () => `${BASE_URL_API}/posts/post`,
     updatePost: () => `${BASE_URL_API}/posts/post/:id`,
     deletePost: () => `${BASE_URL_API}/posts/post/:id`,
-    getPostByPostId: () => `${BASE_URL_API}/posts/post/:id`,
+    getPostByPostId: (id) => `${BASE_URL_API}/posts/post/${id}`,
     getPostsByUserID: (id) => `${BASE_URL_API}/posts/postsbyuserid/${id}`,
   },
 };

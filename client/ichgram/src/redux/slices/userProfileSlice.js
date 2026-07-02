@@ -76,6 +76,9 @@ const userProfileSlice = createSlice({
     closeCreatePostModal: (state) => {
       state.openModal = false;
     },
+    resetCreatePostStatus(state) {
+      state.status.createPost = Status.NO_STATUS;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -125,7 +128,12 @@ export const checkTokenExpirationMiddleware = (store) => (next) => (action) => {
   return result;
 };
 
-export const { resetState, logout, openCreatePostModal, closeCreatePostModal } =
-  userProfileSlice.actions;
+export const {
+  resetState,
+  logout,
+  openCreatePostModal,
+  closeCreatePostModal,
+  resetCreatePostStatus,
+} = userProfileSlice.actions;
 export const selectUserProfile = (state) => state.profile;
 export default userProfileSlice.reducer;

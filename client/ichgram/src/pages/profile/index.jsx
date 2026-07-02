@@ -11,24 +11,35 @@ import Sidebar from "../../components/sidebar";
 import { useEffect } from "react";
 import {
   getOwnPostsByUserID,
+  resetCreatePostStatus,
   selectUserProfile,
 } from "../../redux/slices/userProfileSlice";
 import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
 import Footer from "../../components/footer";
-import CreatePostModal from "../../components/postModal";
+import CreatePostModal from "../../components/createPostModal";
 import { selectAuth } from "../../redux/slices/authSlice";
+import { selectPosts } from "../../redux/slices/postsSlice";
+import PostModal from "../../components/postModal";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
   const userProfileSelector = useSelector(selectUserProfile);
   const authSelector = useSelector(selectAuth);
-  const { ownPostsList } = useSelector((state) => state.profile);
+  const postsSelector = useSelector(selectPosts);
+  const { ownPostsList, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOwnPostsByUserID());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (status.createPost === Status.DONE) {
+      dispatch(getOwnPostsByUserID());
+      dispatch(resetCreatePostStatus());
+    }
+  }, [status.createPost, dispatch]);
 
   if (!user) {
     return (
@@ -70,6 +81,13 @@ function UserProfile() {
               }}
             >
               Reducer Auth to console
+            </Button>
+            <Button
+              onClick={() => {
+                console.log(postsSelector);
+              }}
+            >
+              Reducer Posts to console
             </Button>
           </Box>
           <Box
@@ -130,7 +148,7 @@ function UserProfile() {
               gap: 2,
             }}
           >
-            {status === Status.LOADING ? (
+            {status.ownPostsList === Status.LOADING ? (
               <Box display="flex" justifyContent="center" mt={4}>
                 <CircularProgress />
               </Box>
@@ -144,6 +162,7 @@ function UserProfile() {
       </Box>
       <Footer></Footer>
       <CreatePostModal />
+      <PostModal></PostModal>
     </Box>
   );
 }

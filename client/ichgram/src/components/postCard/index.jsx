@@ -13,8 +13,11 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { BASE_URL } from "../../api/api";
+import { useDispatch } from "react-redux";
+import { openExistPostModal } from "../../redux/slices/postsSlice";
 
 export default function PostCard({ post }) {
+  const dispatch = useDispatch();
   return (
     <Card
       sx={{
@@ -58,7 +61,11 @@ export default function PostCard({ post }) {
             {post.likes.length}
           </Typography>
 
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              dispatch(openExistPostModal(post));
+            }}
+          >
             <ChatBubbleOutlineOutlinedIcon />
           </IconButton>
 

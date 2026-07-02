@@ -2,17 +2,20 @@
   display: flex;
   align-items: center;
   gap: 16px;
-
   height: 48px;
-
   padding: 0 12px;
-
   border-radius: 8px;
-
   text-decoration: none;
   color: #000;
-
   transition: background 0.2s;
+
+  /* для button */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  font: inherit;
+  text-align: left;
 }
 
 .item:hover {
@@ -21,8 +24,6 @@
 
 .title {
   font-size: 16px;
-  font-family: "Roboto";
-  font-style: normal;
 
   line-height: 20px;
 
