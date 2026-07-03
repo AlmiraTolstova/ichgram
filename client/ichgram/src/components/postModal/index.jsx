@@ -19,11 +19,13 @@ import { Status } from "../../utils/Status";
 const PostModal = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPostByPostID());
-  }, [dispatch]);
-
   const { openModal, currentPost, status } = useSelector(selectPosts);
+
+  useEffect(() => {
+    if (openModal) {
+      dispatch(getPostByPostID());
+    }
+  }, [dispatch, openModal]);
 
   if (!currentPost) return null;
 

@@ -21,6 +21,7 @@ import CreatePostModal from "../../components/createPostModal";
 import { selectAuth } from "../../redux/slices/authSlice";
 import { selectPosts } from "../../redux/slices/postsSlice";
 import PostModal from "../../components/postModal";
+import { useNavigate } from "react-router-dom";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
@@ -29,6 +30,7 @@ function UserProfile() {
   const postsSelector = useSelector(selectPosts);
   const { ownPostsList, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getOwnPostsByUserID());
@@ -108,7 +110,9 @@ function UserProfile() {
                 {user.fullname?.[0]?.toUpperCase()}
               </Avatar>
             </Box>
-
+            <Button onClick={() => navigate("/editprofile")}>
+              Edit profile
+            </Button>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               {/* <Typography variant="h6">{user.fullname}</Typography>
 

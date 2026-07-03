@@ -38,6 +38,31 @@ export const login = createAsyncThunk(
   },
 );
 
+export const editUserData = createAsyncThunk(
+  "auth/edituserdata",
+  async (userData, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        API.Authorization.editUserData(),
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -51,6 +76,7 @@ const authSlice = createSlice({
     status: {
       register: Status.NO_STATUS,
       login: Status.NO_STATUS,
+      editUserData: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -102,6 +128,19 @@ const authSlice = createSlice({
         state.message = action.payload.message;
         state.isSuccessLogin = false;
         state.isErrorLogin = true;
+      });
+
+    builder
+      .addCase(editUserData.pending, (state) => {
+        state.status.editUserData = Status.LOADING;
+      })
+      .addCase(editUserData.fulfilled, (state, action) => {
+        state.status.editUserData = Status.DONE;
+        state.user = action.payload.user;
+      })
+      .addCase(editUserData.rejected, (state, action) => {
+        state.status.editUserData = Status.ERROR;
+        state.message = action.payload.message;
       });
   },
 });

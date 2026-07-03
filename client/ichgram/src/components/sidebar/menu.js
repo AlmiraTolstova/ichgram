@@ -66,4 +66,12 @@ export const menu = [
     outline: CreateSvgOutline,
     fill: AddBoxIcon,
   },
+  {
+    id: 7,
+    type: "link",
+    title: "Profile",
+    path: "/profile",
+    outline: NotificationSvgOutline,
+    fill: FavoriteIcon,
+  },
 ];

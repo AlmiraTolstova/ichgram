@@ -5,6 +5,7 @@ export const API = {
   Authorization: {
     register: () => `${BASE_URL_API}/auth/register`,
     login: () => `${BASE_URL_API}/auth/login`,
+    editUserData: () => `${BASE_URL_API}/auth/edituserdata`,
   },
   Posts: {
     createPost: () => `${BASE_URL_API}/posts/post`,

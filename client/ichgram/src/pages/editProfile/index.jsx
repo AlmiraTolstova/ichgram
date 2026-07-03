@@ -9,29 +9,65 @@ import {
   InputAdornment,
 } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
+
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
 
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+
+import { useDispatch, useSelector } from "react-redux";
+import { editUserData, selectAuth } from "../../redux/slices/authSlice";
+
 function EditProfile() {
+  const dispatch = useDispatch();
+
+  const { user, status } = useSelector(selectAuth);
+
+  const { control, handleSubmit, reset, watch } = useForm({
+    defaultValues: {
+      username: "",
+      link: "",
+      about: "",
+    },
+  });
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        username: user.username ?? "",
+        link: user.link ?? "",
+        about: user.about ?? "",
+      });
+    }
+  }, [user, reset]);
+
+  const about = watch("about");
+
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(editUserData(data)).unwrap();
+      console.log("Profile updated");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <Sidebar></Sidebar>
+      <Box display="flex">
+        <Sidebar />
+
         <Box
           sx={{
-            flexDirection: "column",
-            border: "1px solid red",
+            flex: 1,
             display: "flex",
+            flexDirection: "column",
             p: "94px 106px 185px 118px",
             gap: "2.75rem",
           }}
         >
-          <Typography variant="h4" fontWeight={700} mb={4}>
+          <Typography variant="h4" fontWeight={700}>
             Edit profile
           </Typography>
 
@@ -42,12 +78,11 @@ function EditProfile() {
               bgcolor: "#f5f5f5",
               borderRadius: 4,
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-between",
-              mb: 5,
+              alignItems: "center",
             }}
           >
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Box direction="row" spacing={2} alignItems="center">
               <Avatar
                 src="/logo.png"
                 sx={{
@@ -57,105 +92,133 @@ function EditProfile() {
               />
 
               <Box>
-                <Typography fontWeight={700} fontSize={30} lineHeight={1}>
-                  ichschool
+                <Typography fontWeight={700} fontSize={30}>
+                  {user?.username}
                 </Typography>
 
                 <Typography
                   color="text.secondary"
                   sx={{
                     mt: 1,
-                    maxWidth: 330,
                   }}
                 >
-                  • Гарантия помощи с трудоустройством в ведущие IT-компании
+                  {user?.about}
                 </Typography>
               </Box>
-            </Stack>
+            </Box>
 
-            <Button
-              variant="contained"
-              sx={{
-                px: 4,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 600,
-              }}
-            >
-              New photo
-            </Button>
+            <Button variant="contained">New photo</Button>
           </Paper>
 
-          <Stack spacing={4}>
-            <Box>
-              <Typography fontWeight={700} mb={1}>
-                Username
-              </Typography>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box spacing={4}>
+              <Box>
+                <Typography fontWeight={700} mb={1}>
+                  Username
+                </Typography>
 
-              <TextField
-                fullWidth
-                defaultValue="ichschool"
-                variant="outlined"
-              />
-            </Box>
+                <Controller
+                  name="username"
+                  control={control}
+                  rules={{
+                    required: "Username is required",
+                  }}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </Box>
 
-            <Box>
-              <Typography fontWeight={700} mb={1}>
-                Website
-              </Typography>
+              <Box>
+                <Typography fontWeight={700} mb={1}>
+                  Website
+                </Typography>
 
-              <TextField
-                fullWidth
-                defaultValue="bit.ly/3rpilbh"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LinkIcon fontSize="small" />
-                    </InputAdornment>
-                  ),
+                <Controller
+                  name="link"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <LinkIcon fontSize="small" />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+
+              <Box>
+                <Typography fontWeight={700} mb={1}>
+                  About
+                </Typography>
+
+                <Controller
+                  name="about"
+                  control={control}
+                  rules={{
+                    maxLength: {
+                      value: 150,
+                      message: "Maximum 150 characters",
+                    },
+                  }}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      multiline
+                      rows={4}
+                      error={!!fieldState.error}
+                      helperText={
+                        fieldState.error?.message ??
+                        `${about?.length ?? 0} / 150`
+                      }
+                      slotProps={{
+                        formHelperText: {
+                          sx: {
+                            textAlign: "right",
+                            m: 1,
+                          },
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={status === "loading"}
+                sx={{
+                  width: 330,
+                  height: 48,
+                  textTransform: "none",
+                  fontWeight: 700,
                 }}
-              />
+              >
+                {status === "loading" ? "Saving..." : "Save"}
+              </Button>
             </Box>
-
-            <Box>
-              <Typography fontWeight={700} mb={1}>
-                About
-              </Typography>
-
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                defaultValue={`• Гарантия помощи с трудоустройством в ведущие IT-компании
-• Выпускники зарабатывают от 45к евро
-БЕСПЛАТНАЯ`}
-                helperText="136 / 150"
-                FormHelperTextProps={{
-                  sx: {
-                    textAlign: "right",
-                    m: 1,
-                  },
-                }}
-              />
-            </Box>
-
-            <Button
-              variant="contained"
-              sx={{
-                width: 330,
-                height: 48,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 700,
-              }}
-            >
-              Save
-            </Button>
-          </Stack>
+          </Box>
         </Box>
       </Box>
-      <Footer></Footer>
+
+      <Footer />
     </Box>
   );
 }
+
 export default EditProfile;
