@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import Comment from "../models/Comment.js";
 
 // Create Post
 export const createPost = async (req, res) => {
@@ -97,13 +98,26 @@ export const getPostsByUserID = async (req, res) => {
 //Get Post by post id
 export const getPostByPostId = async (req, res) => {
   try {
-    const { postId } = req.query;
+    const { id } = req.params;
+    console.log("getPostByPostId");
 
-    let filter = { author: userId };
+    //let filter = { author: userId };
 
-    const Post = await Post.findOne({ _id: id });
+    const post = await Post.findOne({ _id: id })
+      .populate("author", "username fullname avatar")
+      .populate("likes", "username avatar")
+      .populate({
+        path: "comments",
+        options: {
+          sort: { createdAt: 1 },
+        },
+        populate: {
+          path: "author",
+          select: "username avatar",
+        },
+      });
 
-    res.json(Posts);
+    res.json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

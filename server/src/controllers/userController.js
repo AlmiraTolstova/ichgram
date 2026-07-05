@@ -1,0 +1,88 @@
+import User from "../models/User.js";
+import path from "path";
+import fs from "fs";
+
+export const editUserData = async (req, res) => {
+  try {
+    const { username, link, about } = req.body;
+    const user_id = req.user.id;
+
+    const user = await User.findOne({
+      _id: user_id,
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        message: "User was not found",
+      });
+    }
+
+    if (username !== undefined) user.username = username;
+    if (link !== undefined) user.link = link;
+    if (about !== undefined) user.about = about;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Success!",
+      user: {
+        id: user._id,
+        name: user.name,
+        avatar: user.avatar,
+        email: user.email,
+        fullname: user.fullname,
+        username: user.username,
+        link: user.link,
+        about: user.about,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const uploadUserAvatar = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // удалить старый аватар
+    if (user.avatar) {
+      const oldFile = path.join(process.cwd(), user.avatar.replace(/^\//, ""));
+
+      if (fs.existsSync(oldFile)) {
+        fs.unlinkSync(oldFile);
+      }
+    }
+
+    user.avatar = `/uploads/avatars/${req.file.filename}`;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Avatar updated",
+      user: {
+        id: user._id,
+        username: user.username,
+        avatar: user.avatar,
+        email: user.email,
+        fullname: user.fullname,
+        link: user.link,
+        about: user.about,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

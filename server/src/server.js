@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import authRoutes from "./routes/authRoutes.js";
 import postsRoutes from "./routes/postsRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -25,6 +26,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });
