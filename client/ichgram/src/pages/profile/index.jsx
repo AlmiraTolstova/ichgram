@@ -55,7 +55,7 @@ function UserProfile() {
   return (
     <Box>
       <Box sx={{ display: "flex", border: "2px solid green" }}>
-        <Sidebar></Sidebar>
+        {/* <Sidebar></Sidebar> */}
 
         <Box
           sx={{
@@ -168,7 +168,7 @@ function UserProfile() {
           </Box>
         </Box>
       </Box>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
       <CreatePostModal />
       <PostModal></PostModal>
     </Box>

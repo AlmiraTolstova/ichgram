@@ -21,9 +21,11 @@ import {
 } from "../../redux/slices/authSlice";
 import BtnLogin from "../../components/btnLogin";
 import { BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 function EditProfile() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { user, status } = useSelector(selectAuth);
 
@@ -50,6 +52,7 @@ function EditProfile() {
   const onSubmit = async (data) => {
     try {
       await dispatch(editUserData(data)).unwrap();
+      navigate("/profile");
     } catch (err) {
       console.error(err);
     }
@@ -76,7 +79,7 @@ function EditProfile() {
   return (
     <Box>
       <Box sx={{ display: "flex", border: "2px solid green" }}>
-        <Sidebar />
+        {/* <Sidebar /> */}
 
         <Box
           sx={{
@@ -273,7 +276,7 @@ function EditProfile() {
         </Box>
       </Box>
 
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 }

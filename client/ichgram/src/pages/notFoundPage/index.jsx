@@ -11,7 +11,7 @@ function NotFoundPage() {
           flexDirection: "row",
         }}
       >
-        <Sidebar></Sidebar>
+        {/* <Sidebar></Sidebar> */}
         <Box
           sx={{
             border: "1px solid red",
@@ -72,7 +72,7 @@ function NotFoundPage() {
           </Box>
         </Box>
       </Box>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </Box>
   );
 }
