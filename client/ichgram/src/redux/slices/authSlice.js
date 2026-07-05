@@ -42,15 +42,39 @@ export const editUserData = createAsyncThunk(
   "auth/edituserdata",
   async (userData, { getState, rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        API.Authorization.editUserData(),
-        userData,
-        {
-          headers: {
-            Authorization: `Bearer ${getState().auth.token}`,
-          },
+      const response = await axios.put(API.User.editUserData(), userData, {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
         },
-      );
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
+export const uploadAvatar = createAsyncThunk(
+  "auth/uploadAvatar",
+  async (avatar, { getState, rejectWithValue }) => {
+    console.log("by");
+
+    try {
+      const formData = new FormData();
+
+      formData.append("avatar", avatar);
+
+      const response = await axios.put(API.User.uploadAvatar(), formData, {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+
       return response.data;
     } catch (error) {
       return rejectWithValue({
@@ -77,6 +101,7 @@ const authSlice = createSlice({
       register: Status.NO_STATUS,
       login: Status.NO_STATUS,
       editUserData: Status.NO_STATUS,
+      avatar: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -140,6 +165,19 @@ const authSlice = createSlice({
       })
       .addCase(editUserData.rejected, (state, action) => {
         state.status.editUserData = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(uploadAvatar.pending, (state) => {
+        state.status.avatar = Status.LOADING;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.status.avatar = Status.DONE;
+        state.user = action.payload.user;
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
+        state.status.avatar = Status.ERROR;
         state.message = action.payload.message;
       });
   },

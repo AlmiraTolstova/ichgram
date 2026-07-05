@@ -22,6 +22,7 @@ import { selectAuth } from "../../redux/slices/authSlice";
 import { selectPosts } from "../../redux/slices/postsSlice";
 import PostModal from "../../components/postModal";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api/api";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
@@ -106,7 +107,10 @@ function UserProfile() {
             }}
           >
             <Box sx={{ pr: "86px" }}>
-              <Avatar sx={{ width: "168px", height: "168px" }}>
+              <Avatar
+                sx={{ width: "168px", height: "168px" }}
+                src={`${BASE_URL}${user.avatar}`}
+              >
                 {user.fullname?.[0]?.toUpperCase()}
               </Avatar>
             </Box>

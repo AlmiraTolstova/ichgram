@@ -1,6 +1,8 @@
 import ExploreIcon from "@mui/icons-material/Explore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import {
   CreateSvgOutline,
   ExploreSvgFill,
@@ -71,7 +73,7 @@ export const menu = [
     type: "link",
     title: "Profile",
     path: "/profile",
-    outline: NotificationSvgOutline,
-    fill: FavoriteIcon,
+    outline: AccountCircleOutlinedIcon,
+    fill: AccountCircleIcon,
   },
 ];

@@ -9,15 +9,18 @@ import {
   InputAdornment,
 } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
-
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
-
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-
 import { useDispatch, useSelector } from "react-redux";
-import { editUserData, selectAuth } from "../../redux/slices/authSlice";
+import {
+  editUserData,
+  selectAuth,
+  uploadAvatar,
+} from "../../redux/slices/authSlice";
+import BtnLogin from "../../components/btnLogin";
+import { BASE_URL } from "../../api/api";
 
 function EditProfile() {
   const dispatch = useDispatch();
@@ -47,7 +50,24 @@ function EditProfile() {
   const onSubmit = async (data) => {
     try {
       await dispatch(editUserData(data)).unwrap();
-      console.log("Profile updated");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const inputRef = useRef(null);
+
+  const handleChoosePhoto = () => {
+    inputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    try {
+      await dispatch(uploadAvatar(file)).unwrap();
     } catch (err) {
       console.error(err);
     }
@@ -55,7 +75,7 @@ function EditProfile() {
 
   return (
     <Box>
-      <Box display="flex">
+      <Box sx={{ display: "flex", border: "2px solid green" }}>
         <Sidebar />
 
         <Box
@@ -63,51 +83,88 @@ function EditProfile() {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            p: "94px 106px 185px 118px",
-            gap: "2.75rem",
+            p: "48px 167px 117px 166px",
+            gap: "33px",
+            border: "2px solid red",
           }}
         >
-          <Typography variant="h4" fontWeight={700}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              fontSize: "20px",
+              lineHeight: "25px",
+              color: "#000000",
+              marginBottom: 1,
+            }}
+          >
             Edit profile
           </Typography>
 
           <Paper
-            elevation={0}
             sx={{
-              p: 3,
-              bgcolor: "#f5f5f5",
-              borderRadius: 4,
+              p: "16px 16px 8px 16px",
+              bgcolor: "#EFEFEF",
+              borderRadius: "20px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              border: "2px solid red",
             }}
           >
-            <Box direction="row" spacing={2} alignItems="center">
+            <Box sx={{ display: "flex" }}>
               <Avatar
-                src="/logo.png"
+                src={`${BASE_URL}${user.avatar}`}
                 sx={{
-                  width: 70,
-                  height: 70,
+                  width: "56px",
+                  height: "56px",
                 }}
               />
 
-              <Box>
-                <Typography fontWeight={700} fontSize={30}>
+              <Box
+                sx={{
+                  marginLeft: "1rem",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "20px",
+                    color: "#000000",
+                  }}
+                >
                   {user?.username}
                 </Typography>
 
                 <Typography
                   color="text.secondary"
                   sx={{
-                    mt: 1,
+                    mt: "0.5rem",
+                    maxWidth: "465px",
+                    fontWeight: 400,
+                    fontSize: "14px",
+                    lineHeight: "18px",
+                    color: "#737373",
                   }}
                 >
                   {user?.about}
                 </Typography>
               </Box>
             </Box>
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleFileChange}
+            />
 
-            <Button variant="contained">New photo</Button>
+            <BtnLogin sx={{ width: "200px" }} onClick={handleChoosePhoto}>
+              New photo
+            </BtnLogin>
+            {/* <Button variant="contained">New photo</Button> */}
           </Paper>
 
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>

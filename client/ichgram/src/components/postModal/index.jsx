@@ -15,6 +15,7 @@ import CommentForm from "./CommentForm";
 import styles from "./PostModal.module.css";
 import { useEffect } from "react";
 import { Status } from "../../utils/Status";
+import { BASE_URL } from "../../api/api";
 
 const PostModal = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,11 @@ const PostModal = () => {
         {/* IMAGE */}
 
         <Box className={styles.imageWrapper}>
-          <img src={currentPost.imageUrl} alt="" className={styles.image} />
+          <img
+            src={`${BASE_URL}${currentPost.image}`}
+            alt=""
+            className={styles.image}
+          />
         </Box>
 
         {/* RIGHT */}
@@ -46,7 +51,7 @@ const PostModal = () => {
           </Box>
         ) : (
           <Box className={styles.sidebar}>
-            {/* <PostHeader />
+            <PostHeader />
 
             <Divider />
 
@@ -54,7 +59,7 @@ const PostModal = () => {
 
             <Divider />
 
-            <CommentForm /> */}
+            <CommentForm />
           </Box>
         )}
       </Box>

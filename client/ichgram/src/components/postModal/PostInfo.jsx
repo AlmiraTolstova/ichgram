@@ -3,6 +3,7 @@ import { Avatar, Box, Typography, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../../api/api";
 
 import { selectPosts } from "../../redux/slices/postsSlice";
 
@@ -23,7 +24,7 @@ const PostInfo = () => {
           p: 2,
         }}
       >
-        <Avatar src={currentPost.author.avatar} />
+        <Avatar src={`${BASE_URL}${currentPost.author.avatar}`} />
 
         <Box ml={2}>
           <Typography fontWeight={600}>
