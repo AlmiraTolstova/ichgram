@@ -9,7 +9,9 @@ import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
 import FeedCard from "../../components/feedCard";
 import PostModal from "../../components/postModal";
-function Home() {
+import ExploreCard from "../../components/exploreCard";
+
+function Explore() {
   const dispatch = useDispatch();
   const { feed, status } = useSelector((state) => state.posts);
 
@@ -18,12 +20,6 @@ function Home() {
   }, [dispatch]);
   return (
     <Box>
-      {/* <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      ></Box> */}
       <Box
         sx={{
           display: "grid",
@@ -36,7 +32,7 @@ function Home() {
             <CircularProgress />
           </Box>
         ) : (
-          feed.map((post) => <FeedCard key={post._id} post={post} />)
+          feed.map((post) => <ExploreCard key={post._id} post={post} />)
         )}
       </Box>
       <PostModal></PostModal>
@@ -45,4 +41,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Explore;

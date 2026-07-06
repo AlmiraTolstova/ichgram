@@ -8,6 +8,8 @@ import UserProfile from "./pages/profile";
 import CreatePost from "./pages/createPost";
 import EditProfile from "./pages/editProfile";
 import MainLayout from "./components/layouts/MainLayout";
+import Home from "./pages/home";
+import Explore from "./pages/explore";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
 
           {/* страницы с Layout */}
           <Route element={<MainLayout />}>
+            <Route path="/home" element={<Home></Home>}></Route>
+            <Route path="/explore" element={<Explore></Explore>}></Route>
             <Route
               path="/profile"
               element={<UserProfile></UserProfile>}

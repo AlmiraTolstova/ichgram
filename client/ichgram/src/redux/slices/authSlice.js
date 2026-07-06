@@ -87,33 +87,37 @@ export const uploadAvatar = createAsyncThunk(
   },
 );
 
+const initialState = {
+  user: null,
+  token: null,
+  isSuccessRegister: false,
+  isErrorRegister: false,
+  isSuccessLogin: false,
+  isErrorLogin: false,
+  message: "",
+  status: {
+    register: Status.NO_STATUS,
+    login: Status.NO_STATUS,
+    editUserData: Status.NO_STATUS,
+    avatar: Status.NO_STATUS,
+  },
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null,
-    token: null,
-    isSuccessRegister: false,
-    isErrorRegister: false,
-    isSuccessLogin: false,
-    isErrorLogin: false,
-    message: "",
-    status: {
-      register: Status.NO_STATUS,
-      login: Status.NO_STATUS,
-      editUserData: Status.NO_STATUS,
-      avatar: Status.NO_STATUS,
-    },
-  },
+  initialState,
   reducers: {
     resetState: (state) => {
       state.status.register = Status.NO_STATUS;
       state.status.login = Status.NO_STATUS;
       state.message = "";
     },
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
+    logout: () => {
       localStorage.removeItem("token");
+      return {
+        ...initialState,
+        token: null,
+      };
     },
   },
   extraReducers: (builder) => {

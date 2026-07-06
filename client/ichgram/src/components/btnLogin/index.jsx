@@ -11,7 +11,6 @@ function BtnLogin({ variantType = "primary", children, sx, ...props }) {
         fontWeight: 600,
         fontSize: "14px",
         lineHeight: "18px",
-
         color: "#FFFFFF",
 
         "&:hover": {

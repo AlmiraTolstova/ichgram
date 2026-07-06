@@ -20,7 +20,7 @@ export const menu = [
     id: 1,
     type: "link",
     title: "Home",
-    path: "/",
+    path: "/home",
     outline: HomeSvgOutline,
     fill: HomeSvgFill,
   },

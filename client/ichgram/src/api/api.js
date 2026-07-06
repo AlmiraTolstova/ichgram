@@ -19,5 +19,7 @@ export const API = {
     deletePost: () => `${BASE_URL_API}/posts/post/:id`,
     getPostByPostId: (id) => `${BASE_URL_API}/posts/post/${id}`,
     getPostsByUserID: (id) => `${BASE_URL_API}/posts/postsbyuserid/${id}`,
+    getFeed: () => `${BASE_URL_API}/posts/feed`,
+    toggleLike: (id) => `${BASE_URL_API}/posts/${id}/like`,
   },
 };

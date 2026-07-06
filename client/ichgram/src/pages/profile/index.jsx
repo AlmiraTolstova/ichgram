@@ -7,8 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../../components/sidebar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   getOwnPostsByUserID,
   resetCreatePostStatus,
@@ -16,13 +15,14 @@ import {
 } from "../../redux/slices/userProfileSlice";
 import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
-import Footer from "../../components/footer";
 import CreatePostModal from "../../components/createPostModal";
 import { selectAuth } from "../../redux/slices/authSlice";
 import { selectPosts } from "../../redux/slices/postsSlice";
 import PostModal from "../../components/postModal";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../api/api";
+import AppButton from "../../components/appButton";
+import LinkIcon from "@mui/icons-material/Link";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
@@ -32,6 +32,8 @@ function UserProfile() {
   const { ownPostsList, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [showFullAbout, setShowFullAbout] = useState(false);
 
   useEffect(() => {
     dispatch(getOwnPostsByUserID());
@@ -93,12 +95,28 @@ function UserProfile() {
               Reducer Posts to console
             </Button>
           </Box>
+          <Box>
+            // Большая синяя
+            <AppButton>Войти</AppButton>
+            // Средняя синяя
+            <AppButton size="medium">Войти</AppButton>
+            // Серая
+            <AppButton appearance="gray">Отмена</AppButton>
+            // Средняя серая
+            <AppButton appearance="gray" size="medium">
+              Назад
+            </AppButton>
+            // Outlined
+            <AppButton appearance="secondary">Регистрация</AppButton>
+            // Текстовая
+            <AppButton appearance="text">Забыли пароль?</AppButton>
+            // Подчеркнутая
+            <AppButton appearance="underline">Подробнее</AppButton>
+          </Box>
+          {/* PROFILE */}
           <Box
-            // elevation={3}
             sx={{
-              // maxWidth: 400,
-              // mx: "auto",
-              mb: "55px",
+              mb: "3.5rem",
               border: "1px solid red",
               display: "flex",
               flexDirection: "row",
@@ -106,7 +124,7 @@ function UserProfile() {
               alignItems: "center",
             }}
           >
-            <Box sx={{ pr: "86px" }}>
+            <Box sx={{ pr: "5.375rem" }}>
               <Avatar
                 sx={{ width: "168px", height: "168px" }}
                 src={`${BASE_URL}${user.avatar}`}
@@ -114,38 +132,101 @@ function UserProfile() {
                 {user.fullname?.[0]?.toUpperCase()}
               </Avatar>
             </Box>
-            <Button onClick={() => navigate("/editprofile")}>
+            {/* <Button onClick={() => navigate("/editprofile")}>
               Edit profile
-            </Button>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              {/* <Typography variant="h6">{user.fullname}</Typography>
+            </Button> */}
 
-              <Typography variant="body2" color="text.secondary">
-                Username
-              </Typography> */}
-              <Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "22px",
+                }}
+              >
                 <Typography
                   sx={{
                     fontWeight: 400,
                     fontSize: "20px",
                     lineheight: "25px",
                     color: "#000000",
+                    textDecorationLine: "underline",
                   }}
                 >
                   {user.username}
                 </Typography>
+                <AppButton
+                  onClick={() => navigate("/editprofile")}
+                  appearance="gray"
+                  size="medium"
+                >
+                  Edit profile
+                </AppButton>
               </Box>
-              <Typography variant="body2" color="text.secondary">
-                Email
-              </Typography>
-              <Typography>{user.email}</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "40px",
+                }}
+              >
+                <Typography>posts</Typography>
+                <Typography>followers</Typography>
+                <Typography>following</Typography>
+              </Box>
 
-              <Typography variant="body2" color="text.secondary">
-                ID
-              </Typography>
-              <Typography fontSize={12} color="text.secondary">
-                {user.id}
-              </Typography>
+              {user.about && (
+                <Typography sx={{ whiteSpace: "pre-line" }}>
+                  {showFullAbout || user.about.length <= 100
+                    ? user.about
+                    : `${user.about.slice(0, 100)}...`}
+
+                  {user.about.length > 100 && (
+                    <Typography
+                      component="span"
+                      onClick={() => setShowFullAbout((prev) => !prev)}
+                      sx={{
+                        ml: 0.5,
+                        color: "#737373",
+                        cursor: "pointer",
+                        userSelect: "none",
+                        fontSize: "inherit",
+                        fontWeight: 400,
+
+                        "&:hover": {
+                          color: "#555",
+                        },
+                      }}
+                    >
+                      {showFullAbout ? " less" : " more"}
+                    </Typography>
+                  )}
+                </Typography>
+              )}
+
+              {user.link && (
+                <Typography
+                  component="a"
+                  href={user.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 0.5,
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    lineHeight: "18px",
+                    color: "#00376B",
+                    textDecoration: "none",
+
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
+                >
+                  <LinkIcon sx={{ fontSize: 16 }} />
+                  {user.link}
+                </Typography>
+              )}
             </Box>
           </Box>
           {/* POSTS */}

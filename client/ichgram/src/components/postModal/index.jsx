@@ -31,7 +31,12 @@ const PostModal = () => {
   if (!currentPost) return null;
 
   return (
-    <Modal open={openModal} onClose={() => dispatch(closeExistPostModal())}>
+    <Modal
+      open={openModal}
+      onClose={() => {
+        dispatch(closeExistPostModal());
+      }}
+    >
       <Box className={styles.modal}>
         {/* IMAGE */}
 

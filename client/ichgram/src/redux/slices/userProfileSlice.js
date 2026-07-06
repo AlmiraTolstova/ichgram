@@ -57,6 +57,32 @@ export const createPost = createAsyncThunk(
   },
 );
 
+export const uploadAvatar = createAsyncThunk(
+  "auth/uploadAvatar",
+  async (avatar, { getState, rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("avatar", avatar);
+
+      const response = await axios.put(API.User.uploadAvatar(), formData, {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 const userProfileSlice = createSlice({
   name: "userProfile",
   initialState: {

@@ -30,6 +30,56 @@ export const getPostByPostID = createAsyncThunk(
   },
 );
 
+export const getFeed = createAsyncThunk(
+  "posts/getFeed",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.get(API.Posts.getFeed(), {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
+export const toggleLike = createAsyncThunk(
+  "posts/toggleLike",
+  async (postId, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        API.Posts.toggleLike(postId),
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -42,6 +92,7 @@ const postsSlice = createSlice({
     status: {
       currentPost: Status.NO_STATUS,
       feed: Status.NO_STATUS,
+      toggleLike: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -51,6 +102,7 @@ const postsSlice = createSlice({
     },
     closeExistPostModal: (state) => {
       state.openModal = false;
+      state.currentPost = {};
     },
     resetExistPostStatus(state) {
       state.status.createPost = Status.NO_STATUS;
@@ -68,6 +120,47 @@ const postsSlice = createSlice({
       })
       .addCase(getPostByPostID.rejected, (state, action) => {
         state.status.currentPost = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(getFeed.pending, (state) => {
+        state.status.feed = Status.LOADING;
+      })
+      .addCase(getFeed.fulfilled, (state, action) => {
+        state.status.feed = Status.DONE;
+        state.feed = action.payload;
+      })
+      .addCase(getFeed.rejected, (state, action) => {
+        state.status.feed = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(toggleLike.pending, (state) => {
+        state.status.toggleLike = Status.LOADING;
+      })
+      .addCase(toggleLike.fulfilled, (state, action) => {
+        state.status.toggleLike = Status.DONE;
+        const post = state.feed.find(
+          (post) => post._id === action.payload.postId,
+        );
+
+        if (post) {
+          post.likesCount = action.payload.likesCount;
+          post.isLiked = action.payload.isLiked;
+        }
+
+        if (
+          state.currentPost &&
+          state.currentPost._id === action.payload.postId
+        ) {
+          state.currentPost.likesCount = action.payload.likesCount;
+          state.currentPost.isLiked = action.payload.isLiked;
+        }
+      })
+      .addCase(toggleLike.rejected, (state, action) => {
+        state.status.toggleLike = Status.ERROR;
         state.message = action.payload.message;
       });
   },
