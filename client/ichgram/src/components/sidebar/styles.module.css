@@ -1,17 +1,11 @@
 .sidebar {
-  width: 244px;
+  width: 15.3125rem;
   height: 100vh;
-
+  /* border: 2px solid blue; */
   border-right: 1px solid #dbdbdb;
-
   display: flex;
   flex-direction: column;
-
-  padding: 24px 12px;
-}
-
-.logo {
-  margin-bottom: 32px;
+  padding: 1.75rem 1.5625rem;
 }
 
 .navigation {

@@ -9,6 +9,7 @@ import { Status } from "../../utils/Status";
 import BtnLogin from "../../components/btnLogin";
 import BtnOr from "../../components/btnOr";
 import Img from "../../assets/404.png";
+import AppButton from "../../components/appButton";
 
 function Login() {
   const dispatch = useDispatch();
@@ -145,7 +146,8 @@ function Login() {
           )}
           <BtnOr></BtnOr>
 
-          <BtnLogin variantType="text">Forgot password?</BtnLogin>
+          {/* <BtnLogin variantType="text">Forgot password?</BtnLogin> */}
+          <AppButton appearance="text">Forgot password?</AppButton>
         </Box>
         <Box
           sx={{
@@ -159,14 +161,22 @@ function Login() {
         >
           <Typography>Don't have an account? </Typography>
 
-          <BtnLogin
+          {/* <BtnLogin
             component={Link}
             to="/register"
             variantType="underline"
             sx={{ minWidth: "4.25rem" }}
           >
             Sign up
-          </BtnLogin>
+          </BtnLogin> */}
+          <AppButton
+            component={Link}
+            to="/register"
+            appearance="underline"
+            sx={{ minWidth: "4.25rem" }}
+          >
+            Sign up
+          </AppButton>
         </Box>
       </Box>
     </Box>

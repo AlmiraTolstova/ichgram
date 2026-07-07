@@ -10,7 +10,7 @@ import {
 
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSearch, selectSearch } from "../../redux/slices/searchSlice";
 import { useState } from "react";
@@ -18,42 +18,19 @@ import { useEffect } from "react";
 import { searchUsers } from "../../redux/slices/searchSlice";
 import { clearSearch } from "../../redux/slices/searchSlice";
 
-const recentUsers = [
-  {
-    id: 1,
-    username: "sashaa",
-    fullname: "Sasha Ivanova",
-    avatar: "/logo.png",
-  },
-];
+// const recentUsers = [
+//   {
+//     id: 1,
+//     username: "sashaa",
+//     fullname: "Sasha Ivanova",
+//     avatar: "/logo.png",
+//   },
+// ];
 
 export default function SearchPanel() {
   const dispatch = useDispatch();
   const { isOpen, users } = useSelector(selectSearch);
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (query.trim()) {
-        dispatch(searchUsers(query));
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [query]);
-
-  useEffect(() => {
-    if (!query.trim()) {
-      dispatch(clearSearch());
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      dispatch(searchUsers(query));
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [query]);
 
   useEffect(() => {
     if (query.trim().length < 2) {
@@ -66,12 +43,48 @@ export default function SearchPanel() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, dispatch]);
+
+  //   useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //       if (query.trim()) {
+  //         dispatch(searchUsers(query));
+  //       }
+  //     }, 400);
+
+  //     return () => clearTimeout(timer);
+  //   }, [query]);
+
+  //   useEffect(() => {
+  //     if (!query.trim()) {
+  //       dispatch(clearSearch());
+  //       return;
+  //     }
+
+  //     const timer = setTimeout(() => {
+  //       dispatch(searchUsers(query));
+  //     }, 400);
+
+  //     return () => clearTimeout(timer);
+  //   }, [query]);
+
+  //   useEffect(() => {
+  //     if (query.trim().length < 2) {
+  //       dispatch(clearSearch());
+  //       return;
+  //     }
+
+  //     const timer = setTimeout(() => {
+  //       dispatch(searchUsers(query));
+  //     }, 300);
+
+  //     return () => clearTimeout(timer);
+  //   }, [query]);
 
   return (
     <>
       {/* затемнение */}
-      {isOpen && (
+      {/* {isOpen && (
         <Box
           onClick={() => dispatch(closeSearch())}
           sx={{
@@ -81,44 +94,68 @@ export default function SearchPanel() {
             zIndex: 1,
           }}
         />
-      )}
+      )} */}
 
       {/* панель */}
       <Box
         sx={{
           position: "fixed",
           top: 0,
-          left: "250px", // ширина Sidebar
-          width: 400,
+          left: "245px", // ширина Sidebar
+          width: "24.8125rem",
           height: "100vh",
-
           bgcolor: "#fff",
-          borderTopRightRadius: 24,
-          borderBottomRightRadius: 24,
-
-          boxShadow: "0 0 20px rgba(0,0,0,.15)",
-
+          borderTopRightRadius: "1rem",
+          borderBottomRightRadius: "1rem",
+          boxShadow: "1 1 20px rgba(0,0,0,.15)",
           transform: isOpen ? "translateX(0)" : "translateX(-200%)",
-
-          transition: "transform .3s ease",
-
-          zIndex: 100,
-
+          transition: "transform .10s ease",
+          zIndex: 2,
           display: "flex",
           flexDirection: "column",
+          border: "2px solid red",
+          padding: "1.5rem 1rem 0rem 1rem",
         }}
       >
         <Box p={4}>
-          <Typography variant="h4" fontWeight={700} mb={4}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 600,
+              fontSize: "24px",
+              lineHeight: "30px",
+              color: "#000000",
+              mb: "39px",
+              ml: 1,
+            }}
+          >
             Search
           </Typography>
 
           <TextField
             fullWidth
             placeholder="Search"
-            variant="outlined"
+            // variant="outlined"
             size="small"
             value={query}
+            variant="filled"
+            hiddenLabel
+            sx={{
+              "& .MuiFilledInput-root": {
+                backgroundColor: "#EFEFEF",
+                borderRadius: "8px",
+
+                "&:before": {
+                  borderBottom: "none",
+                },
+                "&:after": {
+                  borderBottom: "none",
+                },
+                "&:hover:not(.Mui-disabled):before": {
+                  borderBottom: "none",
+                },
+              },
+            }}
             onChange={(e) => setQuery(e.target.value)}
             slotProps={{
               input: {
@@ -130,7 +167,7 @@ export default function SearchPanel() {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton size="small">
-                      <CloseIcon fontSize="small" />
+                      <CancelIcon fontSize="small" />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -152,6 +189,10 @@ export default function SearchPanel() {
             fontWeight={700}
             sx={{
               mb: 3,
+
+              fontWeight: 600,
+              fontSize: "16px",
+              lineHeight: "20px",
             }}
           >
             Recent

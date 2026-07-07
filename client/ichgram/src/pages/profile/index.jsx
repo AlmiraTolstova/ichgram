@@ -95,24 +95,7 @@ function UserProfile() {
               Reducer Posts to console
             </Button>
           </Box>
-          <Box>
-            // Большая синяя
-            <AppButton>Войти</AppButton>
-            // Средняя синяя
-            <AppButton size="medium">Войти</AppButton>
-            // Серая
-            <AppButton appearance="gray">Отмена</AppButton>
-            // Средняя серая
-            <AppButton appearance="gray" size="medium">
-              Назад
-            </AppButton>
-            // Outlined
-            <AppButton appearance="secondary">Регистрация</AppButton>
-            // Текстовая
-            <AppButton appearance="text">Забыли пароль?</AppButton>
-            // Подчеркнутая
-            <AppButton appearance="underline">Подробнее</AppButton>
-          </Box>
+
           {/* PROFILE */}
           <Box
             sx={{

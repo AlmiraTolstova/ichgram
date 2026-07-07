@@ -37,11 +37,11 @@ function AppButton({
     secondary: {
       variant: "outlined",
       sx: {
-        borderColor: "#5B4CFF",
-        color: "#5B4CFF",
+        borderColor: "#0095F6",
+        color: "#0095F6",
 
         "&:hover": {
-          borderColor: "#5B4CFF",
+          borderColor: "#048be5",
         },
       },
     },

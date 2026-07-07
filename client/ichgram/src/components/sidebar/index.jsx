@@ -1,10 +1,10 @@
 import { menu } from "./menu";
 import SidebarItem from "../sidebarItem";
-
+import Logo from "../../assets/ICHGRAM.png";
 import styles from "./styles.module.css";
 import { openCreatePostModal } from "../../redux/slices/userProfileSlice";
 import { useDispatch } from "react-redux";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { openSearch } from "../../redux/slices/searchSlice";
@@ -20,6 +20,17 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
+      {/* IMG */}
+      <Box
+        component="img"
+        src={Logo}
+        alt="logo"
+        sx={{
+          width: "6.0625rem",
+          ml: "10px",
+          mb: 2,
+        }}
+      ></Box>
       <nav className={styles.navigation}>
         {menu.map((item) => (
           <SidebarItem
