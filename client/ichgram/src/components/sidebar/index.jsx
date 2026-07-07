@@ -7,10 +7,16 @@ import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { openSearch } from "../../redux/slices/searchSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const actions = {
+    createPost: () => dispatch(openCreatePostModal()),
+    openSearch: () => dispatch(openSearch()),
+  };
 
   return (
     <aside className={styles.sidebar}>
@@ -19,7 +25,7 @@ const Sidebar = () => {
           <SidebarItem
             key={item.id}
             item={item}
-            action={() => dispatch(openCreatePostModal())}
+            action={item.type === "action" ? actions[item.action] : undefined}
           />
         ))}
       </nav>

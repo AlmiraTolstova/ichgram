@@ -12,6 +12,7 @@ export const API = {
   User: {
     editUserData: () => `${BASE_URL_API}/user/edituserdata`,
     uploadAvatar: () => `${BASE_URL_API}/user/avatar`,
+    searchUsers: () => `${BASE_URL_API}/user/search`,
   },
   Posts: {
     createPost: () => `${BASE_URL_API}/posts/post`,

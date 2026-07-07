@@ -22,6 +22,7 @@ import {
 import BtnLogin from "../../components/btnLogin";
 import { BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import AppButton from "../../components/appButton";
 
 function EditProfile() {
   const dispatch = useDispatch();
@@ -88,7 +89,6 @@ function EditProfile() {
             flexDirection: "column",
             p: "48px 167px 117px 166px",
             gap: "33px",
-            border: "2px solid red",
           }}
         >
           <Typography
@@ -112,7 +112,6 @@ function EditProfile() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              border: "2px solid red",
             }}
           >
             <Box sx={{ display: "flex" }}>
@@ -163,10 +162,13 @@ function EditProfile() {
               hidden
               onChange={handleFileChange}
             />
-
-            <BtnLogin sx={{ width: "200px" }} onClick={handleChoosePhoto}>
+            <AppButton size="medium" onClick={handleChoosePhoto}>
               New photo
-            </BtnLogin>
+            </AppButton>
+
+            {/* <BtnLogin sx={{ width: "200px" }} onClick={handleChoosePhoto}>
+              New photo
+            </BtnLogin> */}
             {/* <Button variant="contained">New photo</Button> */}
           </Paper>
 

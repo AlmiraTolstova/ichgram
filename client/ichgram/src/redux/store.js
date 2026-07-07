@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice, { checkTokenExpirationMiddleware } from "./slices/authSlice";
 import userProfileSlice from "./slices/userProfileSlice";
 import postsSlice from "./slices/postsSlice";
+import searchSlice from "./slices/searchSlice";
 
 const loadState = () => {
   try {
@@ -20,6 +21,7 @@ const store = configureStore({
     auth: authSlice,
     profile: userProfileSlice,
     posts: postsSlice,
+    search: searchSlice,
   },
   preloadedState: loadState(),
   middleware: (getDefaultMiddlware) => {

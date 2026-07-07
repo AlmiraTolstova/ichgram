@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router";
 import Sidebar from "../sidebar";
 import Footer from "../footer";
+import SearchPanel from "../SearchPanel";
 
 function MainLayout() {
   return (
@@ -19,6 +20,7 @@ function MainLayout() {
         }}
       >
         <Sidebar />
+        <SearchPanel />
 
         <Box
           sx={{

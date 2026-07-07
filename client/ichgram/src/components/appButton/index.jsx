@@ -13,6 +13,7 @@ function AppButton({
       sx: {
         backgroundColor: "#0095F6",
         color: "#FFFFFF",
+        boxShadow: "none",
 
         "&:hover": {
           backgroundColor: "#048be5",

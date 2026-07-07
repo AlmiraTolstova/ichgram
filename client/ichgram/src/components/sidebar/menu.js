@@ -27,9 +27,10 @@ export const menu = [
 
   {
     id: 2,
-    type: "link",
+    type: "action",
     title: "Search",
     path: "/search",
+    action: "openSearch",
     outline: SearchSvgOutline,
     fill: SearchSvgFill,
   },
