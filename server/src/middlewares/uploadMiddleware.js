@@ -44,5 +44,5 @@ export const createUpload = (folder) => {
   });
 };
 
-export const uploadPost = createUpload("posts");
+export const uploadPost = createUpload("images");
 export const uploadAvatar = createUpload("avatars");

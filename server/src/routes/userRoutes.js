@@ -2,6 +2,7 @@ import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import {
   editUserData,
+  searchUsers,
   uploadUserAvatar,
 } from "../controllers/userController.js";
 import { uploadAvatar } from "../middlewares/uploadMiddleware.js";
@@ -15,5 +16,6 @@ router.put(
   uploadAvatar.single("avatar"),
   uploadUserAvatar,
 );
+router.get("/search", authMiddleware, searchUsers);
 
 export default router;

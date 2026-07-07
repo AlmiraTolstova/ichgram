@@ -2,8 +2,10 @@ import express from "express";
 import {
   createPost,
   deletePost,
+  getFeed,
   getPostByPostId,
   getPostsByUserID,
+  toggleLike,
   updatePost,
 } from "../controllers/postController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
@@ -17,5 +19,7 @@ router.put("/post/:id", updatePost);
 router.delete("/post/:id", deletePost);
 router.get("/post/:id", getPostByPostId);
 router.get("/postsbyuserid/:id", getPostsByUserID);
+router.get("/feed", getFeed);
+router.put("/:id/like", toggleLike);
 
 export default router;

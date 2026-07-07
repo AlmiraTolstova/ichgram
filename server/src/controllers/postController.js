@@ -1,5 +1,6 @@
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
+import mongoose from "mongoose";
 
 // Create Post
 export const createPost = async (req, res) => {
@@ -120,5 +121,179 @@ export const getPostByPostId = async (req, res) => {
     res.json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// получить ленту постов для страницы home
+export const getFeed = async (req, res) => {
+  try {
+    const limit = Number(req.query.limit) || 20;
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+
+    const posts = await Post.aggregate([
+      // случайные посты
+      {
+        $match: {
+          author: {
+            $ne: userId,
+          },
+        },
+      },
+      {
+        $sample: {
+          size: limit,
+        },
+      },
+
+      // автор поста
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      {
+        $unwind: "$author",
+      },
+
+      // считаем лайки и комментарии
+      {
+        $addFields: {
+          likesCount: {
+            $size: "$likes",
+          },
+          commentsCount: {
+            $size: "$comments",
+          },
+        },
+      },
+
+      // последние два комментария
+      {
+        $lookup: {
+          from: "comments",
+          let: {
+            postId: "$_id",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$post", "$$postId"],
+                },
+              },
+            },
+            {
+              $sort: {
+                createdAt: -1,
+              },
+            },
+            {
+              $limit: 2,
+            },
+
+            // автор комментария
+            {
+              $lookup: {
+                from: "users",
+                localField: "author",
+                foreignField: "_id",
+                as: "author",
+              },
+            },
+            {
+              $unwind: "$author",
+            },
+
+            {
+              $project: {
+                _id: 1,
+                text: 1,
+                createdAt: 1,
+                author: {
+                  _id: "$author._id",
+                  username: "$author.username",
+                  avatar: "$author.avatar",
+                },
+              },
+            },
+          ],
+          as: "comments",
+        },
+      },
+
+      // финальная структура
+      {
+        $project: {
+          image: 1,
+          description: 1,
+          createdAt: 1,
+
+          author: {
+            _id: "$author._id",
+            username: "$author.username",
+            fullname: "$author.fullname",
+            avatar: "$author.avatar",
+          },
+
+          likesCount: 1,
+          commentsCount: 1,
+          comments: 1,
+          isLiked: {
+            $in: [new mongoose.Types.ObjectId(req.user.id), "$likes"],
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const toggleLike = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "Invalid post id",
+      });
+    }
+
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    const alreadyLiked = post.likes.some((like) => like.toString() === userId);
+
+    if (alreadyLiked) {
+      post.likes = post.likes.filter((like) => like.toString() !== userId);
+    } else {
+      post.likes.push(userId);
+    }
+
+    await post.save();
+
+    res.status(200).json({
+      postId: post._id,
+      message: alreadyLiked ? "Like removed" : "Post liked",
+      likesCount: post.likes.length,
+      isLiked: !alreadyLiked,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };

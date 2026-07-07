@@ -86,3 +86,58 @@ export const uploadUserAvatar = async (req, res) => {
     });
   }
 };
+
+export const searchUsers = async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query || query.trim().length === 0) {
+      return res.json([]);
+    }
+
+    const users = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: req.user._id },
+          username: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+      },
+      {
+        $addFields: {
+          startsWith: {
+            $regexMatch: {
+              input: "$username",
+              regex: `^${query}`,
+              options: "i",
+            },
+          },
+        },
+      },
+      {
+        $sort: {
+          startsWith: -1,
+          username: 1,
+        },
+      },
+      {
+        $project: {
+          username: 1,
+          fullname: 1,
+          avatar: 1,
+        },
+      },
+      {
+        $limit: 20,
+      },
+    ]);
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
