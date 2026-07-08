@@ -3,6 +3,7 @@ import { Avatar, Box, Typography, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { selectPosts } from "../../redux/slices/postsSlice";
+import AppButton from "../appButton";
 
 const PostHeader = () => {
   const { currentPost } = useSelector(selectPosts);
@@ -12,18 +13,28 @@ const PostHeader = () => {
       sx={{
         display: "flex",
         alignItems: "center",
-        p: 2,
+        p: "8px",
       }}
     >
       {/* <Avatar src={currentPost.author.avatar} /> */}
       <Avatar />
-      <Typography ml={2} fontWeight={600}>
+      <Typography
+        sx={{
+          ml: "1rem",
+          mr: 1,
+          fontWeight: 600,
+          fontSize: "12px",
+          lineHeight: "15px",
+          color: "#262626",
+        }}
+      >
         {currentPost.author.username}
       </Typography>
 
       <Typography mx={1}>•</Typography>
-
-      <Button size="small">Follow</Button>
+      <AppButton appearance="bluelink" size="small">
+        Follow
+      </AppButton>
     </Box>
   );
 };

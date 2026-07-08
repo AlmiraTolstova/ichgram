@@ -1,6 +1,7 @@
 import { Box, TextField, Button, IconButton } from "@mui/material";
 
 import SentimentSatisfiedAltOutlinedIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
+import AppButton from "../appButton";
 
 const CommentForm = () => {
   return (
@@ -23,8 +24,9 @@ const CommentForm = () => {
           disableUnderline: true,
         }}
       />
-
-      <Button>Post</Button>
+      <AppButton appearance="bluelink" size="small">
+        Send
+      </AppButton>
     </Box>
   );
 };

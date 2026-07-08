@@ -11,8 +11,8 @@ export default function ExploreCard({ post }) {
       sx={{
         maxWidth: 470,
         mx: "auto",
-        mb: 1,
-        borderRadius: 2,
+        mb: "4px",
+        borderRadius: 0,
       }}
     >
       {/* Image */}

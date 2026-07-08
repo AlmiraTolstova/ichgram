@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router";
 import Sidebar from "../sidebar";
 import Footer from "../footer";
-import SearchPanel from "../SearchPanel";
+import SearchPanel from "../searchPanel";
 
 function MainLayout() {
   return (

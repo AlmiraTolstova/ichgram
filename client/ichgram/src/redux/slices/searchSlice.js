@@ -52,6 +52,10 @@ const searchSlice = createSlice({
     clearSearch(state) {
       state.users = [];
     },
+
+    clearQuery(state) {
+      state.query = "";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,8 +73,13 @@ const searchSlice = createSlice({
   },
 });
 
-export const { openSearch, closeSearch, toggleSearch, clearSearch } =
-  searchSlice.actions;
+export const {
+  openSearch,
+  closeSearch,
+  toggleSearch,
+  clearSearch,
+  clearQuery,
+} = searchSlice.actions;
 
 export const selectSearch = (state) => state.search;
 

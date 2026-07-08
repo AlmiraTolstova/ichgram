@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import Img from "../../assets/404.png";
-import Sidebar from "../../components/sidebar";
-import Footer from "../../components/footer";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeed } from "../../redux/slices/postsSlice";
@@ -19,16 +18,22 @@ function Explore() {
     dispatch(getFeed());
   }, [dispatch]);
   return (
-    <Box>
+    <Box
+      sx={{
+        border: "2px solid red",
+        p: "89px 117px 91px",
+      }}
+    >
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 2,
+          columnGap: "4px",
+          rowGap: "0px",
         }}
       >
         {status.feed === Status.LOADING ? (
-          <Box display="flex" justifyContent="center" mt={4}>
+          <Box display="flex" justifyContent="center">
             <CircularProgress />
           </Box>
         ) : (
@@ -37,7 +42,6 @@ function Explore() {
       </Box>
       <PostModal></PostModal>
     </Box>
-    // </Box>
   );
 }
 

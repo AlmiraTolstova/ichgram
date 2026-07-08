@@ -17,18 +17,13 @@ function Home() {
     dispatch(getFeed());
   }, [dispatch]);
   return (
-    <Box>
-      {/* <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      ></Box> */}
+    <Box sx={{ border: "2px solid red", p: "58px 270px 12px 77px" }}>
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 2,
+          gridTemplateColumns: "repeat(2, 1fr)",
+          columnGap: "40px", // расстояние между колонками
+          rowGap: "4px", // расстояние между строками
         }}
       >
         {status.feed === Status.LOADING ? (

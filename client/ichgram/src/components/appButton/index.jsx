@@ -74,6 +74,20 @@ function AppButton({
         },
       },
     },
+    bluelink: {
+      variant: "text",
+      sx: {
+        color: "#0095F6",
+        fontWeight: 600,
+        // textDecoration: "underline",
+        textUnderlineOffset: "2px",
+
+        "&:hover": {
+          backgroundColor: "transparent",
+          textDecoration: "underline",
+        },
+      },
+    },
   };
 
   const sizes = {

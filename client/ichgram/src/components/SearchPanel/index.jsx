@@ -9,14 +9,19 @@ import {
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSearch, selectSearch } from "../../redux/slices/searchSlice";
+import {
+  clearQuery,
+  closeSearch,
+  selectSearch,
+} from "../../redux/slices/searchSlice";
 import { useState } from "react";
 import { useEffect } from "react";
 import { searchUsers } from "../../redux/slices/searchSlice";
 import { clearSearch } from "../../redux/slices/searchSlice";
+import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
+import { useNavigate } from "react-router-dom";
 
 // const recentUsers = [
 //   {
@@ -29,6 +34,8 @@ import { clearSearch } from "../../redux/slices/searchSlice";
 
 export default function SearchPanel() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { isOpen, users } = useSelector(selectSearch);
   const [query, setQuery] = useState("");
 
@@ -84,17 +91,17 @@ export default function SearchPanel() {
   return (
     <>
       {/* затемнение */}
-      {/* {isOpen && (
+      {isOpen && (
         <Box
           onClick={() => dispatch(closeSearch())}
           sx={{
             position: "fixed",
             inset: 0,
-            bgcolor: "rgba(0,0,0,.35)",
+            //bgcolor: "rgba(0,0,0,.35)",
             zIndex: 1,
           }}
         />
-      )} */}
+      )}
 
       {/* панель */}
       <Box
@@ -113,7 +120,7 @@ export default function SearchPanel() {
           zIndex: 2,
           display: "flex",
           flexDirection: "column",
-          border: "2px solid red",
+          // border: "2px solid red",
           padding: "1.5rem 1rem 0rem 1rem",
         }}
       >
@@ -166,7 +173,7 @@ export default function SearchPanel() {
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton size="small">
+                    <IconButton size="small" onClick={() => setQuery("")}>
                       <CancelIcon fontSize="small" />
                     </IconButton>
                   </InputAdornment>
@@ -200,6 +207,10 @@ export default function SearchPanel() {
 
           {users?.map((user) => (
             <Box
+              onClick={() => {
+                dispatch(setTargetUserID(user._id));
+                navigate("/otherprofile");
+              }}
               key={user._id}
               sx={{
                 display: "flex",

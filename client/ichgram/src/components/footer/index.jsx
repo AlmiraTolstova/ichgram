@@ -24,7 +24,7 @@ function Footer() {
       >
         <Stack
           direction="row"
-          flexWrap="wrap"
+          // flexWrap="wrap"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
           {links.map((link) => (

@@ -12,7 +12,7 @@ import PostHeader from "./PostHeader";
 import PostInfo from "./PostInfo";
 import CommentForm from "./CommentForm";
 
-import styles from "./PostModal.module.css";
+import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { Status } from "../../utils/Status";
 import { BASE_URL } from "../../api/api";

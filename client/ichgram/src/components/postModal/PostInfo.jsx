@@ -16,18 +16,31 @@ const PostInfo = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        border: "1px solid green",
       }}
     >
       <Box
         sx={{
+          border: "1px solid blue",
           display: "flex",
-          p: 2,
+          p: "8px",
         }}
       >
-        <Avatar src={`${BASE_URL}${currentPost.author.avatar}`} />
+        <Avatar
+          sx={{ mr: "12px" }}
+          src={`${BASE_URL}${currentPost.author.avatar}`}
+        />
 
         <Box ml={2}>
-          <Typography fontWeight={600}>
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: "14px",
+              lineHeight: "15px",
+              color: "#262626",
+            }}
+            fontWeight={600}
+          >
             {currentPost.author.username}
           </Typography>
 
@@ -41,7 +54,7 @@ const PostInfo = () => {
         ))}
       </Box>
 
-      <Box p={2}>
+      <Box sx={{ p: "12px", border: "1px solid green" }}>
         <IconButton>
           <FavoriteBorderIcon />
         </IconButton>

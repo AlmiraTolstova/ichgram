@@ -25,10 +25,14 @@ export default function FeedCard({ post }) {
   return (
     <Card
       sx={{
-        maxWidth: 470,
-        mx: "auto",
+        // maxWidth: 470,
+        // mx: "auto",
+        // mb: 4,
+        // borderRadius: 2,
+        width: "100%",
         mb: 4,
         borderRadius: 2,
+        border: "2px solid green",
       }}
     >
       {/* Header */}

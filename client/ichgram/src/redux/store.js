@@ -3,6 +3,7 @@ import authSlice, { checkTokenExpirationMiddleware } from "./slices/authSlice";
 import userProfileSlice from "./slices/userProfileSlice";
 import postsSlice from "./slices/postsSlice";
 import searchSlice from "./slices/searchSlice";
+import otherProfileSlice from "./slices/otherProfileSlice";
 
 const loadState = () => {
   try {
@@ -22,6 +23,7 @@ const store = configureStore({
     profile: userProfileSlice,
     posts: postsSlice,
     search: searchSlice,
+    otherProfile: otherProfileSlice,
   },
   preloadedState: loadState(),
   middleware: (getDefaultMiddlware) => {

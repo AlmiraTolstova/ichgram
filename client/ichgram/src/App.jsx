@@ -10,6 +10,7 @@ import EditProfile from "./pages/editProfile";
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home";
 import Explore from "./pages/explore";
+import OtherProfile from "./pages/otherProfile";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
             <Route
               path="/profile"
               element={<UserProfile></UserProfile>}
+            ></Route>
+            <Route
+              path="/otherprofile"
+              element={<OtherProfile></OtherProfile>}
             ></Route>
             <Route path="/create" element={<CreatePost></CreatePost>}></Route>
             <Route path="/notfoundpage" element={<NotFoundPage />}></Route>
