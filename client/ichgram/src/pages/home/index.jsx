@@ -9,6 +9,7 @@ import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
 import FeedCard from "../../components/feedCard";
 import PostModal from "../../components/postModal";
+import FeedEnd from "../../components/feedEnd";
 function Home() {
   const dispatch = useDispatch();
   const { feed, status } = useSelector((state) => state.posts);
@@ -34,6 +35,7 @@ function Home() {
           feed.map((post) => <FeedCard key={post._id} post={post} />)
         )}
       </Box>
+      <FeedEnd></FeedEnd>
       <PostModal></PostModal>
     </Box>
     // </Box>
