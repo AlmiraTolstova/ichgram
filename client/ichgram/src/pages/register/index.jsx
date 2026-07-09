@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, TextField, Typography, Link } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../../assets/ICHGRAM.png";
@@ -10,7 +10,7 @@ import {
   resetState,
 } from "../../redux/slices/authSlice";
 import { Status } from "../../utils/Status";
-import BtnLogin from "../../components/btnLogin";
+import AppButton from "../../components/appButton";
 
 function Register() {
   const dispatch = useDispatch();
@@ -98,7 +98,7 @@ function Register() {
             alignItems: "center",
             textAlign: "center",
             color: "#737373",
-            marginBottom: "36px",
+            marginBottom: "2.25rem",
           }}
         >
           Sign up to see photos and videos from your friends.
@@ -184,22 +184,21 @@ function Register() {
             helperText={errors.confirmPassword?.message}
           />
 
-          <BtnLogin
+          {/* <BtnLogin
             type="submit"
             variant="contained"
             disabled={status.register === Status.LOADING}
           >
             {status.register === Status.LOADING ? "Loading..." : "Sign up"}
-          </BtnLogin>
+          </BtnLogin> */}
 
-          {/* <Button
+          <AppButton
             type="submit"
-            variant="contained"
-            size="large"
+            appearance="primary"
             disabled={status.register === Status.LOADING}
           >
-            {status.register === Status.LOADING ? "Loading..." : "Register"}
-          </Button> */}
+            {status.register === Status.LOADING ? "Loading..." : "Sign up"}
+          </AppButton>
 
           {isErrorRegister && <Typography color="error">{message}</Typography>}
 
@@ -212,7 +211,7 @@ function Register() {
       </Box>
       <Box
         sx={{
-          maxWidth: "21.875rem",
+          width: "21.875rem",
           marginTop: "1rem",
           border: "1px solid  #DBDBDB",
           display: "flex",
@@ -230,20 +229,25 @@ function Register() {
             color: "#000000",
           }}
         >
-          Already have an account?
+          Have an account?
         </Typography>
 
-        {/* <Link component={RouterLink} to="/">
-          Sign in
-        </Link> */}
-        <BtnLogin
+        {/* <BtnLogin
           component={RouterLink}
           to="/"
           variantType="underline"
           sx={{ minWidth: "4.25rem" }}
         >
           Log in
-        </BtnLogin>
+        </BtnLogin> */}
+        <AppButton
+          component={RouterLink}
+          to="/"
+          appearance="bluelink"
+          sx={{ minWidth: "4.25rem" }}
+        >
+          Log in
+        </AppButton>
       </Box>
     </Box>
   );
