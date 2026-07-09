@@ -2,6 +2,7 @@ import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import {
   editUserData,
+  getProfile,
   searchUsers,
   uploadUserAvatar,
 } from "../controllers/userController.js";
@@ -17,5 +18,6 @@ router.put(
   uploadUserAvatar,
 );
 router.get("/search", authMiddleware, searchUsers);
+router.get("/:id/profile", authMiddleware, getProfile);
 
 export default router;

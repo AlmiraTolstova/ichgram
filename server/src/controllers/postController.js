@@ -279,8 +279,22 @@ export const toggleLike = async (req, res) => {
 
     if (alreadyLiked) {
       post.likes = post.likes.filter((like) => like.toString() !== userId);
+      await Notification.findOneAndDelete({
+        recipient: post.author,
+        sender: userId,
+        post: post._id,
+        type: "like",
+      });
     } else {
       post.likes.push(userId);
+      if (post.author.toString() !== userId) {
+        await Notification.create({
+          recipient: post.author,
+          sender: userId,
+          type: "like",
+          post: post._id,
+        });
+      }
     }
 
     await post.save();

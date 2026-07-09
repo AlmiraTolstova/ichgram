@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import path from "path";
 import fs from "fs";
+import Post from "../models/Post.js";
+import mongoose from "mongoose";
 
 export const editUserData = async (req, res) => {
   try {
@@ -98,7 +100,7 @@ export const searchUsers = async (req, res) => {
     const users = await User.aggregate([
       {
         $match: {
-          _id: { $ne: req.user._id },
+          _id: { $ne: new mongoose.Types.ObjectId(req.user.id) },
           username: {
             $regex: query,
             $options: "i",
@@ -135,6 +137,41 @@ export const searchUsers = async (req, res) => {
     ]);
 
     res.json(users);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const [postsCount, posts] = await Promise.all([
+      Post.countDocuments({ author: id }),
+      Post.find({ author: id }).sort({ createdAt: -1 }),
+    ]);
+    const temp_user = user.toJSON();
+    console.log(temp_user);
+
+    res.json({
+      user: {
+        ...user.toObject(),
+        postsCount: postsCount,
+        followersCount: temp_user.followers.length,
+        followingCount: temp_user.follows.length,
+      },
+      posts,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
