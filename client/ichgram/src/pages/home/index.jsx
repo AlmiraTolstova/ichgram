@@ -38,7 +38,6 @@ function Home() {
       <FeedEnd></FeedEnd>
       <PostModal></PostModal>
     </Box>
-    // </Box>
   );
 }
 

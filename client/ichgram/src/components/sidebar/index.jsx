@@ -8,6 +8,7 @@ import { Box, Button } from "@mui/material";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { openSearch } from "../../redux/slices/searchSlice";
+import { openNotifications } from "../../redux/slices/sidebarPanelSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

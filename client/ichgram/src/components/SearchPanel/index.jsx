@@ -11,11 +11,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearQuery,
-  closeSearch,
-  selectSearch,
-} from "../../redux/slices/searchSlice";
+import { closeSearch, selectSearch } from "../../redux/slices/searchSlice";
 import { useState } from "react";
 import { useEffect } from "react";
 import { searchUsers } from "../../redux/slices/searchSlice";

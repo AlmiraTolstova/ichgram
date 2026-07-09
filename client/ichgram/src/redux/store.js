@@ -4,6 +4,7 @@ import userProfileSlice from "./slices/userProfileSlice";
 import postsSlice from "./slices/postsSlice";
 import searchSlice from "./slices/searchSlice";
 import otherProfileSlice from "./slices/otherProfileSlice";
+import sidebarPanelReducer from "./slices/sidebarPanelSlice";
 
 const loadState = () => {
   try {
@@ -24,6 +25,7 @@ const store = configureStore({
     posts: postsSlice,
     search: searchSlice,
     otherProfile: otherProfileSlice,
+    sidebarPanel: sidebarPanelReducer, // SideBar
   },
   preloadedState: loadState(),
   middleware: (getDefaultMiddlware) => {

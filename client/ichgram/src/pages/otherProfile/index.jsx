@@ -83,7 +83,7 @@ function OtherProfile() {
             <Box sx={{ pr: "5.375rem" }}>
               <Avatar
                 sx={{ width: "168px", height: "168px" }}
-                src={`${BASE_URL}${user.avatar}`}
+                src={`${BASE_URL}${user.user.avatar}`}
               >
                 {user.fullname?.[0]?.toUpperCase()}
               </Avatar>
@@ -127,9 +127,9 @@ function OtherProfile() {
                   gap: "40px",
                 }}
               >
-                <Typography>posts</Typography>
-                <Typography>followers</Typography>
-                <Typography>following</Typography>
+                <Typography>posts {user.user.postsCount}</Typography>
+                <Typography>followers {user.user.followersCount}</Typography>
+                <Typography>following {user.user.followingCount}</Typography>
               </Box>
 
               {user.about && (

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -23,7 +24,7 @@ export default function FeedCard({ post }) {
   const dispatch = useDispatch();
 
   return (
-    <Card
+    <Box
       sx={{
         // maxWidth: 470,
         // mx: "auto",
@@ -32,7 +33,8 @@ export default function FeedCard({ post }) {
         width: "100%",
         mb: 4,
         borderRadius: 2,
-        border: "2px solid green",
+        // border: "2px solid green",
+        borderBottom: "1px solid #DBDBDB",
       }}
     >
       {/* Header */}
@@ -142,6 +144,6 @@ export default function FeedCard({ post }) {
           {new Date(post.createdAt).toLocaleDateString()}
         </Typography>
       </CardContent>
-    </Card>
+    </Box>
   );
 }
