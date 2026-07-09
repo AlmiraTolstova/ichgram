@@ -2,8 +2,19 @@ import { Stack, Divider, Box } from "@mui/material";
 
 export default function BtnOr() {
   return (
-    <Stack sx={{ display: "flex", alignItems: "center", flexDirection: "row" }}>
-      <Divider sx={{ flex: 1 }} />
+    <Stack
+      sx={{
+        display: "flex",
+        alignText: "center",
+        flexDirection: "row",
+        width: "100%",
+      }}
+    >
+      <Divider
+        orientation="horizontal"
+        flexItem
+        sx={{ flexGrow: 1, marginBottom: "14px" }}
+      />
 
       <Box
         sx={{
@@ -13,7 +24,6 @@ export default function BtnOr() {
           fontWeight: 600,
           fontSize: "13px",
           lineHeight: "15px",
-
           alignItems: "center",
           textTransform: "uppercase",
           color: "#737373",
@@ -22,7 +32,11 @@ export default function BtnOr() {
         OR
       </Box>
 
-      <Divider sx={{ flex: 1 }} />
+      <Divider
+        orientation="horizontal"
+        flexItem
+        sx={{ flexGrow: 1, marginBottom: "14px" }}
+      />
     </Stack>
   );
 }

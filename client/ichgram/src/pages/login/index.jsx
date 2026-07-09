@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router";
 import Logo from "../../assets/ICHGRAM.png";
 import { login, resetState } from "../../redux/slices/authSlice";
 import { Status } from "../../utils/Status";
-import BtnLogin from "../../components/btnLogin";
 import BtnOr from "../../components/btnOr";
 import Img from "../../assets/404.png";
 import AppButton from "../../components/appButton";
@@ -47,10 +46,15 @@ function Login() {
   return (
     <Box
       sx={{
-        marginTop: "5.375rem",
+        mt: { xs: 2, sm: 4, md: "5.375rem" },
         display: "flex",
+        flexDirection: {
+          xs: "column",
+          sm: "row",
+        },
         justifyContent: "center",
         gap: "2rem",
+        border: "1px solid red",
       }}
     >
       {/* IMG */}
@@ -59,6 +63,10 @@ function Login() {
         src={Img}
         alt="login-image"
         sx={{
+          display: {
+            xs: "none",
+            md: "block",
+          },
           width: "23.75rem",
           height: "auto",
         }}
@@ -131,13 +139,21 @@ function Login() {
             helperText={errors.password?.message}
           />
 
-          <BtnLogin
+          {/* <BtnLogin
             type="submit"
             variant="contained"
             disabled={status.login.isLoading === Status.LOADING}
           >
             {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
-          </BtnLogin>
+          </BtnLogin> */}
+
+          <AppButton
+            type="submit"
+            appearance="primary"
+            disabled={status.login.isLoading === Status.LOADING}
+          >
+            {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
+          </AppButton>
 
           {isErrorLogin && <Typography color="error">{message}</Typography>}
 
