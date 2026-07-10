@@ -1,38 +1,22 @@
 import { Avatar, Box, Divider, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeNotifications } from "../../redux/slices/notificationsSlice";
+import { useEffect } from "react";
+import { getNotifications } from "../../redux/slices/notificationsSlice";
+import { BASE_URL } from "../../api/api";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-const notifications = [
-  {
-    id: 1,
-    user: "sashaa",
-    action: "liked your photo.",
-    time: "2 d",
-    avatar: "/avatar.jpg",
-    post: "/post.jpg",
-  },
-  {
-    id: 2,
-    user: "sashaa",
-    action: "commented your photo.",
-    time: "2 wek",
-    avatar: "/avatar.jpg",
-    post: "/post.jpg",
-  },
-  {
-    id: 3,
-    user: "sashaa",
-    action: "started following.",
-    time: "2 d",
-    avatar: "/avatar.jpg",
-    post: "/post.jpg",
-  },
-];
+dayjs.extend(relativeTime);
 
 function NotificationsPanel() {
   const dispatch = useDispatch();
-  const { isOpen } = useSelector((state) => state.notifications);
-
+  const { isOpen, notifications_list } = useSelector(
+    (state) => state.notifications,
+  );
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch]);
   return (
     <>
       {isOpen && (
@@ -94,17 +78,18 @@ function NotificationsPanel() {
             New
           </Typography>
 
-          {notifications.map((item) => (
+          {notifications_list?.map((item, index) => (
             <Box
-              key={item.id}
+              key={index}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 mb: 3,
               }}
+              onClick={() => console.log(item)}
             >
               <Avatar
-                src={item.avatar}
+                src={`${BASE_URL}${item.sender.avatar}`}
                 sx={{
                   width: 56,
                   height: 56,
@@ -120,9 +105,15 @@ function NotificationsPanel() {
                 }}
               >
                 <Box component="span" fontWeight={700}>
-                  {item.user}
+                  {item.sender.username}
                 </Box>{" "}
-                {item.action}
+                {item.type === "like"
+                  ? "liked your photo"
+                  : item.type === "comment"
+                    ? "commented your photo"
+                    : item.type === "follow"
+                      ? "started following"
+                      : ""}
                 <Box
                   component="span"
                   sx={{
@@ -130,13 +121,13 @@ function NotificationsPanel() {
                   }}
                 >
                   {" "}
-                  {item.time}
+                  {dayjs(item.updatedAt).fromNow()}
                 </Box>
               </Typography>
 
               <Box
                 component="img"
-                src={item.post}
+                src={`${BASE_URL}${item.post.image}`}
                 alt=""
                 sx={{
                   width: 56,

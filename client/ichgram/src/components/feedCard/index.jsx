@@ -63,6 +63,7 @@ export default function FeedCard({ post }) {
       {/* Image */}
 
       <CardMedia
+        onClick={() => dispatch(openExistPostModal(post))}
         component="img"
         image={`${BASE_URL}${post.image}`}
         alt={post.description}

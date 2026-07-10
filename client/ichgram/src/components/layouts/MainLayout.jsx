@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 import Sidebar from "../sidebar";
 import Footer from "../footer";
 import SearchPanel from "../searchPanel";
+import NotificationsPanel from "../notificationsPanel";
 
 function MainLayout() {
   return (
@@ -21,7 +22,7 @@ function MainLayout() {
       >
         <Sidebar />
         <SearchPanel />
-
+        <NotificationsPanel></NotificationsPanel>
         <Box
           sx={{
             flex: 1,

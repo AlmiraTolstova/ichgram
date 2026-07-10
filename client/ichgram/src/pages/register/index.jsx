@@ -89,8 +89,6 @@ function Register() {
           variant="h6"
           sx={{
             maxWidth: "15.94rem",
-            // font-family: 'Roboto';
-            // fontStyle: "normal",
             fontWeight: 600,
             fontSize: "16px",
             lineHeight: "20px",

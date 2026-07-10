@@ -116,7 +116,6 @@ const postsSlice = createSlice({
       .addCase(getPostByPostID.fulfilled, (state, action) => {
         state.status.currentPost = Status.DONE;
         state.currentPost = action.payload;
-        console.log(state);
       })
       .addCase(getPostByPostID.rejected, (state, action) => {
         state.status.currentPost = Status.ERROR;

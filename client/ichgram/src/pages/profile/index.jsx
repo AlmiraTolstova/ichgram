@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../api/api";
 import AppButton from "../../components/appButton";
 import LinkIcon from "@mui/icons-material/Link";
+import ExploreCard from "../../components/exploreCard";
 
 function UserProfile() {
   const user = useSelector((state) => state.auth.user);
@@ -226,7 +227,7 @@ function UserProfile() {
               </Box>
             ) : (
               ownPostsList.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <ExploreCard key={post._id} post={post} />
               ))
             )}
           </Box>

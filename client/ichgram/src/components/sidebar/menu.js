@@ -54,7 +54,8 @@ export const menu = [
   },
   {
     id: 5,
-    type: "link",
+    type: "action",
+    action: "openNotificationsPanel",
     title: "Notification",
     path: "/notification",
     outline: NotificationSvgOutline,

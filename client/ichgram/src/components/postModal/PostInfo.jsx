@@ -2,13 +2,19 @@ import { Avatar, Box, Typography, IconButton } from "@mui/material";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../api/api";
 
-import { selectPosts } from "../../redux/slices/postsSlice";
+import {
+  getPostByPostID,
+  selectPosts,
+  toggleLike,
+} from "../../redux/slices/postsSlice";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const PostInfo = () => {
   const { currentPost } = useSelector(selectPosts);
+  const dispatch = useDispatch();
 
   return (
     <Box
@@ -55,8 +61,16 @@ const PostInfo = () => {
       </Box>
 
       <Box sx={{ p: "12px", border: "1px solid green" }}>
-        <IconButton>
-          <FavoriteBorderIcon />
+        <IconButton
+          onClick={() => {
+            dispatch(toggleLike(currentPost._id));
+          }}
+        >
+          {currentPost.isLiked ? (
+            <FavoriteIcon sx={{ color: "red" }} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
 
         <IconButton>

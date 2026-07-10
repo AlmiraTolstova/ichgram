@@ -24,4 +24,7 @@ export const API = {
     getFeed: () => `${BASE_URL_API}/posts/feed`,
     toggleLike: (id) => `${BASE_URL_API}/posts/${id}/like`,
   },
+  Notifications: {
+    getNotifications: () => `${BASE_URL_API}/notifications/list`,
+  },
 };

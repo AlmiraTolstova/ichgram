@@ -18,6 +18,7 @@ import { searchUsers } from "../../redux/slices/searchSlice";
 import { clearSearch } from "../../redux/slices/searchSlice";
 import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api/api";
 
 // const recentUsers = [
 //   {
@@ -220,7 +221,7 @@ export default function SearchPanel() {
                 },
               }}
             >
-              <Avatar src={user.avatar} />
+              <Avatar src={`${BASE_URL}${user.avatar}`} />
 
               <Box>
                 <Typography fontWeight={600}>{user.username}</Typography>

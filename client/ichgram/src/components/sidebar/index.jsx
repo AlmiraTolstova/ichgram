@@ -8,7 +8,10 @@ import { Box, Button } from "@mui/material";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { openSearch } from "../../redux/slices/searchSlice";
-import { openNotifications } from "../../redux/slices/sidebarPanelSlice";
+import {
+  getNotifications,
+  openNotifications,
+} from "../../redux/slices/notificationsSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -17,6 +20,10 @@ const Sidebar = () => {
   const actions = {
     createPost: () => dispatch(openCreatePostModal()),
     openSearch: () => dispatch(openSearch()),
+    openNotificationsPanel: () => {
+      dispatch(openNotifications());
+      dispatch(getNotifications());
+    },
   };
 
   return (
