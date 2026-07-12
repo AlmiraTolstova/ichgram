@@ -4,12 +4,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../api/api";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-import {
-  getPostByPostID,
-  selectPosts,
-  toggleLike,
-} from "../../redux/slices/postsSlice";
+dayjs.extend(relativeTime);
+
+import { selectPosts, toggleLike } from "../../redux/slices/postsSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const PostInfo = () => {
@@ -82,7 +82,7 @@ const PostInfo = () => {
         </Typography>
 
         <Typography variant="caption" color="text.secondary">
-          {currentPost.createdAt}
+          {dayjs(currentPost.createdAt).fromNow()}
         </Typography>
       </Box>
     </Box>

@@ -1,10 +1,14 @@
 import { NavLink } from "react-router-dom";
 
 import styles from "./styles.module.css";
+import { useSelector } from "react-redux";
 
 const SidebarItem = ({ item, action }) => {
   const OutlineIcon = item.outline;
   const FillIcon = item.fill;
+  const unreadNotifications = useSelector(
+    (state) => state.notifications.unread_notificiatioon_count,
+  );
 
   if (item.type === "link") {
     return (
@@ -37,6 +41,11 @@ const SidebarItem = ({ item, action }) => {
         </span>
 
         <span>{item.title}</span>
+        {item.hasBadge && unreadNotifications > 0 && (
+          <span className={styles.badge}>
+            {unreadNotifications > 9 ? "9+" : unreadNotifications}
+          </span>
+        )}
       </button>
     );
   }

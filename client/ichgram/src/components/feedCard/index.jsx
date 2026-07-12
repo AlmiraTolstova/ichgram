@@ -26,14 +26,14 @@ export default function FeedCard({ post }) {
   return (
     <Box
       sx={{
-        // maxWidth: 470,
-        // mx: "auto",
-        // mb: 4,
+        // width: "100%",
+        mb: 4,
         // borderRadius: 2,
         width: "100%",
-        mb: 4,
-        borderRadius: 2,
-        // border: "2px solid green",
+        maxWidth: "470px", // или 500px
+        mx: "auto", // центрирует карточку
+        bgcolor: "#fff",
+        border: "2px solid green",
         borderBottom: "1px solid #DBDBDB",
       }}
     >
@@ -68,8 +68,11 @@ export default function FeedCard({ post }) {
         image={`${BASE_URL}${post.image}`}
         alt={post.description}
         sx={{
-          aspectRatio: "1 / 1",
+          // aspectRatio: "1 / 1",
+          width: "100%",
+          aspectRatio: "402 / 504",
           objectFit: "cover",
+          display: "block",
         }}
       />
 

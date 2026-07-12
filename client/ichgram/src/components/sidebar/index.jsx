@@ -11,6 +11,7 @@ import { openSearch } from "../../redux/slices/searchSlice";
 import {
   getNotifications,
   openNotifications,
+  readNotifications,
 } from "../../redux/slices/notificationsSlice";
 
 const Sidebar = () => {
@@ -23,6 +24,7 @@ const Sidebar = () => {
     openNotificationsPanel: () => {
       dispatch(openNotifications());
       dispatch(getNotifications());
+      dispatch(readNotifications());
     },
   };
 

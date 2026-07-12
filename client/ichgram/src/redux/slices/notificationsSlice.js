@@ -21,12 +21,34 @@ export const getNotifications = createAsyncThunk(
   },
 );
 
+export const readNotifications = createAsyncThunk(
+  "search/readNotifications",
+  async (query, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        API.Notifications.readNotifications(),
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  },
+);
+
 const initialState = {
   isOpen: false,
   notifications_list: [],
+  unread_notificiatioon_count: 0,
   message: "",
   status: {
     getNotifications: Status.NO_STATUS,
+    readNotifications: Status.NO_STATUS,
   },
 };
 
@@ -41,6 +63,10 @@ const notificationsSlice = createSlice({
     closeNotifications(state) {
       state.isOpen = false;
     },
+
+    setUnreadNotifications(state, action) {
+      state.unread_notificiatioon_count = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,18 +74,30 @@ const notificationsSlice = createSlice({
         state.status.getNotifications = Status.LOADING;
       })
       .addCase(getNotifications.fulfilled, (state, action) => {
-        state.status.searchUsers = Status.DONE;
+        state.status.getNotifications = Status.DONE;
         state.notifications_list = action.payload;
-        console.log(action.payload);
       })
       .addCase(getNotifications.rejected, (state, action) => {
-        state.status.searchUsers = Status.ERROR;
+        state.status.getNotifications = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(readNotifications.pending, (state) => {
+        state.status.readNotifications = Status.LOADING;
+      })
+      .addCase(readNotifications.fulfilled, (state) => {
+        state.status.readNotifications = Status.DONE;
+        state.unread_notificiatioon_count = 0;
+      })
+      .addCase(readNotifications.rejected, (state, action) => {
+        state.status.readNotifications = Status.ERROR;
         state.message = action.payload.message;
       });
   },
 });
 
-export const { openNotifications, closeNotifications } =
+export const { openNotifications, closeNotifications, setUnreadNotifications } =
   notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

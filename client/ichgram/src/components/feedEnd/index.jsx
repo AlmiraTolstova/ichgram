@@ -5,7 +5,6 @@ function FeedEnd() {
   return (
     <Box
       sx={{
-        // border: "1px solid red",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

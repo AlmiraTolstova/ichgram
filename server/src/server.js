@@ -68,6 +68,12 @@ const PORT = process.env.PORT || 3000;
 io.on("connection", (socket) => {
   console.log(`Пользователь подключился: ${socket.id}`);
 
+  socket.on("join", (userId) => {
+    socket.join(userId);
+
+    console.log(`${userId} joined personal room`);
+  });
+
   socket.on("disconnect", () => {
     console.log(`Пользователь отключился: ${socket.id}`);
   });

@@ -36,6 +36,9 @@ const PostModal = () => {
       onClose={() => {
         dispatch(closeExistPostModal());
       }}
+      sx={{
+        overflow: "auto",
+      }}
     >
       <Box className={styles.modal}>
         {/* IMAGE */}

@@ -1,7 +1,11 @@
+import Notification from "../models/Notifications.js";
+import mongoose from "mongoose";
+
 export const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({
       recipient: req.user.id,
+      isRead: false,
     })
       .sort({ createdAt: -1 })
       .limit(50)
@@ -17,9 +21,9 @@ export const getNotifications = async (req, res) => {
 };
 
 export const readNotifications = async (req, res) => {
-  await Notification.updateMany(
+  const result = await Notification.updateMany(
     {
-      recipient: req.user.id,
+      recipient: new mongoose.Types.ObjectId(req.user.id),
       isRead: false,
     },
     {
@@ -31,6 +35,7 @@ export const readNotifications = async (req, res) => {
 
   res.json({
     success: true,
+    result: result,
   });
 };
 

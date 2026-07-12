@@ -11,8 +11,21 @@ import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home";
 import Explore from "./pages/explore";
 import OtherProfile from "./pages/otherProfile";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { socket } from "./socket/socket";
 
 function App() {
+  const { token, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!token) return;
+    socket.connect();
+    socket.emit("join", user.id);
+
+    return () => socket.disconnect();
+  }, [token, user]);
+
   return (
     <Box>
       <Router>

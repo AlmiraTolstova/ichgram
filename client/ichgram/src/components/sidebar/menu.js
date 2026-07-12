@@ -56,10 +56,11 @@ export const menu = [
     id: 5,
     type: "action",
     action: "openNotificationsPanel",
-    title: "Notification",
+    title: "Notifications",
     path: "/notification",
     outline: NotificationSvgOutline,
     fill: FavoriteIcon,
+    hasBadge: true,
   },
   {
     id: 6,

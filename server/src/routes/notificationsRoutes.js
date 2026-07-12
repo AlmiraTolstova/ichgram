@@ -9,8 +9,8 @@ import {
 const router = express.Router();
 
 router.use(authMiddleware);
-router.get("/notifications", getNotifications);
-router.put("/notifications/read", readNotifications);
-router.put("/notifications/unread-count", getUnreadNotifications);
+router.get("/list", getNotifications);
+router.put("/set-read", readNotifications);
+router.put("/unread-count", getUnreadNotifications);
 
 export default router;

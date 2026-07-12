@@ -61,3 +61,5 @@ pids
 # Windows
 ehthumbs.db
 Desktop.ini
+
+server/src/uploads

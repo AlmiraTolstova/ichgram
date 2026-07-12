@@ -1,6 +1,8 @@
 import Post from "../models/Post.js";
+import Notification from "../models/Notifications.js";
 import Comment from "../models/Comment.js";
 import mongoose from "mongoose";
+import { sendNotification } from "../utils/sendNotification.js";
 
 // Create Post
 export const createPost = async (req, res) => {
@@ -100,7 +102,7 @@ export const getPostsByUserID = async (req, res) => {
 export const getPostByPostId = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("getPostByPostId");
+    const userId = req.user.id;
 
     //let filter = { author: userId };
 
@@ -118,7 +120,19 @@ export const getPostByPostId = async (req, res) => {
         },
       });
 
-    res.json(post);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    const postObject = post.toObject();
+
+    postObject.isLiked = post.likes.some(
+      (user) => user._id.toString() === userId,
+    );
+
+    res.json(postObject);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -288,7 +302,8 @@ export const toggleLike = async (req, res) => {
     } else {
       post.likes.push(userId);
       if (post.author.toString() !== userId) {
-        await Notification.create({
+        await sendNotification({
+          io: req.io,
           recipient: post.author,
           sender: userId,
           type: "like",

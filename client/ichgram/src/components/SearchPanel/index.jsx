@@ -29,7 +29,9 @@ import { BASE_URL } from "../../api/api";
 //   },
 // ];
 
-export default function SearchPanel() {
+// export default function SearchPanel() {
+
+export default function SearchPanel({ isMobile }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,12 +107,16 @@ export default function SearchPanel() {
         sx={{
           position: "fixed",
           top: 0,
-          left: "245px", // ширина Sidebar
-          width: "24.8125rem",
+          // left: "245px", // ширина Sidebar
+          left: isMobile ? 0 : "245px",
+          // width: "24.8125rem",
+          width: isMobile ? "100%" : "24.8125rem",
           height: "100vh",
           bgcolor: "#fff",
-          borderTopRightRadius: "1rem",
-          borderBottomRightRadius: "1rem",
+          // borderTopRightRadius: "1rem",
+          // borderBottomRightRadius: "1rem",
+          borderTopRightRadius: isMobile ? 0 : "1rem",
+          borderBottomRightRadius: isMobile ? 0 : "1rem",
           boxShadow: "1 1 20px rgba(0,0,0,.15)",
           transform: isOpen ? "translateX(0)" : "translateX(-200%)",
           transition: "transform .10s ease",

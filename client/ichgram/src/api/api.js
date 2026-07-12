@@ -26,5 +26,6 @@ export const API = {
   },
   Notifications: {
     getNotifications: () => `${BASE_URL_API}/notifications/list`,
+    readNotifications: () => `${BASE_URL_API}/notifications/set-read`,
   },
 };

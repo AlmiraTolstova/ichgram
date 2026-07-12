@@ -9,7 +9,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-function NotificationsPanel() {
+// function NotificationsPanel() {
+function NotificationsPanel({ isMobile }) {
   const dispatch = useDispatch();
   const { isOpen, notifications_list } = useSelector(
     (state) => state.notifications,
@@ -34,12 +35,16 @@ function NotificationsPanel() {
         sx={{
           position: "fixed",
           top: 0,
-          left: "245px",
-          width: "397px",
+          // left: "245px",
+          left: isMobile ? 0 : "245px",
+          // width: "397px",
+          width: isMobile ? "100%" : "397px",
           height: "100vh",
           bgcolor: "#fff",
-          borderTopRightRadius: "16px",
-          borderBottomRightRadius: "16px",
+          // borderTopRightRadius: "16px",
+          // borderBottomRightRadius: "16px",
+          borderTopRightRadius: isMobile ? 0 : "16px",
+          borderBottomRightRadius: isMobile ? 0 : "16px",
           boxShadow: "0 0 20px rgba(0,0,0,.12)",
           transform: isOpen ? "translateX(0)" : "translateX(-200%)",
           transition: ".2s",
@@ -86,7 +91,7 @@ function NotificationsPanel() {
                 alignItems: "center",
                 mb: 3,
               }}
-              onClick={() => console.log(item)}
+              //onClick={() => console.log(item)}
             >
               <Avatar
                 src={`${BASE_URL}${item.sender.avatar}`}
