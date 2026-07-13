@@ -20,17 +20,6 @@ import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../api/api";
 
-// const recentUsers = [
-//   {
-//     id: 1,
-//     username: "sashaa",
-//     fullname: "Sasha Ivanova",
-//     avatar: "/logo.png",
-//   },
-// ];
-
-// export default function SearchPanel() {
-
 export default function SearchPanel({ isMobile }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,42 +39,6 @@ export default function SearchPanel({ isMobile }) {
 
     return () => clearTimeout(timer);
   }, [query, dispatch]);
-
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       if (query.trim()) {
-  //         dispatch(searchUsers(query));
-  //       }
-  //     }, 400);
-
-  //     return () => clearTimeout(timer);
-  //   }, [query]);
-
-  //   useEffect(() => {
-  //     if (!query.trim()) {
-  //       dispatch(clearSearch());
-  //       return;
-  //     }
-
-  //     const timer = setTimeout(() => {
-  //       dispatch(searchUsers(query));
-  //     }, 400);
-
-  //     return () => clearTimeout(timer);
-  //   }, [query]);
-
-  //   useEffect(() => {
-  //     if (query.trim().length < 2) {
-  //       dispatch(clearSearch());
-  //       return;
-  //     }
-
-  //     const timer = setTimeout(() => {
-  //       dispatch(searchUsers(query));
-  //     }, 300);
-
-  //     return () => clearTimeout(timer);
-  //   }, [query]);
 
   return (
     <>

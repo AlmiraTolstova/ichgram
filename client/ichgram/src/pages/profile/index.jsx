@@ -16,7 +16,7 @@ import {
 import { Status } from "../../utils/Status";
 import PostCard from "../../components/postCard";
 import CreatePostModal from "../../components/createPostModal";
-import { selectAuth } from "../../redux/slices/authSlice";
+import { getCurrentUser, selectAuth } from "../../redux/slices/authSlice";
 import { selectPosts } from "../../redux/slices/postsSlice";
 import PostModal from "../../components/postModal";
 import { useNavigate } from "react-router-dom";
@@ -24,12 +24,14 @@ import { BASE_URL } from "../../api/api";
 import AppButton from "../../components/appButton";
 import LinkIcon from "@mui/icons-material/Link";
 import ExploreCard from "../../components/exploreCard";
+import { selectConversations } from "../../redux/slices/conversationsSlice";
 
 function UserProfile() {
-  const user = useSelector((state) => state.auth.user);
+  const { user, token } = useSelector((state) => state.auth);
   const userProfileSelector = useSelector(selectUserProfile);
   const authSelector = useSelector(selectAuth);
   const postsSelector = useSelector(selectPosts);
+  const converstationSelector = useSelector(selectConversations);
   const { ownPostsList, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +41,12 @@ function UserProfile() {
   useEffect(() => {
     dispatch(getOwnPostsByUserID());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(getCurrentUser());
+  //   }
+  // }, [dispatch, token]);
 
   useEffect(() => {
     if (status.createPost === Status.DONE) {
@@ -57,7 +65,7 @@ function UserProfile() {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", border: "2px solid green" }}>
+      <Box sx={{ display: "flex" }}>
         {/* <Sidebar></Sidebar> */}
 
         <Box
@@ -66,7 +74,7 @@ function UserProfile() {
             p: "38px 95px 216px 170px",
           }}
         >
-          <Box>
+          {/* <Box>
             <Button
               onClick={() => {
                 dispatch(getOwnPostsByUserID());
@@ -95,7 +103,14 @@ function UserProfile() {
             >
               Reducer Posts to console
             </Button>
-          </Box>
+            <Button
+              onClick={() => {
+                console.log(converstationSelector);
+              }}
+            >
+              Reducer Conversation to console
+            </Button>
+          </Box> */}
 
           {/* PROFILE */}
           <Box
@@ -152,9 +167,9 @@ function UserProfile() {
                   gap: "40px",
                 }}
               >
-                <Typography>posts</Typography>
-                <Typography>followers</Typography>
-                <Typography>following</Typography>
+                <Typography>posts {user.postsCount}</Typography>
+                <Typography>followers {user.followersCount}</Typography>
+                <Typography>following {user.followingCount}</Typography>
               </Box>
 
               {user.about && (

@@ -1,8 +1,8 @@
 import { Avatar, Box, Typography, IconButton } from "@mui/material";
-
+import { BASE_URL } from "../../api/api";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-const Comment = ({ comment }) => {
+const CommentPost = ({ comment }) => {
   return (
     <Box
       sx={{
@@ -10,7 +10,7 @@ const Comment = ({ comment }) => {
         p: 2,
       }}
     >
-      <Avatar src={comment.author.avatar} />
+      <Avatar src={`${BASE_URL}${comment.author.avatar}`} />
 
       <Box ml={2}>
         <Typography fontWeight={600}>{comment.author.username}</Typography>
@@ -25,4 +25,4 @@ const Comment = ({ comment }) => {
   );
 };
 
-export default Comment;
+export default CommentPost;

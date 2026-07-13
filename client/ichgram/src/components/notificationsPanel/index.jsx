@@ -6,12 +6,16 @@ import { getNotifications } from "../../redux/slices/notificationsSlice";
 import { BASE_URL } from "../../api/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { openExistPostModal } from "../../redux/slices/postsSlice";
+import { useNavigate } from "react-router-dom";
+import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
 
 dayjs.extend(relativeTime);
 
-// function NotificationsPanel() {
 function NotificationsPanel({ isMobile }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { isOpen, notifications_list } = useSelector(
     (state) => state.notifications,
   );
@@ -33,8 +37,10 @@ function NotificationsPanel({ isMobile }) {
 
       <Box
         sx={{
+          border: "1px solid red",
           position: "fixed",
           top: 0,
+          padding: "2rem",
           // left: "245px",
           left: isMobile ? 0 : "245px",
           // width: "397px",
@@ -91,7 +97,23 @@ function NotificationsPanel({ isMobile }) {
                 alignItems: "center",
                 mb: 3,
               }}
-              //onClick={() => console.log(item)}
+              onClick={() => {
+                console.log(item);
+                if (item.type === "follow") {
+                  dispatch(closeNotifications());
+
+                  dispatch(setTargetUserID(item.sender._id));
+                  navigate("/otherprofile");
+
+                  return;
+                }
+
+                if (item.post) {
+                  dispatch(openExistPostModal(item.post));
+                }
+
+                dispatch(closeNotifications());
+              }}
             >
               <Avatar
                 src={`${BASE_URL}${item.sender.avatar}`}
@@ -117,7 +139,7 @@ function NotificationsPanel({ isMobile }) {
                   : item.type === "comment"
                     ? "commented your photo"
                     : item.type === "follow"
-                      ? "started following"
+                      ? "started following you"
                       : ""}
                 <Box
                   component="span"
@@ -129,19 +151,20 @@ function NotificationsPanel({ isMobile }) {
                   {dayjs(item.updatedAt).fromNow()}
                 </Box>
               </Typography>
-
-              <Box
-                component="img"
-                src={`${BASE_URL}${item.post.image}`}
-                alt=""
-                sx={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: 1,
-                  objectFit: "cover",
-                  ml: 2,
-                }}
-              />
+              {item.post && (
+                <Box
+                  component="img"
+                  src={`${BASE_URL}${item.post.image}`}
+                  alt=""
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: 1,
+                    objectFit: "cover",
+                    ml: 2,
+                  }}
+                />
+              )}
             </Box>
           ))}
         </Box>

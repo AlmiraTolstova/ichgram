@@ -80,6 +80,80 @@ export const toggleLike = createAsyncThunk(
   },
 );
 
+export const addComment = createAsyncThunk(
+  "posts/addComment",
+  async ({ postId, text }, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        API.Posts.addComment(postId),
+        { text },
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
+export const updateComment = createAsyncThunk(
+  "posts/updateComment",
+  async ({ commentId, text }, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        API.Posts.updateComment(commentId),
+        { text },
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
+export const deleteComment = createAsyncThunk(
+  "posts/deleteComment",
+  async (commentId, { getState, rejectWithValue }) => {
+    try {
+      await axios.delete(API.Posts.deleteComment(commentId), {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+
+      return commentId;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -93,6 +167,9 @@ const postsSlice = createSlice({
       currentPost: Status.NO_STATUS,
       feed: Status.NO_STATUS,
       toggleLike: Status.NO_STATUS,
+      addComment: Status.NO_STATUS,
+      updateComment: Status.NO_STATUS,
+      deleteComment: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -160,6 +237,58 @@ const postsSlice = createSlice({
       })
       .addCase(toggleLike.rejected, (state, action) => {
         state.status.toggleLike = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(addComment.pending, (state) => {
+        state.status.addComment = Status.LOADING;
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        state.status.addComment = Status.DONE;
+        state.currentPost.comments = [
+          ...state.currentPost.comments,
+          action.payload.comment,
+        ];
+        state.currentPost.commentsCount = action.payload.commentsCount;
+      })
+      .addCase(addComment.rejected, (state, action) => {
+        state.status.addComment = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(updateComment.pending, (state) => {
+        state.status.updateComment = Status.LOADING;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.status.updateComment = Status.DONE;
+        const comment = state.currentPost.comments.find(
+          (item) => item._id === action.payload._id,
+        );
+
+        if (comment) {
+          comment.text = action.payload.text;
+        }
+      })
+      .addCase(updateComment.rejected, (state, action) => {
+        state.status.updateComment = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(deleteComment.pending, (state) => {
+        state.status.deleteComment = Status.LOADING;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.status.deleteComment = Status.DONE;
+        state.currentPost.comments = state.currentPost.comments.filter(
+          (comment) => comment._id !== action.payload,
+        );
+        state.currentPost.commentsCount = action.payload.commentsCount;
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
+        state.status.deleteComment = Status.ERROR;
         state.message = action.payload.message;
       });
   },

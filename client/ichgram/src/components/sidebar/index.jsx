@@ -13,6 +13,7 @@ import {
   openNotifications,
   readNotifications,
 } from "../../redux/slices/notificationsSlice";
+import { openConversations } from "../../redux/slices/conversationsSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const Sidebar = () => {
       dispatch(getNotifications());
       dispatch(readNotifications());
     },
+    openConversations: () => dispatch(openConversations()),
   };
 
   return (

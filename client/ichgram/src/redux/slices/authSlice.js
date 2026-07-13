@@ -87,6 +87,23 @@ export const uploadAvatar = createAsyncThunk(
   },
 );
 
+export const getCurrentUser = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.get(API.User.getCurrentUser(), {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  },
+);
+
 const initialState = {
   user: null,
   token: null,
@@ -100,6 +117,7 @@ const initialState = {
     login: Status.NO_STATUS,
     editUserData: Status.NO_STATUS,
     avatar: Status.NO_STATUS,
+    getCurrentUser: Status.NO_STATUS,
   },
 };
 
@@ -150,7 +168,6 @@ const authSlice = createSlice({
         //state.user = jwtDecode(action.payload.token).user;
         state.user = action.payload.user;
         localStorage.setItem("token", action.payload.token);
-        console.log(action.payload);
       })
       .addCase(login.rejected, (state, action) => {
         state.status.login = Status.ERROR;
@@ -182,6 +199,19 @@ const authSlice = createSlice({
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
         state.status.avatar = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(getCurrentUser.pending, (state) => {
+        state.status.getCurrentUser = Status.LOADING;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.status.getCurrentUser = Status.DONE;
+        state.user = action.payload.user;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.status.getCurrentUser = Status.ERROR;
         state.message = action.payload.message;
       });
   },

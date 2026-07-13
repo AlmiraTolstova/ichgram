@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { socket } from "../../socket/socket";
 import { useDispatch } from "react-redux";
 import { setUnreadNotifications } from "../../redux/slices/notificationsSlice.js";
+import ConversationsPanel from "../conversationsPanel/index.jsx";
 
 function MainLayout() {
   const theme = useTheme();
@@ -56,6 +57,7 @@ function MainLayout() {
         <SearchPanel isMobile={isMobile} />
         {/* <NotificationsPanel></NotificationsPanel> */}
         <NotificationsPanel isMobile={isMobile} />
+        <ConversationsPanel isMobile={isMobile} />
         <Box
           sx={{
             flex: 1,

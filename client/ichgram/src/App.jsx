@@ -16,10 +16,12 @@ import { useEffect } from "react";
 import { socket } from "./socket/socket";
 
 function App() {
-  const { token, user } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     if (!token) return;
+    console.log(user);
     socket.connect();
     socket.emit("join", user.id);
 

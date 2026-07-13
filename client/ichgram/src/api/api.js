@@ -14,6 +14,9 @@ export const API = {
     uploadAvatar: () => `${BASE_URL_API}/user/avatar`,
     searchUsers: () => `${BASE_URL_API}/user/search`,
     getProfile: (id) => `${BASE_URL_API}/user/${id}/profile`,
+    followUser: (id) => `${BASE_URL_API}/user/${id}/follow`,
+    unfollowUser: (id) => `${BASE_URL_API}/user/${id}/unfollow`,
+    getCurrentUser: () => `${BASE_URL_API}/user/me`,
   },
   Posts: {
     createPost: () => `${BASE_URL_API}/posts/post`,
@@ -23,9 +26,18 @@ export const API = {
     getPostsByUserID: (id) => `${BASE_URL_API}/posts/postsbyuserid/${id}`,
     getFeed: () => `${BASE_URL_API}/posts/feed`,
     toggleLike: (id) => `${BASE_URL_API}/posts/${id}/like`,
+    addComment: (id) => `${BASE_URL_API}/posts/post/${id}/comment`,
+    updateComment: (id) => `${BASE_URL_API}/posts/comment/${id}`,
+    deleteComment: (id) => `${BASE_URL_API}/posts/comment/${id}`,
   },
   Notifications: {
     getNotifications: () => `${BASE_URL_API}/notifications/list`,
     readNotifications: () => `${BASE_URL_API}/notifications/set-read`,
+  },
+  Chat: {
+    getConversations: () => `${BASE_URL_API}/chat`,
+    getMessages: (id) => `${BASE_URL_API}/chat/${id}/messages`,
+    readConversation: (id) => `${BASE_URL_API}/chat/${id}/read`,
+    createConversation: () => `${BASE_URL_API}/chat/conversation`,
   },
 };

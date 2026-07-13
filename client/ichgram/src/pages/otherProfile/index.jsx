@@ -8,33 +8,34 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
+  followUser,
   getProfile,
   selectOtherProfile,
+  unfollowUser,
 } from "../../redux/slices/otherProfileSlice";
 import { Status } from "../../utils/Status";
-import PostCard from "../../components/postCard";
 import PostModal from "../../components/postModal";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../api/api";
 import AppButton from "../../components/appButton";
 import LinkIcon from "@mui/icons-material/Link";
 import ExploreCard from "../../components/exploreCard";
+import {
+  createConversation,
+  getMessages,
+} from "../../redux/slices/conversationsSlice";
 
 function OtherProfile() {
   const otherProfileSelector = useSelector(selectOtherProfile);
   const { user, status, targetUserID } = useSelector(
     (state) => state.otherProfile,
   );
+  const currentUserId = useSelector((state) => state.auth.user.id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [showFullAbout, setShowFullAbout] = useState(false);
-
-  useEffect(() => {
-    console.log("otherprofile");
-
-    //dispatch(getProfile());
-  }, [dispatch]);
+  const isFollowing = user.user?.followers?.includes(currentUserId);
 
   useEffect(() => {
     dispatch(getProfile());
@@ -48,9 +49,17 @@ function OtherProfile() {
     );
   }
 
+  const handleMessage = async () => {
+    const conversation = await dispatch(
+      createConversation(user.user._id),
+    ).unwrap();
+
+    dispatch(getMessages(conversation._id));
+  };
+
   return (
     <Box>
-      <Box sx={{ display: "flex", border: "2px solid green" }}>
+      <Box sx={{ display: "flex" }}>
         {/* <Sidebar></Sidebar> */}
 
         <Box
@@ -122,11 +131,25 @@ function OtherProfile() {
                     >
                       {user.username}
                     </Typography>
-                    <AppButton appearance="primary" size="medium">
-                      Follow
-                    </AppButton>
+                    {isFollowing ? (
+                      <AppButton
+                        appearance="secondary"
+                        size="medium"
+                        onClick={() => dispatch(unfollowUser())}
+                      >
+                        Following
+                      </AppButton>
+                    ) : (
+                      <AppButton
+                        appearance="primary"
+                        size="medium"
+                        onClick={() => dispatch(followUser())}
+                      >
+                        Follow
+                      </AppButton>
+                    )}
                     <AppButton
-                      onClick={() => navigate("/editprofile")}
+                      onClick={handleMessage}
                       appearance="gray"
                       size="medium"
                     >

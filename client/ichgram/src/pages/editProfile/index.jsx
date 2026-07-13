@@ -79,7 +79,7 @@ function EditProfile() {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", border: "2px solid green" }}>
+      <Box sx={{ display: "flex" }}>
         {/* <Sidebar /> */}
 
         <Box

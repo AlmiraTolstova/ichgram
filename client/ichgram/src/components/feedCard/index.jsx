@@ -33,7 +33,7 @@ export default function FeedCard({ post }) {
         maxWidth: "470px", // или 500px
         mx: "auto", // центрирует карточку
         bgcolor: "#fff",
-        border: "2px solid green",
+        // border: "2px solid green",
         borderBottom: "1px solid #DBDBDB",
       }}
     >

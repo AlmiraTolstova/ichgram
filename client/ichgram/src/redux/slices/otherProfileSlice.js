@@ -29,6 +29,59 @@ export const getProfile = createAsyncThunk(
   },
 );
 
+export const followUser = createAsyncThunk(
+  "otherProfile/followUser",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { targetUserID } = getState().otherProfile;
+
+      const response = await axios.post(
+        API.User.followUser(targetUserID),
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
+export const unfollowUser = createAsyncThunk(
+  "otherProfile/unfollowUser",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        API.User.unfollowUser(getState().otherProfile.targetUserID),
+        {
+          headers: {
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 const otherProfleSlice = createSlice({
   name: "otherProfle",
   initialState: {
@@ -40,6 +93,8 @@ const otherProfleSlice = createSlice({
     status: {
       getProfile: Status.NO_STATUS,
       openPost: Status.NO_STATUS,
+      follow: Status.NO_STATUS,
+      unfollow: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -67,6 +122,41 @@ const otherProfleSlice = createSlice({
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.status.getProfile = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(followUser.pending, (state) => {
+        state.status.follow = Status.LOADING;
+      })
+
+      .addCase(followUser.fulfilled, (state, action) => {
+        state.status.follow = Status.DONE;
+        console.log(action.payload);
+        state.user.user.followers.push(action.payload.userId);
+      })
+
+      .addCase(followUser.rejected, (state, action) => {
+        state.status.follow = Status.ERROR;
+        state.message = action.payload.message;
+      });
+
+    builder
+      .addCase(unfollowUser.pending, (state) => {
+        state.status.follow = Status.LOADING;
+      })
+
+      .addCase(unfollowUser.fulfilled, (state, action) => {
+        state.status.follow = Status.DONE;
+
+        state.user.user.followers = state.user.user.followers.filter(
+          (id) => id !== action.payload.userId,
+        );
+        console.log(state.user.user);
+      })
+
+      .addCase(unfollowUser.rejected, (state, action) => {
+        state.status.follow = Status.ERROR;
         state.message = action.payload.message;
       });
   },

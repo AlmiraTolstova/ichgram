@@ -1,5 +1,4 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import Img from "../../assets/404.png";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeed } from "../../redux/slices/postsSlice";

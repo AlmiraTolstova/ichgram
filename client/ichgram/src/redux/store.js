@@ -5,6 +5,7 @@ import postsSlice from "./slices/postsSlice";
 import searchSlice from "./slices/searchSlice";
 import otherProfileSlice from "./slices/otherProfileSlice";
 import notificationsSlice from "./slices/notificationsSlice";
+import conversationsSlice from "./slices/conversationsSlice";
 
 const loadState = () => {
   try {
@@ -26,6 +27,7 @@ const store = configureStore({
     search: searchSlice,
     otherProfile: otherProfileSlice,
     notifications: notificationsSlice, // SideBar
+    conversations: conversationsSlice,
   },
   preloadedState: loadState(),
   middleware: (getDefaultMiddlware) => {

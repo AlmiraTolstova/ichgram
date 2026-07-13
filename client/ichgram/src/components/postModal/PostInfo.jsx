@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../api/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
+import CommentPost from "../postModal/Comment";
 dayjs.extend(relativeTime);
 
 import { selectPosts, toggleLike } from "../../redux/slices/postsSlice";
@@ -22,7 +22,7 @@ const PostInfo = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        border: "1px solid green",
+        // border: "1px solid green",
       }}
     >
       <Box
@@ -56,7 +56,7 @@ const PostInfo = () => {
 
       <Box sx={{ flex: 1 }}>
         {currentPost.comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
+          <CommentPost key={comment._id} comment={comment} />
         ))}
       </Box>
 

@@ -46,7 +46,8 @@ export const menu = [
 
   {
     id: 4,
-    type: "link",
+    type: "action",
+    action: "openConversations",
     title: "Messages",
     path: "/messages",
     outline: MessagesSvgOutline,
