@@ -10,6 +10,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import http from "http";
+import conversationRoutes from "./routes/converstationRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,6 +59,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/notifications", notificationsRoutes);
+app.use("/api/chat", conversationRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });

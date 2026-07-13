@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import Post from "../models/Post.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -75,6 +76,10 @@ export const loginUser = async (req, res) => {
       },
     );
 
+    const postsCount = await Post.countDocuments({
+      author: user._id,
+    });
+
     res.status(200).json({
       message: "Success!",
       token,
@@ -87,6 +92,9 @@ export const loginUser = async (req, res) => {
         username: user.username,
         link: user.link,
         about: user.about,
+        postsCount,
+        followersCount: user.followers.length,
+        followingCount: user.following.length,
       },
     });
   } catch (error) {

@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import Post from "../models/Post.js";
 import mongoose from "mongoose";
+import { sendNotification } from "../utils/sendNotification.js";
 
 export const editUserData = async (req, res) => {
   try {
@@ -168,9 +169,128 @@ export const getProfile = async (req, res) => {
         ...user.toObject(),
         postsCount: postsCount,
         followersCount: temp_user.followers.length,
-        followingCount: temp_user.follows.length,
+        followingCount: temp_user.following.length,
       },
       posts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const followUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const currentUserId = req.user.id;
+
+    if (currentUserId === id) {
+      return res.status(400).json({
+        message: "You cannot follow yourself",
+      });
+    }
+
+    const userToFollow = await User.findById(id);
+    const currentUser = await User.findById(currentUserId);
+
+    if (!userToFollow) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const alreadyFollowing = currentUser.following.includes(id);
+
+    if (alreadyFollowing) {
+      return res.status(400).json({
+        message: "Already following",
+      });
+    }
+
+    currentUser.following.push(userToFollow._id);
+
+    userToFollow.followers.push(currentUser._id);
+
+    await currentUser.save();
+    await userToFollow.save();
+
+    // создаем уведомление
+    await sendNotification({
+      io: req.io,
+      recipient: userToFollow._id,
+      sender: currentUser._id,
+      type: "follow",
+    });
+
+    res.json({
+      success: true,
+      message: "User followed",
+      userId: currentUserId,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const unfollowUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const currentUserId = req.user.id;
+
+    await User.findByIdAndUpdate(currentUserId, {
+      $pull: {
+        following: id,
+      },
+    });
+
+    await User.findByIdAndUpdate(id, {
+      $pull: {
+        followers: currentUserId,
+      },
+    });
+
+    res.json({
+      success: true,
+      message: "User unfollowed",
+      userId: currentUserId,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getCurrentUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const postsCount = await Post.countDocuments({
+      author: user._id,
+    });
+
+    res.json({
+      id: user._id,
+      email: user.email,
+      avatar: user.avatar,
+      fullname: user.fullname,
+      username: user.username,
+      link: user.link,
+      about: user.about,
+
+      postsCount,
+      followersCount: user.followers.length,
+      followingCount: user.following.length,
     });
   } catch (error) {
     res.status(500).json({

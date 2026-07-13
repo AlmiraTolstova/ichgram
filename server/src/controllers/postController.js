@@ -326,3 +326,154 @@ export const toggleLike = async (req, res) => {
     });
   }
 };
+
+export const addComment = async (req, res) => {
+  try {
+    const { id } = req.params; // id поста
+    const { text } = req.body;
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "Invalid post id",
+      });
+    }
+
+    if (!text?.trim()) {
+      return res.status(400).json({
+        message: "Comment cannot be empty",
+      });
+    }
+
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    const comment = await Comment.create({
+      author: userId,
+      post: post._id,
+      text: text.trim(),
+    });
+
+    post.comments.push(comment._id);
+
+    await post.save();
+
+    // уведомляем автора поста, если это не он сам
+    if (post.author.toString() !== userId) {
+      await sendNotification({
+        io: req.io,
+        recipient: post.author,
+        sender: userId,
+        type: "comment",
+        post: post._id,
+        comment: comment._id,
+      });
+    }
+
+    // сразу возвращаем комментарий с автором
+    await comment.populate("author", "username avatar");
+
+    res.status(201).json({
+      comment,
+      commentsCount: post.comments.length,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const updateComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { text } = req.body;
+
+    const comment = await Comment.findById(id);
+
+    if (!comment) {
+      return res.status(404).json({
+        message: "Comment not found",
+      });
+    }
+
+    // редактировать может только автор
+    if (comment.author.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied",
+      });
+    }
+
+    comment.text = text.trim();
+
+    await comment.save();
+
+    await comment.populate("author", "username avatar");
+
+    res.json(comment);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const comment = await Comment.findById(id);
+
+    if (!comment) {
+      return res.status(404).json({
+        message: "Comment not found",
+      });
+    }
+
+    const post = await Post.findById(comment.post);
+
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    // удалить комментарий может автор комментария или автор поста
+    const canDelete =
+      comment.author.toString() === req.user.id ||
+      post.author.toString() === req.user.id;
+
+    if (!canDelete) {
+      return res.status(403).json({
+        message: "Access denied",
+      });
+    }
+
+    // удаляем ссылку из поста
+    post.comments.pull(comment._id);
+    await post.save();
+
+    // удаляем уведомление
+    await Notification.findOneAndDelete({
+      type: "comment",
+      comment: comment._id,
+    });
+
+    // удаляем комментарий
+    await Comment.findByIdAndDelete(comment._id);
+
+    res.json({
+      success: true,
+      commentsCount: post.comments.length,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
