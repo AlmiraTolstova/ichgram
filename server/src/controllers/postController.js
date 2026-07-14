@@ -30,9 +30,9 @@ export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { description } = req.body;
 
-    const Post = await Post.findOne({ _id: id, author: req.user.id });
+    const post = await Post.findOne({ _id: id, author: req.user.id });
 
-    if (!Post) {
+    if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
@@ -51,9 +51,9 @@ export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const Post = await Post.findOne({ _id: id, user: req.user.id });
+    const post = await Post.findOne({ _id: id, author: req.user.id });
 
-    if (!Post) {
+    if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 

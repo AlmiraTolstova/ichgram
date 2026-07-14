@@ -8,7 +8,7 @@ export const getConversations = async (req, res) => {
     const conversations = await Conversation.find({
       participants: userId,
     })
-      .populate("participants", "username avatar")
+      .populate("participants", "username avatar fullname")
       .populate("lastMessage")
       .sort({ updatedAt: -1 });
 
@@ -109,7 +109,7 @@ export const createConversation = async (req, res) => {
       });
     }
 
-    await conversation.populate("participants", "username avatar");
+    await conversation.populate("participants", "username avatar fullname");
 
     res.json(conversation);
   } catch (error) {

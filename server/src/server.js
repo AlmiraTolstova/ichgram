@@ -11,6 +11,9 @@ import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import http from "http";
 import conversationRoutes from "./routes/converstationRoutes.js";
+import Conversation from "./models/Conversation.js";
+import Message from "./models/Message.js";
+import { sendNotification } from "./utils/sendNotification.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,9 +74,50 @@ io.on("connection", (socket) => {
   console.log(`Пользователь подключился: ${socket.id}`);
 
   socket.on("join", (userId) => {
+    socket.userId = userId;
+
     socket.join(userId);
 
     console.log(`${userId} joined personal room`);
+  });
+
+  socket.on("send_message", async ({ conversationId, text }) => {
+    try {
+      const conversation = await Conversation.findById(conversationId);
+      const receiverId = conversation.participants.find(
+        (id) => id.toString() !== socket.userId,
+      );
+      const message = await Message.create({
+        conversation: conversationId,
+        sender: socket.userId,
+        text,
+      });
+      conversation.lastMessage = message._id;
+      conversation.updatedAt = new Date();
+
+      await conversation.save();
+      const fullMessage = await Message.findById(message._id).populate(
+        "sender",
+        "username avatar",
+      );
+
+      io.to(socket.userId).emit("new_message", fullMessage);
+
+      io.to(receiverId.toString()).emit("new_message", fullMessage);
+
+      // if (receiverId.currentConversation !== conversationId) {
+      //   await sendNotification({
+      //     io,
+      //     recipient: receiverId,
+      //     sender: socket.userId,
+      //     type: "message",
+      //   });
+      // }
+
+      if (!conversation) return;
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   socket.on("disconnect", () => {

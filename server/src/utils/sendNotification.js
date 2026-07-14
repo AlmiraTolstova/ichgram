@@ -17,8 +17,6 @@ export const sendNotification = async ({
     post,
     comment,
   });
-  console.log("IO:", !!io);
-  console.log("RECIPIENT:", recipient.toString());
   await notification.populate([
     {
       path: "sender",
