@@ -15,19 +15,20 @@ const MessageBubble = ({ message, showAvatar }) => {
         mb: 2,
       }}
     >
-      {!own && showAvatar && (
-        <Avatar
-          src={`${BASE_URL}${message.sender.avatar}`}
-          sx={{
-            width: 28,
-            height: 28,
-            mr: 1,
-            alignSelf: "flex-end",
-          }}
-        />
-      )}
-      : (
-      <Box sx={{ width: 28, mr: 1 }} />)
+      {!own &&
+        (showAvatar ? (
+          <Avatar
+            src={`${BASE_URL}${message.sender.avatar}`}
+            sx={{
+              width: 28,
+              height: 28,
+              mr: 1,
+              alignSelf: "flex-end",
+            }}
+          />
+        ) : (
+          <Box sx={{ width: 28, mr: 1 }} />
+        ))}
       <Box
         sx={{
           maxWidth: "60%",
@@ -48,19 +49,20 @@ const MessageBubble = ({ message, showAvatar }) => {
           {message.text}
         </Typography>
       </Box>
-      {own && showAvatar && (
-        <Avatar
-          src={`${BASE_URL}${message.sender.avatar}`}
-          sx={{
-            width: 28,
-            height: 28,
-            ml: 1,
-            alignSelf: "flex-end",
-          }}
-        />
-      )}
-      : (
-      <Box sx={{ width: 28, mr: 1 }} />)
+      {own &&
+        (showAvatar ? (
+          <Avatar
+            src={`${BASE_URL}${message.sender.avatar}`}
+            sx={{
+              width: 28,
+              height: 28,
+              ml: 1,
+              alignSelf: "flex-end",
+            }}
+          />
+        ) : (
+          <Box sx={{ width: 28, ml: 1 }} />
+        ))}
     </Box>
   );
 };

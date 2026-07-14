@@ -40,15 +40,11 @@ function NotificationsPanel({ isMobile }) {
           border: "1px solid red",
           position: "fixed",
           top: 0,
-          padding: "2rem",
-          // left: "245px",
+          padding: "1.5rem",
           left: isMobile ? 0 : "245px",
-          // width: "397px",
           width: isMobile ? "100%" : "397px",
           height: "100vh",
           bgcolor: "#fff",
-          // borderTopRightRadius: "16px",
-          // borderBottomRightRadius: "16px",
           borderTopRightRadius: isMobile ? 0 : "16px",
           borderBottomRightRadius: isMobile ? 0 : "16px",
           boxShadow: "0 0 20px rgba(0,0,0,.12)",
@@ -59,22 +55,24 @@ function NotificationsPanel({ isMobile }) {
           flexDirection: "column",
         }}
       >
-        <Box p={4}>
+        <Box>
           <Typography
             sx={{
-              fontSize: 24,
               fontWeight: 700,
+              fontSize: "24px",
+              lineHeight: "30px",
+              color: "#000000",
+              marginBottom: "1rem",
             }}
           >
             Notifications
           </Typography>
         </Box>
 
-        <Divider />
+        {/* <Divider /> */}
 
         <Box
           sx={{
-            p: 4,
             overflowY: "auto",
             flex: 1,
           }}
@@ -82,8 +80,9 @@ function NotificationsPanel({ isMobile }) {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 16,
-              mb: 3,
+              fontSize: "16px",
+              lineHeight: "20px",
+              color: "#000000",
             }}
           >
             New

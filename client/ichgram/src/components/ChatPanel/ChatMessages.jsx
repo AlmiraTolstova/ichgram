@@ -3,7 +3,6 @@ import MessageBubble from "./MessageBubble";
 
 const ChatMessages = () => {
   const { messages } = useSelector((state) => state.conversations);
-
   return (
     <>
       {messages.map((message, index) => {

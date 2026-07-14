@@ -149,19 +149,37 @@ const conversationsSlice = createSlice({
     },
     closeConversations(state) {
       state.conversationsOpen = false;
+      state.chatOpen = false;
+      state.currentConversation = null;
     },
     clearCurrentConversation(state) {
       state.currentConversation = null;
       state.messages = [];
     },
     receiveMessage(state, action) {
-      state.messages.push(action.payload);
+      const message = action.payload;
+      state.messages.push(message);
 
       if (
         !state.currentConversation ||
         action.payload.conversation !== state.currentConversation._id
       ) {
         state.unreadMessages++;
+      }
+
+      const conversation = state.conversations.find(
+        (c) => c._id === message.conversation,
+      );
+
+      if (conversation) {
+        conversation.lastMessage = message;
+
+        if (
+          !state.currentConversation ||
+          state.currentConversation._id !== message.conversation
+        ) {
+          conversation.unreadCount++;
+        }
       }
     },
     closeChat(state) {

@@ -35,6 +35,7 @@ const CommentForm = () => {
         display: "flex",
         alignItems: "center",
         p: 2,
+        border: "1px solid violet",
       }}
     >
       <IconButton>

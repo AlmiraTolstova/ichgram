@@ -33,6 +33,7 @@ function UserProfile() {
   const postsSelector = useSelector(selectPosts);
   const converstationSelector = useSelector(selectConversations);
   const { ownPostsList, status } = useSelector((state) => state.profile);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ function UserProfile() {
             p: "38px 95px 216px 170px",
           }}
         >
-          {/* <Box>
+          <Box>
             <Button
               onClick={() => {
                 dispatch(getOwnPostsByUserID());
@@ -110,7 +111,7 @@ function UserProfile() {
             >
               Reducer Conversation to console
             </Button>
-          </Box> */}
+          </Box>
 
           {/* PROFILE */}
           <Box

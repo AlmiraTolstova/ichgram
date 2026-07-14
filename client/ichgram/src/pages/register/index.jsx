@@ -182,14 +182,6 @@ function Register() {
             helperText={errors.confirmPassword?.message}
           />
 
-          {/* <BtnLogin
-            type="submit"
-            variant="contained"
-            disabled={status.register === Status.LOADING}
-          >
-            {status.register === Status.LOADING ? "Loading..." : "Sign up"}
-          </BtnLogin> */}
-
           <AppButton
             type="submit"
             appearance="primary"

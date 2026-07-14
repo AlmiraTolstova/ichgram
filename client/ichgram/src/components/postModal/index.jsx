@@ -16,12 +16,19 @@ import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { Status } from "../../utils/Status";
 import { BASE_URL } from "../../api/api";
+import { useState } from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { IconButton } from "@mui/material";
+import PostActionsMenu from "../postActionsMenu/PostActionsMenu";
+import { setOpenPostActionMenu } from "../../redux/slices/userProfileSlice";
 
 const PostModal = () => {
   const dispatch = useDispatch();
 
   const { openModal, currentPost, status } = useSelector(selectPosts);
+  const { user } = useSelector((state) => state.auth);
 
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     if (openModal) {
       dispatch(getPostByPostID());
@@ -50,7 +57,10 @@ const PostModal = () => {
             className={styles.image}
           />
         </Box>
-
+        <PostActionsMenu
+          isOwner={currentPost?.author?._id === user.id}
+          currentPost={currentPost}
+        />
         {/* RIGHT */}
 
         {status.currentPost === Status.LOADING ? (
@@ -59,6 +69,21 @@ const PostModal = () => {
           </Box>
         ) : (
           <Box className={styles.sidebar}>
+            {currentPost?.author?._id === user.id ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  p: 1,
+                }}
+              >
+                <IconButton onClick={() => dispatch(setOpenPostActionMenu())}>
+                  <MoreHorizIcon />
+                </IconButton>
+              </Box>
+            ) : (
+              <Box />
+            )}
             <PostHeader />
 
             <Divider />

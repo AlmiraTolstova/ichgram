@@ -14,11 +14,27 @@ function Home() {
     dispatch(getFeed());
   }, [dispatch]);
   return (
-    <Box sx={{ border: "2px solid red", p: "58px 270px 12px 77px" }}>
+    <Box
+      sx={{
+        border: "2px solid red",
+
+        p: {
+          xs: "1rem 1rem 1rem 1rem", // мобильные устройства
+          sm: "3rem 3rem 0.75rem 4rem", // планшеты (при желании тоже 1 колонка)
+          md: "3.625rem 16.875rem 0.75rem 4.8125rem", // от 900px и выше — 2 колонки
+        },
+      }}
+    >
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          // gridTemplateColumns: "repeat(2, 1fr)",
+
+          gridTemplateColumns: {
+            xs: "1fr", // мобильные устройства
+            sm: "1fr", // планшеты (при желании тоже 1 колонка)
+            md: "repeat(2, 1fr)", // от 900px и выше — 2 колонки
+          },
           columnGap: "40px", // расстояние между колонками
           rowGap: "4px", // расстояние между строками
         }}

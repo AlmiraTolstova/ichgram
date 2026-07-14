@@ -15,6 +15,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { BASE_URL } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { openExistPostModal } from "../../redux/slices/postsSlice";
+import { CommentSvgOutline } from "../icons";
 
 export default function PostCard({ post }) {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ export default function PostCard({ post }) {
             }}
           >
             <ChatBubbleOutlineOutlinedIcon />
+            <CommentSvgOutline />
           </IconButton>
 
           <Typography variant="body2" sx={{ alignSelf: "center" }}>

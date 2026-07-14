@@ -291,6 +291,8 @@ const postsSlice = createSlice({
         state.status.deleteComment = Status.ERROR;
         state.message = action.payload.message;
       });
+
+    
   },
 });
 

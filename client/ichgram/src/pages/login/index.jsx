@@ -177,14 +177,6 @@ function Login() {
         >
           <Typography>Don't have an account? </Typography>
 
-          {/* <BtnLogin
-            component={Link}
-            to="/register"
-            variantType="underline"
-            sx={{ minWidth: "4.25rem" }}
-          >
-            Sign up
-          </BtnLogin> */}
           <AppButton
             component={Link}
             to="/register"

@@ -9,6 +9,10 @@ const SidebarItem = ({ item, action }) => {
   const unreadNotifications = useSelector(
     (state) => state.notifications.unread_notificiatioon_count,
   );
+  const unreadMessages = useSelector(
+    (state) => state.conversations.unreadMessages,
+  );
+  console.log(unreadMessages);
 
   if (item.type === "link") {
     return (
@@ -41,9 +45,14 @@ const SidebarItem = ({ item, action }) => {
         </span>
 
         <span>{item.title}</span>
-        {item.hasBadge && unreadNotifications > 0 && (
+        {item.hasNotificationBadge && unreadNotifications > 0 && (
           <span className={styles.badge}>
             {unreadNotifications > 9 ? "9+" : unreadNotifications}
+          </span>
+        )}
+        {item.hasMessageBadge && unreadMessages > 0 && (
+          <span className={styles.badge}>
+            {unreadMessages > 9 ? "9+" : unreadMessages}
           </span>
         )}
       </button>

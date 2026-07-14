@@ -12,6 +12,10 @@ import { socket } from "../../socket/socket";
 import { useDispatch } from "react-redux";
 import { setUnreadNotifications } from "../../redux/slices/notificationsSlice.js";
 import ConversationsPanel from "../conversationsPanel/index.jsx";
+import {
+  addMessage,
+  receiveMessage,
+} from "../../redux/slices/conversationsSlice.js";
 
 function MainLayout() {
   const theme = useTheme();
@@ -20,20 +24,26 @@ function MainLayout() {
 
   useEffect(() => {
     const handleNotification = (notification) => {
-      console.log("Notification:", notification);
       dispatch(setUnreadNotifications(notification.unreadCount));
+      console.log(notification.unreadCount);
     };
 
     const handleConnect = () => {
       console.log("Socket connected:", socket.id);
     };
 
+    const handleNewMessage = (message) => {
+      dispatch(receiveMessage(message));
+    };
+
     socket.on("connect", handleConnect);
     socket.on("notification", handleNotification);
+    socket.on("new_message", handleNewMessage);
 
     return () => {
       socket.off("connect", handleConnect);
       socket.off("notification", handleNotification);
+      socket.off("new_message", handleNewMessage);
     };
   }, [dispatch]);
 

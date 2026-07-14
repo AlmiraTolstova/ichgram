@@ -7,15 +7,42 @@ const CommentPost = ({ comment }) => {
     <Box
       sx={{
         display: "flex",
-        p: 2,
+        // p: 2,
+        border: "1px solid yellow",
+        fontWeight: 600,
+        p: 1,
       }}
     >
-      <Avatar src={`${BASE_URL}${comment.author.avatar}`} />
+      <Avatar sx={{ mr: 2 }} src={`${BASE_URL}${comment.author.avatar}`} />
 
-      <Box ml={2}>
-        <Typography fontWeight={600}>{comment.author.username}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontSize: "13px",
+            lineHeight: "15px",
+            color: "#262626",
+          }}
+        >
+          {comment.author.username}
+        </Typography>
 
-        <Typography>{comment.text}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: "13px",
+            lineHeight: "15px",
+            color: "#00376B",
+          }}
+        >
+          {comment.text}
+        </Typography>
       </Box>
 
       <IconButton sx={{ ml: "auto" }}>

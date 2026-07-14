@@ -20,12 +20,28 @@ function Footer() {
       }}
     >
       <Container
-        sx={{ paddingTop: "1.5rem", width: "30.875rem", paddingBottom: "3rem" }}
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "28rem",
+            md: "30.875rem",
+          },
+          pt: "1.5rem",
+          pb: "3rem",
+          border: "1px solid red",
+        }}
       >
         <Stack
           direction="row"
-          // flexWrap="wrap"
-          sx={{ display: "flex", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+
+            flexWrap: {
+              xs: "wrap",
+              md: "nowrap",
+            },
+            justifyContent: "space-between",
+          }}
         >
           {links.map((link) => (
             <Link

@@ -19,6 +19,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { BASE_URL } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { openExistPostModal, toggleLike } from "../../redux/slices/postsSlice";
+import { CommentSvgOutline } from "../icons";
 
 export default function FeedCard({ post }) {
   const dispatch = useDispatch();
@@ -92,7 +93,8 @@ export default function FeedCard({ post }) {
         </IconButton>
 
         <IconButton onClick={() => dispatch(openExistPostModal(post))}>
-          <ChatBubbleOutlineOutlinedIcon />
+          {/* <ChatBubbleOutlineOutlinedIcon /> */}
+          <CommentSvgOutline></CommentSvgOutline>
         </IconButton>
       </CardActions>
 

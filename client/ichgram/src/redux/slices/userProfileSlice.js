@@ -57,6 +57,28 @@ export const createPost = createAsyncThunk(
   },
 );
 
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (postId, { getState, rejectWithValue }) => {
+    try {
+      await axios.delete(API.Posts.deletePost(postId), {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+
+      return postId;
+    } catch (error) {
+      return rejectWithValue({
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      });
+    }
+  },
+);
+
 export const uploadAvatar = createAsyncThunk(
   "auth/uploadAvatar",
   async (avatar, { getState, rejectWithValue }) => {
@@ -90,9 +112,11 @@ const userProfileSlice = createSlice({
     lastPost: {},
     openModal: false,
     message: "",
+    openPostActionMenu: false,
     status: {
       ownPostsList: Status.NO_STATUS,
       createPost: Status.NO_STATUS,
+      deletePost: Status.NO_STATUS,
     },
   },
   reducers: {
@@ -104,6 +128,13 @@ const userProfileSlice = createSlice({
     },
     resetCreatePostStatus(state) {
       state.status.createPost = Status.NO_STATUS;
+    },
+    setOpenPostActionMenu(state) {
+      state.openPostActionMenu = true;
+    },
+    resetOpenPostActionMenu(state) {
+      state.openPostActionMenu = false;
+      state.openModal = false;
     },
   },
   extraReducers: (builder) => {
@@ -133,6 +164,23 @@ const userProfileSlice = createSlice({
         state.status.createPost = Status.ERROR;
         state.message = action.payload.message;
       });
+
+    builder
+      .addCase(deletePost.pending, (state) => {
+        state.status.deletePost = Status.LOADING;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.status.deletePost = Status.DONE;
+        state.ownPostsList = state.ownPostsList.filter(
+          (post) => post._id !== action.payload,
+        );
+        state.openPostActionMenu = false;
+        state.openModal = false;
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.status.deletePost = Status.ERROR;
+        state.message = action.payload.message;
+      });
   },
 });
 
@@ -160,6 +208,8 @@ export const {
   openCreatePostModal,
   closeCreatePostModal,
   resetCreatePostStatus,
+  setOpenPostActionMenu,
+  resetOpenPostActionMenu,
 } = userProfileSlice.actions;
 export const selectUserProfile = (state) => state.profile;
 export default userProfileSlice.reducer;

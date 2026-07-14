@@ -21,7 +21,7 @@ export const API = {
   Posts: {
     createPost: () => `${BASE_URL_API}/posts/post`,
     updatePost: () => `${BASE_URL_API}/posts/post/:id`,
-    deletePost: () => `${BASE_URL_API}/posts/post/:id`,
+    deletePost: (id) => `${BASE_URL_API}/posts/post/${id}`,
     getPostByPostId: (id) => `${BASE_URL_API}/posts/post/${id}`,
     getPostsByUserID: (id) => `${BASE_URL_API}/posts/postsbyuserid/${id}`,
     getFeed: () => `${BASE_URL_API}/posts/feed`,

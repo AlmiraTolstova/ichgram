@@ -11,6 +11,7 @@ dayjs.extend(relativeTime);
 
 import { selectPosts, toggleLike } from "../../redux/slices/postsSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { CommentSvgOutline } from "../icons";
 
 const PostInfo = () => {
   const { currentPost } = useSelector(selectPosts);
@@ -74,7 +75,7 @@ const PostInfo = () => {
         </IconButton>
 
         <IconButton>
-          <ChatBubbleOutlineOutlinedIcon />
+          <CommentSvgOutline></CommentSvgOutline>
         </IconButton>
 
         <Typography fontWeight={600}>

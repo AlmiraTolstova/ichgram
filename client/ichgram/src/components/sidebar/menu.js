@@ -52,6 +52,7 @@ export const menu = [
     path: "/messages",
     outline: MessagesSvgOutline,
     fill: MessageSvgFill,
+    hasMessageBadge: true,
   },
   {
     id: 5,
@@ -61,7 +62,7 @@ export const menu = [
     path: "/notification",
     outline: NotificationSvgOutline,
     fill: FavoriteIcon,
-    hasBadge: true,
+    hasNotificationBadge: true,
   },
   {
     id: 6,
