@@ -26,7 +26,7 @@ const ChatHeader = () => {
         flexDirection: "column",
         alignItems: "center",
         px: 3,
-        border: "1px solid red",
+        // border: "1px solid red",
         textAlign: "center",
       }}
     >

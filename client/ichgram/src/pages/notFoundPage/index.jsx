@@ -1,7 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import Img from "../../assets/404.png";
-import Sidebar from "../../components/sidebar";
-import Footer from "../../components/footer";
 function NotFoundPage() {
   return (
     <Box>
@@ -11,16 +9,24 @@ function NotFoundPage() {
           flexDirection: "row",
         }}
       >
-        {/* <Sidebar></Sidebar> */}
         <Box
           sx={{
-            border: "1px solid red",
+            //border: "1px solid red",
             display: "flex",
-            p: "94px 106px 185px 118px",
+            //p: "5.875rem 6.625rem 11.5625rem 7.375rem",
+            p: {
+              xs: "1rem 1rem 1rem 1rem",
+              sm: "1rem 1rem 1rem 1rem",
+              md: "2.375rem 5.9375rem 13.5rem 10.625rem",
+            },
             gap: "2.75rem",
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+            },
           }}
         >
-          {/* IMG */}
           <Box
             component="img"
             src={Img}
@@ -39,10 +45,9 @@ function NotFoundPage() {
           >
             <Typography
               sx={{
-                // fontStyle: "normal",
                 fontWeight: 700,
                 fontSize: "36px",
-                lineHeight: "20px",
+                lineHeight: "40px",
                 display: "flex",
                 alignItems: "center",
                 color: "#000000",
@@ -72,7 +77,6 @@ function NotFoundPage() {
           </Box>
         </Box>
       </Box>
-      {/* <Footer></Footer> */}
     </Box>
   );
 }

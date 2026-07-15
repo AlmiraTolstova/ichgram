@@ -246,7 +246,7 @@ const ConversationsPanel = () => {
           position: "fixed",
           top: 0,
           left: isMobile ? 0 : "245px",
-          width: isMobile ? "100%" : "397px",
+          width: isMobile ? "90%" : "397px",
           height: "100vh",
           bgcolor: "#fff",
           borderTopRightRadius: isMobile ? 0 : "16px",

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../../api/api";
 import { Status } from "../../utils/Status";
+import { login } from "./authSlice";
 
 export const getNotifications = createAsyncThunk(
   "search/getNotifications",
@@ -94,6 +95,11 @@ const notificationsSlice = createSlice({
         state.status.readNotifications = Status.ERROR;
         state.message = action.payload.message;
       });
+
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.unread_notificiatioon_count =
+        action.payload.unread?.notifications ?? 0;
+    });
   },
 });
 

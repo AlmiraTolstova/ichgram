@@ -4,6 +4,7 @@ import {
   deletePost,
   resetOpenPostActionMenu,
 } from "../../redux/slices/userProfileSlice";
+import { closeExistPostModal } from "../../redux/slices/postsSlice";
 
 const PostActionsMenu = ({ isOwner, currentPost }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,10 @@ const PostActionsMenu = ({ isOwner, currentPost }) => {
                 borderRadius: 0,
                 fontWeight: 700,
               }}
-              onClick={() => dispatch(deletePost(currentPost?._id))}
+              onClick={() => {
+                dispatch(deletePost(currentPost?._id));
+                dispatch(closeExistPostModal());
+              }}
             >
               Delete
             </Button>

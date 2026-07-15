@@ -63,14 +63,14 @@ export default function SearchPanel({ isMobile }) {
           // left: "245px", // ширина Sidebar
           left: isMobile ? 0 : "245px",
           // width: "24.8125rem",
-          width: isMobile ? "100%" : "24.8125rem",
+          width: isMobile ? "90%" : "24.8125rem",
           height: "100vh",
           bgcolor: "#fff",
           // borderTopRightRadius: "1rem",
           // borderBottomRightRadius: "1rem",
           borderTopRightRadius: isMobile ? 0 : "1rem",
           borderBottomRightRadius: isMobile ? 0 : "1rem",
-          boxShadow: "1 1 20px rgba(0,0,0,.15)",
+          boxShadow: "1px 1px 20px rgba(0,0,0,.15)",
           transform: isOpen ? "translateX(0)" : "translateX(-200%)",
           transition: "transform .10s ease",
           zIndex: 2,
@@ -164,7 +164,10 @@ export default function SearchPanel({ isMobile }) {
           {users?.map((user) => (
             <Box
               onClick={() => {
+                // dispatch(setTargetUserID(user._id));
+                // navigate("/otherprofile");
                 dispatch(setTargetUserID(user._id));
+                dispatch(closeSearch());
                 navigate("/otherprofile");
               }}
               key={user._id}

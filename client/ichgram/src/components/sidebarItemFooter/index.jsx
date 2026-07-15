@@ -2,11 +2,10 @@ import { NavLink } from "react-router-dom";
 
 import styles from "./styles.module.css";
 import { useSelector } from "react-redux";
-import { Avatar, Box } from "@mui/material";
-import { BASE_URL } from "../../api/api";
-import { mt } from "date-fns/locale";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-const SidebarItem = ({ item, action }) => {
+const SidebarItemFooter = ({ item, action }) => {
   const OutlineIcon = item.outline;
   const FillIcon = item.fill;
   const unreadNotifications = useSelector(
@@ -15,7 +14,9 @@ const SidebarItem = ({ item, action }) => {
   const unreadMessages = useSelector(
     (state) => state.conversations.unreadMessages,
   );
-  const { user } = useSelector((state) => state.auth);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (item.type === "link") {
     return (
@@ -25,16 +26,8 @@ const SidebarItem = ({ item, action }) => {
           `${styles.item} ${isActive ? styles.active : ""}`
         }
       >
-        {item.avatar ? (
-          <Avatar
-            sx={{
-              width: "24px",
-              height: "24px",
-            }}
-            src={`${BASE_URL}${user.avatar}`}
-          ></Avatar>
-        ) : (
-          <Box>
+        {isMobile ? (
+          <>
             <span className={styles.outline}>
               <OutlineIcon />
             </span>
@@ -42,29 +35,35 @@ const SidebarItem = ({ item, action }) => {
             <span className={styles.fill}>
               <FillIcon />
             </span>
-          </Box>
+          </>
+        ) : (
+          <span className={styles.title}>{item.title}</span>
         )}
-
-        <span className={styles.title}>{item.title}</span>
       </NavLink>
     );
   } else {
     return (
       <button className={styles.item} onClick={action}>
-        <span className={styles.outline}>
-          <OutlineIcon />
-        </span>
+        {isMobile ? (
+          <>
+            <span className={styles.outline}>
+              <OutlineIcon />
+            </span>
 
-        <span className={styles.fill}>
-          <FillIcon />
-        </span>
+            <span className={styles.fill}>
+              <FillIcon />
+            </span>
+          </>
+        ) : (
+          <span>{item.title}</span>
+        )}
 
-        <span>{item.title}</span>
         {item.hasNotificationBadge && unreadNotifications > 0 && (
           <span className={styles.badge}>
             {unreadNotifications > 9 ? "9+" : unreadNotifications}
           </span>
         )}
+
         {item.hasMessageBadge && unreadMessages > 0 && (
           <span className={styles.badge}>
             {unreadMessages > 9 ? "9+" : unreadMessages}
@@ -75,4 +74,4 @@ const SidebarItem = ({ item, action }) => {
   }
 };
 
-export default SidebarItem;
+export default SidebarItemFooter;

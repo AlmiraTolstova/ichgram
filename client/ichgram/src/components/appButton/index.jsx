@@ -79,7 +79,6 @@ function AppButton({
       sx: {
         color: "#0095F6",
         fontWeight: 600,
-        // textDecoration: "underline",
         textUnderlineOffset: "2px",
 
         "&:hover": {

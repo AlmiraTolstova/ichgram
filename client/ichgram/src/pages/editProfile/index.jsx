@@ -19,7 +19,6 @@ import {
   selectAuth,
   uploadAvatar,
 } from "../../redux/slices/authSlice";
-import BtnLogin from "../../components/btnLogin";
 import { BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import AppButton from "../../components/appButton";
@@ -80,15 +79,19 @@ function EditProfile() {
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
-        {/* <Sidebar /> */}
-
         <Box
           sx={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            p: "48px 167px 117px 166px",
-            gap: "33px",
+            //p: "3rem 10.4375rem 7.3125rem 10.375rem",
+
+            p: {
+              xs: "1rem 1rem 1rem 1rem", // мобильные устройства
+              sm: "3rem 3rem 0.75rem 4rem", // планшеты
+              md: "3rem 10.4375rem 7.3125rem 10.375rem",
+            },
+            gap: "2rem",
           }}
         >
           <Typography
@@ -105,13 +108,29 @@ function EditProfile() {
           </Typography>
 
           <Paper
+            // sx={{
+            //   p: "1rem 1rem 0.5rem 1rem",
+            //   bgcolor: "#EFEFEF",
+            //   borderRadius: "20px",
+            //   display: "flex",
+            //   justifyContent: "space-between",
+            //   alignItems: "center",
+            // }}
             sx={{
-              p: "16px 16px 8px 16px",
+              p: "1rem",
               bgcolor: "#EFEFEF",
               borderRadius: "20px",
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: {
+                xs: "flex-start",
+                md: "center",
+              },
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+              gap: 2,
             }}
           >
             <Box sx={{ display: "flex" }}>
@@ -165,17 +184,19 @@ function EditProfile() {
             <AppButton size="medium" onClick={handleChoosePhoto}>
               New photo
             </AppButton>
-
-            {/* <BtnLogin sx={{ width: "200px" }} onClick={handleChoosePhoto}>
-              New photo
-            </BtnLogin> */}
-            {/* <Button variant="contained">New photo</Button> */}
           </Paper>
 
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box spacing={4}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
               <Box>
-                <Typography fontWeight={700} mb={1}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "20px",
+                    color: "#000000",
+                  }}
+                >
                   Username
                 </Typography>
 
@@ -197,7 +218,14 @@ function EditProfile() {
               </Box>
 
               <Box>
-                <Typography fontWeight={700} mb={1}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "20px",
+                    color: "#000000",
+                  }}
+                >
                   Website
                 </Typography>
 
@@ -223,7 +251,14 @@ function EditProfile() {
               </Box>
 
               <Box>
-                <Typography fontWeight={700} mb={1}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "20px",
+                    color: "#000000",
+                  }}
+                >
                   About
                 </Typography>
 
@@ -260,7 +295,7 @@ function EditProfile() {
                 />
               </Box>
 
-              <Button
+              {/* <Button
                 type="submit"
                 variant="contained"
                 disabled={status === "loading"}
@@ -272,7 +307,17 @@ function EditProfile() {
                 }}
               >
                 {status === "loading" ? "Saving..." : "Save"}
-              </Button>
+              </Button> */}
+              <AppButton
+                sx={{
+                  alignSelf: "flex-start",
+                }}
+                type="submit"
+                appearance="primary"
+                disabled={status === "loading"}
+              >
+                {status === "loading" ? "Saving..." : "Save"}
+              </AppButton>
             </Box>
           </Box>
         </Box>

@@ -5,17 +5,15 @@ import Footer from "../footer";
 import SearchPanel from "../searchPanel";
 import NotificationsPanel from "../notificationsPanel";
 
-import { createTheme, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect } from "react";
 import { socket } from "../../socket/socket";
 import { useDispatch } from "react-redux";
 import { setUnreadNotifications } from "../../redux/slices/notificationsSlice.js";
 import ConversationsPanel from "../conversationsPanel/index.jsx";
-import {
-  addMessage,
-  receiveMessage,
-} from "../../redux/slices/conversationsSlice.js";
+import { receiveMessage } from "../../redux/slices/conversationsSlice.js";
+import CreatePostModal from "../createPostModal/index.jsx";
 
 function MainLayout() {
   const theme = useTheme();
@@ -59,22 +57,26 @@ function MainLayout() {
         sx={{
           display: "flex",
           flex: 1,
+          overflow: "hidden",
         }}
       >
         {/* <Sidebar /> */}
         {!isMobile && <Sidebar />}
         {/* <SearchPanel /> */}
+
         <SearchPanel isMobile={isMobile} />
-        {/* <NotificationsPanel></NotificationsPanel> */}
+
         <NotificationsPanel isMobile={isMobile} />
         <ConversationsPanel isMobile={isMobile} />
         <Box
           sx={{
             flex: 1,
+            overflow: "auto",
           }}
         >
           <Outlet />
         </Box>
+        <CreatePostModal />
       </Box>
 
       <Footer />

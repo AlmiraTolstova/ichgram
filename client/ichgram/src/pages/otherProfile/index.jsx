@@ -60,12 +60,15 @@ function OtherProfile() {
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
-        {/* <Sidebar></Sidebar> */}
-
         <Box
           sx={{
-            border: "1px solid red",
-            p: "38px 95px 216px 170px",
+            //border: "1px solid red",
+            //p: "2.375rem 5.9375rem 13.5rem 10.625rem",
+            p: {
+              xs: "1rem 1rem 1rem 1rem", // мобильные устройства
+              sm: "1rem 1rem 1rem 1rem", // планшеты
+              md: "2.375rem 5.9375rem 13.5rem 10.625rem", // от 900px и выше
+            },
           }}
         >
           <Box>
@@ -93,31 +96,91 @@ function OtherProfile() {
           ) : (
             <Box>
               <Box
+                // sx={{
+                //   mb: "3.5rem",
+                //   border: "1px solid red",
+                //   display: "flex",
+                //   flexDirection: "row",
+                //   gap: 2,
+                //   alignItems: "center",
+                // }}
                 sx={{
                   mb: "3.5rem",
-                  border: "1px solid red",
+                  //border: "2px solid red",
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: {
+                    xs: "column",
+                    md: "row",
+                  },
                   gap: 2,
                   alignItems: "center",
                 }}
               >
-                <Box sx={{ pr: "5.375rem" }}>
+                <Box
+                  /*sx={{ pr: "5.375rem" }}  */ sx={{
+                    pr: {
+                      xs: 0,
+                      md: "5.375rem",
+                    },
+
+                    display: {
+                      xs: "flex",
+                      md: "block",
+                    },
+                    justifyContent: {
+                      xs: "center",
+                      md: "initial",
+                    },
+                  }}
+                >
                   <Avatar
-                    sx={{ width: "168px", height: "168px" }}
+                    sx={{
+                      width: {
+                        xs: "5.625rem",
+                        md: "10.5rem",
+                      },
+                      height: {
+                        xs: "5.625rem",
+                        md: "10.5rem",
+                      },
+                    }}
                     src={`${BASE_URL}${user.user.avatar}`}
                   >
-                    {user.fullname?.[0]?.toUpperCase()}
+                    {user.user.fullname?.[0]?.toUpperCase()}
                   </Avatar>
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
+                  // sx={{
+                  //   display: "flex",
+                  //   flexDirection: "column",
+                  //   gap: "1.25rem",
+                  // }}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.25rem",
+                    width: {
+                      xs: "100%",
+                      md: "auto",
+                    },
+                  }}
                 >
                   <Box
+                    // sx={{
+                    //   display: "flex",
+                    //   gap: "22px",
+                    // }}
                     sx={{
                       display: "flex",
-                      gap: "22px",
+                      gap: { xs: "1rem", md: "1rem", lg: "3rem" },
+                      alignItems: "center",
+                      flexWrap: "wrap",
+
+                      justifyContent: {
+                        xs: "center",
+                        md: "flex-start",
+                      },
                     }}
                   >
                     <Typography
@@ -129,7 +192,7 @@ function OtherProfile() {
                         textDecorationLine: "underline",
                       }}
                     >
-                      {user.username}
+                      {user.user.username}
                     </Typography>
                     {isFollowing ? (
                       <AppButton
@@ -171,13 +234,13 @@ function OtherProfile() {
                     </Typography>
                   </Box>
 
-                  {user.about && (
+                  {user.user.about && (
                     <Typography sx={{ whiteSpace: "pre-line" }}>
-                      {showFullAbout || user.about.length <= 100
-                        ? user.about
-                        : `${user.about.slice(0, 100)}...`}
+                      {showFullAbout || user.user.about.length <= 100
+                        ? user.user.about
+                        : `${user.user.about.slice(0, 100)}...`}
 
-                      {user.about.length > 100 && (
+                      {user.user.about.length > 100 && (
                         <Typography
                           component="span"
                           onClick={() => setShowFullAbout((prev) => !prev)}
@@ -200,10 +263,10 @@ function OtherProfile() {
                     </Typography>
                   )}
 
-                  {user.link && (
+                  {user.user.link && (
                     <Typography
                       component="a"
-                      href={user.link}
+                      href={user.user.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
@@ -222,16 +285,23 @@ function OtherProfile() {
                       }}
                     >
                       <LinkIcon sx={{ fontSize: 16 }} />
-                      {user.link}
+                      {user.user.link}
                     </Typography>
                   )}
                 </Box>
               </Box>
+
               {/* POSTS */}
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
+                  // gridTemplateColumns: "repeat(3, 1fr)",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(2, 1fr)",
+                    lg: "repeat(3, 1fr)",
+                  },
                   gap: 2,
                 }}
               >
@@ -250,7 +320,6 @@ function OtherProfile() {
         </Box>
       </Box>
 
-      {/* <Footer></Footer> */}
       <PostModal></PostModal>
     </Box>
   );

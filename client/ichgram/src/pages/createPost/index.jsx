@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createPost } from "../../redux/slices/userProfileSlice";
+import AppButton from "../../components/appButton";
 
 export default function CreatePost() {
   const dispatch = useDispatch();

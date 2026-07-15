@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Card,
   CardActions,
   CardContent,
   CardHeader,
@@ -13,28 +12,40 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import { BASE_URL } from "../../api/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openExistPostModal, toggleLike } from "../../redux/slices/postsSlice";
 import { CommentSvgOutline } from "../icons";
+import AppButton from "../appButton";
+
+import { formatDistanceToNow } from "date-fns";
+import { enUS } from "date-fns/locale";
+import {
+  followUser,
+  setTargetUserID,
+  unfollowUser,
+} from "../../redux/slices/otherProfileSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function FeedCard({ post }) {
   const dispatch = useDispatch();
+  const currentUserId = useSelector((state) => state.auth.user.id);
+  const navigate = useNavigate();
+  // const isOwnPost = currentUser._id === post.author._id;
 
   return (
     <Box
       sx={{
-        // width: "100%",
         mb: 4,
         // borderRadius: 2,
         width: "100%",
-        maxWidth: "470px", // или 500px
+        maxWidth: "29.375rem", // или 500px
         mx: "auto", // центрирует карточку
         bgcolor: "#fff",
-        // border: "2px solid green",
+        //border: "2px solid green",
         borderBottom: "1px solid #DBDBDB",
       }}
     >
@@ -48,17 +59,94 @@ export default function FeedCard({ post }) {
                 ? `${BASE_URL}${post.author.avatar}`
                 : undefined
             }
+            onClick={() => {
+              dispatch(setTargetUserID(post.author._id));
+              navigate("/otherprofile");
+            }}
           />
         }
+        // action={
+        //   <IconButton>
+        //     <AppButton appearance="bluelink" size="small">
+        //       follow
+        //     </AppButton>
+        //     <MoreHorizIcon />
+        //   </IconButton>
+        // }
         action={
-          <IconButton>
-            <MoreHorizIcon />
-          </IconButton>
+          <Stack direction="row" spacing={1} alignItems="center">
+            {/* <AppButton
+              appearance="bluelink"
+              size="small"
+              onClick={() => {
+                dispatch(setTargetUserID(post.author._id));
+                dispatch(followUser());
+              }}
+            >
+              Follow
+            </AppButton> */}
+            {post.isFollowing ? (
+              <AppButton
+                appearance="bluelink"
+                size="small"
+                onClick={() => {
+                  dispatch(setTargetUserID(post.author._id));
+                  dispatch(unfollowUser());
+                }}
+              >
+                Following
+              </AppButton>
+            ) : (
+              <AppButton
+                appearance="bluelink"
+                size="small"
+                onClick={() => {
+                  dispatch(setTargetUserID(post.author._id));
+                  dispatch(followUser());
+                }}
+              >
+                Follow
+              </AppButton>
+            )}
+
+            {/* <IconButton>
+              <MoreHorizIcon />
+            </IconButton> */}
+          </Stack>
         }
         title={
-          <Typography fontWeight={700}>{post.author?.username}</Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: "12.0585px",
+                lineHeight: "16px",
+                color: "#000000",
+              }}
+            >
+              {post.author?.username}
+            </Typography>
+
+            <Typography color="text.secondary">•</Typography>
+
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: "12.0585px",
+                lineHeight: "16px",
+                color: "#737373",
+              }}
+              variant="caption"
+              color="text.secondary"
+            >
+              {formatDistanceToNow(new Date(post.createdAt), {
+                addSuffix: false,
+                locale: enUS,
+              })}
+            </Typography>
+            <Typography color="text.secondary">•</Typography>
+          </Box>
         }
-        subheader={new Date(post.createdAt).toLocaleDateString()}
       />
 
       {/* Image */}
@@ -93,7 +181,6 @@ export default function FeedCard({ post }) {
         </IconButton>
 
         <IconButton onClick={() => dispatch(openExistPostModal(post))}>
-          {/* <ChatBubbleOutlineOutlinedIcon /> */}
           <CommentSvgOutline></CommentSvgOutline>
         </IconButton>
       </CardActions>

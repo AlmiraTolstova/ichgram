@@ -52,15 +52,6 @@ const Sidebar = () => {
           />
         ))}
       </nav>
-
-      <Button
-        onClick={() => {
-          dispatch(logout());
-          navigate("/");
-        }}
-      >
-        Logout
-      </Button>
     </aside>
   );
 };

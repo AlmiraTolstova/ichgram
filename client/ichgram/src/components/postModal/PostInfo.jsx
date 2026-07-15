@@ -28,7 +28,7 @@ const PostInfo = () => {
     >
       <Box
         sx={{
-          border: "1px solid blue",
+          //border: "1px solid blue",
           display: "flex",
           p: "8px",
         }}
@@ -61,7 +61,7 @@ const PostInfo = () => {
         ))}
       </Box>
 
-      <Box sx={{ p: "12px", border: "1px solid green" }}>
+      <Box sx={{ p: "12px" }}>
         <IconButton
           onClick={() => {
             dispatch(toggleLike(currentPost._id));

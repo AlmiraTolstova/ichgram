@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../../api/api";
 import { Status } from "../../utils/Status";
+import { updateFollowingInFeed } from "./postsSlice";
+import { useDispatch } from "react-redux";
 
 export const getProfile = createAsyncThunk(
   "otherProfile/getProfile",
@@ -31,7 +33,7 @@ export const getProfile = createAsyncThunk(
 
 export const followUser = createAsyncThunk(
   "otherProfile/followUser",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState, dispatch, rejectWithValue }) => {
     try {
       const { targetUserID } = getState().otherProfile;
 
@@ -44,6 +46,13 @@ export const followUser = createAsyncThunk(
           },
         },
       );
+
+      // dispatch(
+      //   updateFollowingInFeed({
+      //     targetUserID,
+      //     isFollowing: true,
+      //   }),
+      // );
 
       return response.data;
     } catch (error) {
@@ -59,8 +68,9 @@ export const followUser = createAsyncThunk(
 
 export const unfollowUser = createAsyncThunk(
   "otherProfile/unfollowUser",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState, dispatch, rejectWithValue }) => {
     try {
+      const { targetUserID } = getState().otherProfile;
       const response = await axios.delete(
         API.User.unfollowUser(getState().otherProfile.targetUserID),
         {
@@ -69,6 +79,13 @@ export const unfollowUser = createAsyncThunk(
           },
         },
       );
+
+      // dispatch(
+      //   updateFollowingInFeed({
+      //     targetUserID,
+      //     isFollowing: false,
+      //   }),
+      // );
 
       return response.data;
     } catch (error) {
@@ -133,7 +150,7 @@ const otherProfleSlice = createSlice({
       .addCase(followUser.fulfilled, (state, action) => {
         state.status.follow = Status.DONE;
         console.log(action.payload);
-        state.user.user.followers.push(action.payload.userId);
+        state.user?.user?.followers?.push(action.payload.userId);
       })
 
       .addCase(followUser.rejected, (state, action) => {
@@ -149,10 +166,17 @@ const otherProfleSlice = createSlice({
       .addCase(unfollowUser.fulfilled, (state, action) => {
         state.status.follow = Status.DONE;
 
-        state.user.user.followers = state.user.user.followers.filter(
-          (id) => id !== action.payload.userId,
-        );
-        console.log(state.user.user);
+        // 1. Проверяем, загружен ли пользователь вообще
+        if (state.user?.user) {
+          // 2. Инициализируем массив фолловеров, если он почему-то равен null/undefined,
+          //    чтобы избежать падения метода filter
+          const followers = state.user.user.followers || [];
+
+          // 3. Перезаписываем массив
+          state.user.user.followers = followers.filter(
+            (id) => id !== action.payload.userId,
+          );
+        }
       })
 
       .addCase(unfollowUser.rejected, (state, action) => {

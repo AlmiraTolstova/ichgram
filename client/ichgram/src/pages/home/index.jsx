@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeed } from "../../redux/slices/postsSlice";
@@ -16,12 +16,12 @@ function Home() {
   return (
     <Box
       sx={{
-        border: "2px solid red",
-
+        //border: "2px solid red",
         p: {
-          xs: "1rem 1rem 1rem 1rem", // мобильные устройства
-          sm: "3rem 3rem 0.75rem 4rem", // планшеты (при желании тоже 1 колонка)
-          md: "3.625rem 16.875rem 0.75rem 4.8125rem", // от 900px и выше — 2 колонки
+          xs: "1rem 1rem 1rem 1rem",
+          sm: "1rem 1rem 1rem 1rem",
+          md: "1rem 1rem 1rem 1rem",
+          lg: "3.625rem 16.875rem 0.75rem 4.8125rem",
         },
       }}
     >
@@ -29,14 +29,14 @@ function Home() {
         sx={{
           display: "grid",
           // gridTemplateColumns: "repeat(2, 1fr)",
-
           gridTemplateColumns: {
-            xs: "1fr", // мобильные устройства
-            sm: "1fr", // планшеты (при желании тоже 1 колонка)
-            md: "repeat(2, 1fr)", // от 900px и выше — 2 колонки
+            xs: "1fr",
+            sm: "1fr",
+            md: " 1fr",
+            lg: "repeat(2, 1fr)",
           },
-          columnGap: "40px", // расстояние между колонками
-          rowGap: "4px", // расстояние между строками
+          columnGap: "2.5rem",
+          rowGap: "0.25",
         }}
       >
         {status.feed === Status.LOADING ? (

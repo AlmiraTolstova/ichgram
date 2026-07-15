@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Status } from "../../utils/Status";
 import axios from "axios";
 import { API } from "../../api/api";
+import { login } from "./authSlice";
 
 export const createConversation = createAsyncThunk(
   "chat/createConversation",
@@ -254,6 +255,10 @@ const conversationsSlice = createSlice({
         state.status.createConversation = Status.ERROR;
         state.message = action.payload.message;
       });
+
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.unreadMessages = action.payload.unread?.messages ?? 0;
+    });
   },
 });
 

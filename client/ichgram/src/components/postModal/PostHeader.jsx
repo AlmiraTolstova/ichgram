@@ -1,13 +1,20 @@
 import { Avatar, Box, Typography, Button } from "@mui/material";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { selectPosts } from "../../redux/slices/postsSlice";
+import {
+  closeExistPostModal,
+  selectPosts,
+} from "../../redux/slices/postsSlice";
 import AppButton from "../appButton";
+import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api/api";
 
 const PostHeader = () => {
   const { currentPost } = useSelector(selectPosts);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Box
       sx={{
@@ -16,8 +23,14 @@ const PostHeader = () => {
         p: "8px",
       }}
     >
-      {/* <Avatar src={currentPost.author.avatar} /> */}
-      <Avatar />
+      <Avatar
+        src={`${BASE_URL}${currentPost.author.avatar}`}
+        onClick={() => {
+          dispatch(closeExistPostModal());
+          dispatch(setTargetUserID(currentPost.author._id));
+          navigate("/otherprofile");
+        }}
+      />
       <Typography
         sx={{
           ml: "1rem",

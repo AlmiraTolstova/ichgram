@@ -15,6 +15,7 @@ import {
   SearchSvgOutline,
   MessageSvgFill,
 } from "../icons";
+
 export const menu = [
   {
     id: 1,
@@ -80,5 +81,6 @@ export const menu = [
     path: "/profile",
     outline: AccountCircleOutlinedIcon,
     fill: AccountCircleIcon,
+    avatar: true,
   },
 ];

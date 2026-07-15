@@ -1,0 +1,50 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 48px;
+  padding: 0 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #000;
+  transition: background 0.2s;
+
+  /* для button */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  font: inherit;
+  text-align: left;
+}
+
+.item:hover {
+  background: #f2f2f2;
+}
+
+.title {
+  font-size: 16px;
+
+  line-height: 20px;
+
+  color: #000000;
+}
+
+.fill {
+  display: none;
+}
+
+.item:hover .outline,
+.active .outline {
+  display: none;
+}
+
+.item:hover .fill,
+.active .fill {
+  display: block;
+}
+
+.item:hover .title,
+.active .title {
+  font-weight: 700;
+}

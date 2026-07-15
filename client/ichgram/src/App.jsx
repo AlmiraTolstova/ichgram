@@ -31,7 +31,6 @@ function App() {
   return (
     <Box>
       <Router>
-        {/* <Header></Header> */}
         <Routes>
           {/* страницы без Layout */}
           <Route path="/" element={<Login></Login>}></Route>
@@ -54,7 +53,6 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />}></Route>
           </Route>
         </Routes>
-        {/* <Footer></Footer> */}
       </Router>
     </Box>
   );

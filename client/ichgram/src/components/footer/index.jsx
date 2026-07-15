@@ -1,4 +1,16 @@
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
+import { menu } from "../sidebar/menu";
+import SidebarItemFooter from "../sidebarItemFooter";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { openCreatePostModal } from "../../redux/slices/userProfileSlice";
+import { openSearch } from "../../redux/slices/searchSlice";
+import {
+  getNotifications,
+  openNotifications,
+  readNotifications,
+} from "../../redux/slices/notificationsSlice";
+import { openConversations } from "../../redux/slices/conversationsSlice";
 
 const links = [
   { label: "Home", href: "#" },
@@ -10,11 +22,23 @@ const links = [
 ];
 
 function Footer() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const actions = {
+    createPost: () => dispatch(openCreatePostModal()),
+    openSearch: () => dispatch(openSearch()),
+    openNotificationsPanel: () => {
+      dispatch(openNotifications());
+      dispatch(getNotifications());
+      dispatch(readNotifications());
+    },
+    openConversations: () => dispatch(openConversations()),
+  };
   return (
     <Box
       component="footer"
       sx={{
-        border: "1px solid ",
         borderColor: "divider",
         bgcolor: "#fff",
       }}
@@ -28,22 +52,22 @@ function Footer() {
           },
           pt: "1.5rem",
           pb: "3rem",
-          border: "1px solid red",
+          // border: "1px solid red",
         }}
       >
         <Stack
           direction="row"
           sx={{
             display: "flex",
-
             flexWrap: {
-              xs: "wrap",
+              //xs: "wrap",
               md: "nowrap",
             },
+            gap: { xs: 0 },
             justifyContent: "space-between",
           }}
         >
-          {links.map((link) => (
+          {/* {links.map((link) => (
             <Link
               key={link.label}
               href={link.href}
@@ -64,6 +88,13 @@ function Footer() {
             >
               {link.label}
             </Link>
+          ))} */}
+          {menu.map((item) => (
+            <SidebarItemFooter
+              key={item.id}
+              item={item}
+              action={item.type === "action" ? actions[item.action] : undefined}
+            />
           ))}
         </Stack>
 
@@ -81,7 +112,7 @@ function Footer() {
             color: "#737373",
           }}
         >
-          © 2024 ICHgram
+          © 2026 ICHgram
         </Typography>
       </Container>
     </Box>

@@ -1,19 +1,33 @@
 import { Avatar, Box, Typography, IconButton } from "@mui/material";
 import { BASE_URL } from "../../api/api";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { closeExistPostModal } from "../../redux/slices/postsSlice";
+import { setTargetUserID } from "../../redux/slices/otherProfileSlice";
 
 const CommentPost = ({ comment }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
         display: "flex",
         // p: 2,
-        border: "1px solid yellow",
+        //border: "1px solid yellow",
         fontWeight: 600,
         p: 1,
       }}
     >
-      <Avatar sx={{ mr: 2 }} src={`${BASE_URL}${comment.author.avatar}`} />
+      <Avatar
+        sx={{ mr: 2 }}
+        src={`${BASE_URL}${comment.author.avatar}`}
+        onClick={() => {
+          dispatch(closeExistPostModal());
+          dispatch(setTargetUserID(comment.author._id));
+          navigate("/otherprofile");
+        }}
+      />
 
       <Box
         sx={{

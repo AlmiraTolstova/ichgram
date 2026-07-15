@@ -31,7 +31,7 @@ function Login() {
 
   useEffect(() => {
     if (isSuccessLogin) {
-      navigate("/profile");
+      navigate("/home");
     }
 
     return () => {
@@ -54,7 +54,7 @@ function Login() {
         },
         justifyContent: "center",
         gap: "2rem",
-        border: "1px solid red",
+        // border: "1px solid red",
       }}
     >
       {/* IMG */}
@@ -78,11 +78,6 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
         sx={{
           width: "21.875rem",
-          // mx: "auto",
-          // mt: 1,
-          // display: "flex",
-          // flexDirection: "column",
-          // gap: 2,
         }}
       >
         <Box
@@ -138,14 +133,6 @@ function Login() {
             error={!!errors.password}
             helperText={errors.password?.message}
           />
-
-          {/* <BtnLogin
-            type="submit"
-            variant="contained"
-            disabled={status.login.isLoading === Status.LOADING}
-          >
-            {status.login.isLoading === Status.LOADING ? "Loading..." : "Login"}
-          </BtnLogin> */}
 
           <AppButton
             type="submit"

@@ -3,6 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { API } from "../../api/api";
 import { Status } from "../../utils/Status";
+import { followUser, unfollowUser } from "./otherProfileSlice";
 
 export const getPostByPostID = createAsyncThunk(
   "posts/getPostByPostID",
@@ -184,6 +185,16 @@ const postsSlice = createSlice({
     resetExistPostStatus(state) {
       state.status.createPost = Status.NO_STATUS;
     },
+
+    updateFollowingInFeed(state, action) {
+      const { userId, isFollowing } = action.payload;
+      console.log("updateFollowingInFeed", action.payload);
+      state.feed.forEach((post) => {
+        if (post.author._id === userId) {
+          post.isFollowing = isFollowing;
+        }
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -292,7 +303,24 @@ const postsSlice = createSlice({
         state.message = action.payload.message;
       });
 
-    
+    builder.addCase(followUser.fulfilled, (state, action) => {
+      const { followUserId } = action.payload;
+      console.log("updateFollowingInFeed follow", action.payload);
+      state.feed.forEach((post) => {
+        if (post.author._id === followUserId) {
+          post.isFollowing = true;
+        }
+      });
+    });
+    builder.addCase(unfollowUser.fulfilled, (state, action) => {
+      const { unfollowUserId } = action.payload;
+      console.log("updateFollowingInFeed unfollow", action.payload);
+      state.feed.forEach((post) => {
+        if (post.author._id === unfollowUserId) {
+          post.isFollowing = false;
+        }
+      });
+    });
   },
 });
 
@@ -320,6 +348,7 @@ export const {
   closeExistPostModal,
   resetExistPostStatus,
   resetCreatePostStatus,
+  updateFollowingInFeed,
 } = postsSlice.actions;
 export const selectPosts = (state) => state.posts;
 export default postsSlice.reducer;
