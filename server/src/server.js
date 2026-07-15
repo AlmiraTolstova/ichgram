@@ -105,15 +105,6 @@ io.on("connection", (socket) => {
 
       io.to(receiverId.toString()).emit("new_message", fullMessage);
 
-      // if (receiverId.currentConversation !== conversationId) {
-      //   await sendNotification({
-      //     io,
-      //     recipient: receiverId,
-      //     sender: socket.userId,
-      //     type: "message",
-      //   });
-      // }
-
       if (!conversation) return;
     } catch (err) {
       console.error(err);

@@ -3,7 +3,7 @@ import Notification from "../models/Notifications.js";
 import Comment from "../models/Comment.js";
 import mongoose from "mongoose";
 import { sendNotification } from "../utils/sendNotification.js";
-
+import User from "../models/User.js";
 // Create Post
 export const createPost = async (req, res) => {
   try {
@@ -141,8 +141,14 @@ export const getPostByPostId = async (req, res) => {
 // получить ленту постов для страницы home
 export const getFeed = async (req, res) => {
   try {
-    const limit = Number(req.query.limit) || 20;
+    const limit = Number(req.query.limit) || 50;
     const userId = new mongoose.Types.ObjectId(req.user.id);
+
+    const currentUser = await User.findById(req.user.id)
+      .select("following")
+      .lean();
+
+    const following = currentUser.following || [];
 
     const posts = await Post.aggregate([
       // случайные посты
@@ -258,12 +264,17 @@ export const getFeed = async (req, res) => {
           isLiked: {
             $in: [new mongoose.Types.ObjectId(req.user.id), "$likes"],
           },
+          isFollowing: {
+            $in: ["$author._id", following],
+          },
         },
       },
     ]);
 
     res.status(200).json(posts);
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       message: error.message,
     });

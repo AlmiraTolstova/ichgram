@@ -2,6 +2,9 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Post from "../models/Post.js";
+import Message from "../models/Message.js";
+import Conversation from "../models/Conversation.js";
+import Notification from "../models/Notifications.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -76,9 +79,30 @@ export const loginUser = async (req, res) => {
       },
     );
 
-    const postsCount = await Post.countDocuments({
-      author: user._id,
-    });
+    const conversations = await Conversation.find({
+      participants: user._id,
+    }).select("_id");
+
+    const conversationIds = conversations.map((c) => c._id);
+
+    const [postsCount, unreadNotifications, unreadMessages] = await Promise.all(
+      [
+        Post.countDocuments({
+          author: user._id,
+        }),
+
+        Notification.countDocuments({
+          recipient: user._id,
+          isRead: false,
+        }),
+
+        Message.countDocuments({
+          conversation: { $in: conversationIds },
+          sender: { $ne: user._id }, // только сообщения от собеседников
+          isRead: false,
+        }),
+      ],
+    );
 
     res.status(200).json({
       message: "Success!",
@@ -95,6 +119,10 @@ export const loginUser = async (req, res) => {
         postsCount,
         followersCount: user.followers.length,
         followingCount: user.following.length,
+      },
+      unread: {
+        notifications: unreadNotifications,
+        messages: unreadMessages,
       },
     });
   } catch (error) {
