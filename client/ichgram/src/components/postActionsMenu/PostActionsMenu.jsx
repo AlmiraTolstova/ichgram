@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogContent, Divider } from "@mui/material";
+import { Button, Dialog, DialogContent, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deletePost,

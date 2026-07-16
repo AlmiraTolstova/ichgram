@@ -54,7 +54,6 @@ function Login() {
         },
         justifyContent: "center",
         gap: "2rem",
-        // border: "1px solid red",
       }}
     >
       {/* IMG */}
@@ -149,7 +148,6 @@ function Login() {
           )}
           <BtnOr></BtnOr>
 
-          {/* <BtnLogin variantType="text">Forgot password?</BtnLogin> */}
           <AppButton appearance="text">Forgot password?</AppButton>
         </Box>
         <Box

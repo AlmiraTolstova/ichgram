@@ -36,24 +36,6 @@ function NotificationsPanel({ isMobile }) {
       )}
 
       <Box
-        // sx={{
-        //   position: "fixed",
-        //   top: 0,
-        //   left: isMobile ? 0 : "245px",
-        //   width: isMobile ? "100vw" : "397px",
-        //   height: "100dvh",
-        //   bgcolor: "#fff",
-        //   padding: isMobile ? "16px" : "24px",
-        //   borderTopRightRadius: isMobile ? 0 : "16px",
-        //   borderBottomRightRadius: isMobile ? 0 : "16px",
-        //   boxShadow: "0 0 20px rgba(0,0,0,.12)",
-        //   transform: isOpen ? "translateX(0)" : "translateX(-100%)",
-        //   transition: "transform .25s ease",
-        //   zIndex: 2,
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   overflow: "hidden",
-        // }}
         sx={{
           border: "1px solid red",
           position: "fixed",

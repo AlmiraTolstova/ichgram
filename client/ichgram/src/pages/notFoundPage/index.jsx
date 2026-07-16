@@ -11,9 +11,7 @@ function NotFoundPage() {
       >
         <Box
           sx={{
-            //border: "1px solid red",
             display: "flex",
-            //p: "5.875rem 6.625rem 11.5625rem 7.375rem",
             p: {
               xs: "1rem 1rem 1rem 1rem",
               sm: "1rem 1rem 1rem 1rem",
@@ -73,7 +71,6 @@ function NotFoundPage() {
               exist. If you typed the URL manually, please double-check the
               spelling. If you clicked on a link, it may be outdated or broken.
             </Typography>
-            {/* <BtnCard sx={{ pl: 7, pr: 7 }}>Go Home</BtnCard> */}
           </Box>
         </Box>
       </Box>

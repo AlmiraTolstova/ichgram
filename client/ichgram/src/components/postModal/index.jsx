@@ -104,11 +104,6 @@ const PostModal = () => {
           <Box className={styles.sidebar}>
             {currentPost?.author?._id === user.id ? (
               <Box
-                // sx={{
-                //   display: "flex",
-                //   justifyContent: "flex-end",
-                //   p: 1,
-                // }}
                 sx={{
                   width: {
                     xs: "100%",

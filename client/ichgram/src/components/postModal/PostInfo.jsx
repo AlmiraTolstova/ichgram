@@ -1,7 +1,5 @@
 import { Avatar, Box, Typography, IconButton } from "@mui/material";
-
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../api/api";
 import dayjs from "dayjs";
@@ -23,12 +21,10 @@ const PostInfo = () => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        // border: "1px solid green",
       }}
     >
       <Box
         sx={{
-          //border: "1px solid blue",
           display: "flex",
           p: "8px",
         }}

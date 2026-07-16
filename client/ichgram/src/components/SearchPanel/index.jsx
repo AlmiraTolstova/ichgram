@@ -49,7 +49,6 @@ export default function SearchPanel({ isMobile }) {
           sx={{
             position: "fixed",
             inset: 0,
-            //bgcolor: "rgba(0,0,0,.35)",
             zIndex: 1,
           }}
         />
@@ -66,8 +65,6 @@ export default function SearchPanel({ isMobile }) {
           width: isMobile ? "90%" : "24.8125rem",
           height: "100vh",
           bgcolor: "#fff",
-          // borderTopRightRadius: "1rem",
-          // borderBottomRightRadius: "1rem",
           borderTopRightRadius: isMobile ? 0 : "1rem",
           borderBottomRightRadius: isMobile ? 0 : "1rem",
           boxShadow: "1px 1px 20px rgba(0,0,0,.15)",
@@ -76,7 +73,6 @@ export default function SearchPanel({ isMobile }) {
           zIndex: 2,
           display: "flex",
           flexDirection: "column",
-          // border: "2px solid red",
           padding: "1.5rem 1rem 0rem 1rem",
         }}
       >
@@ -98,7 +94,6 @@ export default function SearchPanel({ isMobile }) {
           <TextField
             fullWidth
             placeholder="Search"
-            // variant="outlined"
             size="small"
             value={query}
             variant="filled"
@@ -164,8 +159,6 @@ export default function SearchPanel({ isMobile }) {
           {users?.map((user) => (
             <Box
               onClick={() => {
-                // dispatch(setTargetUserID(user._id));
-                // navigate("/otherprofile");
                 dispatch(setTargetUserID(user._id));
                 dispatch(closeSearch());
                 navigate("/otherprofile");

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { BASE_URL } from "../../api/api";
@@ -26,7 +26,6 @@ const ChatHeader = () => {
         flexDirection: "column",
         alignItems: "center",
         px: 3,
-        // border: "1px solid red",
         textAlign: "center",
       }}
     >
@@ -35,7 +34,6 @@ const ChatHeader = () => {
         sx={{ width: "96px", height: "96px", mb: "1rem" }}
       />
 
-      {/* <Box> */}
       <Typography
         sx={{
           fontWeight: 600,
@@ -57,15 +55,7 @@ const ChatHeader = () => {
       >
         {user.fullname}
       </Typography>
-      {/* <Button
-          onClick={() => {
-            dispatch(setTargetUserID(user._id));
-            dispatch(closeConversations());
-            navigate("/otherprofile");
-          }}
-        >
-          view profile
-        </Button> */}
+
       <AppButton
         appearance="gray"
         size="medium"
@@ -77,7 +67,6 @@ const ChatHeader = () => {
       >
         view profile
       </AppButton>
-      {/* </Box> */}
     </Box>
   );
 };

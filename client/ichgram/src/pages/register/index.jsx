@@ -222,14 +222,6 @@ function Register() {
           Have an account?
         </Typography>
 
-        {/* <BtnLogin
-          component={RouterLink}
-          to="/"
-          variantType="underline"
-          sx={{ minWidth: "4.25rem" }}
-        >
-          Log in
-        </BtnLogin> */}
         <AppButton
           component={RouterLink}
           to="/"

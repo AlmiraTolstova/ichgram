@@ -34,23 +34,19 @@ export default function FeedCard({ post }) {
   const dispatch = useDispatch();
   const currentUserId = useSelector((state) => state.auth.user.id);
   const navigate = useNavigate();
-  // const isOwnPost = currentUser._id === post.author._id;
 
   return (
     <Box
       sx={{
         mb: 4,
-        // borderRadius: 2,
         width: "100%",
-        maxWidth: "29.375rem", // или 500px
+        maxWidth: "29.375rem",
         mx: "auto", // центрирует карточку
         bgcolor: "#fff",
-        //border: "2px solid green",
         borderBottom: "1px solid #DBDBDB",
       }}
     >
       {/* Header */}
-
       <CardHeader
         avatar={
           <Avatar
@@ -65,26 +61,8 @@ export default function FeedCard({ post }) {
             }}
           />
         }
-        // action={
-        //   <IconButton>
-        //     <AppButton appearance="bluelink" size="small">
-        //       follow
-        //     </AppButton>
-        //     <MoreHorizIcon />
-        //   </IconButton>
-        // }
         action={
           <Stack direction="row" spacing={1} alignItems="center">
-            {/* <AppButton
-              appearance="bluelink"
-              size="small"
-              onClick={() => {
-                dispatch(setTargetUserID(post.author._id));
-                dispatch(followUser());
-              }}
-            >
-              Follow
-            </AppButton> */}
             {post.isFollowing ? (
               <AppButton
                 appearance="bluelink"
@@ -108,10 +86,6 @@ export default function FeedCard({ post }) {
                 Follow
               </AppButton>
             )}
-
-            {/* <IconButton>
-              <MoreHorizIcon />
-            </IconButton> */}
           </Stack>
         }
         title={
@@ -157,7 +131,6 @@ export default function FeedCard({ post }) {
         image={`${BASE_URL}${post.image}`}
         alt={post.description}
         sx={{
-          // aspectRatio: "1 / 1",
           width: "100%",
           aspectRatio: "402 / 504",
           objectFit: "cover",
@@ -166,7 +139,6 @@ export default function FeedCard({ post }) {
       />
 
       {/* Action buttons */}
-
       <CardActions>
         <IconButton
           onClick={() => {

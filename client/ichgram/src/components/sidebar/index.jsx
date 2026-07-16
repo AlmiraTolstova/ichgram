@@ -4,7 +4,7 @@ import Logo from "../../assets/ICHGRAM.png";
 import styles from "./styles.module.css";
 import { openCreatePostModal } from "../../redux/slices/userProfileSlice";
 import { useDispatch } from "react-redux";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { logout } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { openSearch } from "../../redux/slices/searchSlice";

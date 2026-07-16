@@ -62,8 +62,6 @@ function OtherProfile() {
       <Box sx={{ display: "flex" }}>
         <Box
           sx={{
-            //border: "1px solid red",
-            //p: "2.375rem 5.9375rem 13.5rem 10.625rem",
             p: {
               xs: "1rem 1rem 1rem 1rem", // мобильные устройства
               sm: "1rem 1rem 1rem 1rem", // планшеты
@@ -71,7 +69,7 @@ function OtherProfile() {
             },
           }}
         >
-          <Box>
+          {/* <Box>
             <Button
               onClick={() => {
                 dispatch(getProfile());
@@ -86,7 +84,7 @@ function OtherProfile() {
             >
               Reducer userProfile to console
             </Button>
-          </Box>
+          </Box> */}
 
           {/* PROFILE */}
           {status.getProfile === Status.LOADING ? (
@@ -96,17 +94,8 @@ function OtherProfile() {
           ) : (
             <Box>
               <Box
-                // sx={{
-                //   mb: "3.5rem",
-                //   border: "1px solid red",
-                //   display: "flex",
-                //   flexDirection: "row",
-                //   gap: 2,
-                //   alignItems: "center",
-                // }}
                 sx={{
                   mb: "3.5rem",
-                  //border: "2px solid red",
                   display: "flex",
                   flexDirection: {
                     xs: "column",
@@ -117,7 +106,7 @@ function OtherProfile() {
                 }}
               >
                 <Box
-                  /*sx={{ pr: "5.375rem" }}  */ sx={{
+                  sx={{
                     pr: {
                       xs: 0,
                       md: "5.375rem",
@@ -151,11 +140,6 @@ function OtherProfile() {
                 </Box>
 
                 <Box
-                  // sx={{
-                  //   display: "flex",
-                  //   flexDirection: "column",
-                  //   gap: "1.25rem",
-                  // }}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -167,10 +151,6 @@ function OtherProfile() {
                   }}
                 >
                   <Box
-                    // sx={{
-                    //   display: "flex",
-                    //   gap: "22px",
-                    // }}
                     sx={{
                       display: "flex",
                       gap: { xs: "1rem", md: "1rem", lg: "3rem" },
@@ -295,7 +275,6 @@ function OtherProfile() {
               <Box
                 sx={{
                   display: "grid",
-                  // gridTemplateColumns: "repeat(3, 1fr)",
                   gridTemplateColumns: {
                     xs: "1fr",
                     sm: "repeat(2, 1fr)",

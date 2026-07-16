@@ -13,8 +13,6 @@ const CommentPost = ({ comment }) => {
     <Box
       sx={{
         display: "flex",
-        // p: 2,
-        //border: "1px solid yellow",
         fontWeight: 600,
         p: 1,
       }}

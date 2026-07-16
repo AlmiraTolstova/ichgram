@@ -1,16 +1,12 @@
 import {
   Avatar,
   Box,
-  Button,
   Paper,
-  Stack,
   TextField,
   Typography,
   InputAdornment,
 } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
-import Sidebar from "../../components/sidebar";
-import Footer from "../../components/footer";
 import { useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,8 +80,6 @@ function EditProfile() {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            //p: "3rem 10.4375rem 7.3125rem 10.375rem",
-
             p: {
               xs: "1rem 1rem 1rem 1rem", // мобильные устройства
               sm: "3rem 3rem 0.75rem 4rem", // планшеты
@@ -108,14 +102,6 @@ function EditProfile() {
           </Typography>
 
           <Paper
-            // sx={{
-            //   p: "1rem 1rem 0.5rem 1rem",
-            //   bgcolor: "#EFEFEF",
-            //   borderRadius: "20px",
-            //   display: "flex",
-            //   justifyContent: "space-between",
-            //   alignItems: "center",
-            // }}
             sx={{
               p: "1rem",
               bgcolor: "#EFEFEF",
@@ -295,19 +281,6 @@ function EditProfile() {
                 />
               </Box>
 
-              {/* <Button
-                type="submit"
-                variant="contained"
-                disabled={status === "loading"}
-                sx={{
-                  width: 330,
-                  height: 48,
-                  textTransform: "none",
-                  fontWeight: 700,
-                }}
-              >
-                {status === "loading" ? "Saving..." : "Save"}
-              </Button> */}
               <AppButton
                 sx={{
                   alignSelf: "flex-start",
@@ -322,8 +295,6 @@ function EditProfile() {
           </Box>
         </Box>
       </Box>
-
-      {/* <Footer /> */}
     </Box>
   );
 }

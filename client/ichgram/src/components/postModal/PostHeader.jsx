@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography, Button } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 

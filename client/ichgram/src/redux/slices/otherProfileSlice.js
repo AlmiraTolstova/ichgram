@@ -47,13 +47,6 @@ export const followUser = createAsyncThunk(
         },
       );
 
-      // dispatch(
-      //   updateFollowingInFeed({
-      //     targetUserID,
-      //     isFollowing: true,
-      //   }),
-      // );
-
       return response.data;
     } catch (error) {
       return rejectWithValue({
@@ -79,13 +72,6 @@ export const unfollowUser = createAsyncThunk(
           },
         },
       );
-
-      // dispatch(
-      //   updateFollowingInFeed({
-      //     targetUserID,
-      //     isFollowing: false,
-      //   }),
-      // );
 
       return response.data;
     } catch (error) {

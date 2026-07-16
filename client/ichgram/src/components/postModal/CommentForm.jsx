@@ -1,4 +1,4 @@
-import { Box, TextField, Button, IconButton } from "@mui/material";
+import { Box, TextField, IconButton } from "@mui/material";
 
 import SentimentSatisfiedAltOutlinedIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import AppButton from "../appButton";
@@ -35,7 +35,6 @@ const CommentForm = () => {
         display: "flex",
         alignItems: "center",
         p: 2,
-       // border: "1px solid violet",
       }}
     >
       <IconButton>

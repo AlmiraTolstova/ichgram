@@ -16,7 +16,6 @@ function Home() {
   return (
     <Box
       sx={{
-        //border: "2px solid red",
         p: {
           xs: "1rem 1rem 1rem 1rem",
           sm: "1rem 1rem 1rem 1rem",
@@ -28,7 +27,6 @@ function Home() {
       <Box
         sx={{
           display: "grid",
-          // gridTemplateColumns: "repeat(2, 1fr)",
           gridTemplateColumns: {
             xs: "1fr",
             sm: "1fr",

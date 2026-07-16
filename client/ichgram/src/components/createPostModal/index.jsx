@@ -1,6 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   Modal,
   Box,
@@ -66,18 +65,6 @@ const CreatePostModal = () => {
   return (
     <Modal open={open} onClose={() => dispatch(closeCreatePostModal())}>
       <Box
-        // sx={{
-        //   width: 1100,
-        //   height: 760,
-        //   bgcolor: "background.paper",
-        //   borderRadius: 3,
-        //   position: "absolute",
-        //   top: "50%",
-        //   left: "50%",
-        //   transform: "translate(-50%, -50%)",
-        //   overflow: "hidden",
-        //   boxShadow: 24,
-        // }}
         sx={{
           width: {
             xs: "90%",
@@ -148,10 +135,6 @@ const CreatePostModal = () => {
 
           {/* Content */}
           <Box
-            // sx={{
-            //   flex: 1,
-            //   display: "flex",
-            // }}
             sx={{
               flex: 1,
               display: "flex",
@@ -163,16 +146,6 @@ const CreatePostModal = () => {
           >
             {/* Image section */}
             <Box
-              // sx={{
-              //   flex: 1,
-              //   display: "flex",
-              //   flexDirection: "column",
-              //   justifyContent: "center",
-              //   alignItems: "center",
-              //   gap: 3,
-              //   borderRight: "1px solid",
-              //   borderColor: "divider",
-              // }}
               sx={{
                 flex: 1,
                 minHeight: {
@@ -230,11 +203,6 @@ const CreatePostModal = () => {
 
             {/* Sidebar */}
             <Box
-              // sx={{
-              //   width: 420,
-              //   display: "flex",
-              //   flexDirection: "column",
-              // }}
               sx={{
                 width: {
                   xs: "100%",

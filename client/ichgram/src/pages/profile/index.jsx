@@ -59,8 +59,6 @@ function UserProfile() {
       <Box sx={{ display: "flex" }}>
         <Box
           sx={{
-            //border: "1px solid red",
-            //p: "2.375rem 5.9375rem 13.5rem 10.625rem",
             p: {
               xs: "1rem 1rem 1rem 1rem", // мобильные устройства
               sm: "1rem 1rem 1rem 1rem", // планшеты
@@ -107,124 +105,9 @@ function UserProfile() {
           </Box> */}
 
           {/* PROFILE */}
-          {/* <Box
-            sx={{
-              mb: "3.5rem",
-              border: "1px solid red",
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              alignItems: "center",
-            }}
-          >
-            <Box sx={{ pr: "5.375rem" }}>
-              <Avatar
-                sx={{ width: "168px", height: "168px" }}
-                src={`${BASE_URL}${user.avatar}`}
-              >
-                {user.fullname?.[0]?.toUpperCase()}
-              </Avatar>
-            </Box>
-
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: "22px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: "20px",
-                    lineheight: "25px",
-                    color: "#000000",
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  {user.username}
-                </Typography>
-                <AppButton
-                  onClick={() => navigate("/editprofile")}
-                  appearance="gray"
-                  size="medium"
-                >
-                  Edit profile
-                </AppButton>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: "40px",
-                }}
-              >
-                <Typography>posts {user.postsCount}</Typography>
-                <Typography>followers {user.followersCount}</Typography>
-                <Typography>following {user.followingCount}</Typography>
-              </Box>
-
-              {user.about && (
-                <Typography sx={{ whiteSpace: "pre-line" }}>
-                  {showFullAbout || user.about.length <= 100
-                    ? user.about
-                    : `${user.about.slice(0, 100)}...`}
-
-                  {user.about.length > 100 && (
-                    <Typography
-                      component="span"
-                      onClick={() => setShowFullAbout((prev) => !prev)}
-                      sx={{
-                        ml: 0.5,
-                        color: "#737373",
-                        cursor: "pointer",
-                        userSelect: "none",
-                        fontSize: "inherit",
-                        fontWeight: 400,
-
-                        "&:hover": {
-                          color: "#555",
-                        },
-                      }}
-                    >
-                      {showFullAbout ? " less" : " more"}
-                    </Typography>
-                  )}
-                </Typography>
-              )}
-
-              {user.link && (
-                <Typography
-                  component="a"
-                  href={user.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 0.5,
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    lineHeight: "18px",
-                    color: "#00376B",
-                    textDecoration: "none",
-
-                    "&:hover": {
-                      textDecoration: "underline",
-                    },
-                  }}
-                >
-                  <LinkIcon sx={{ fontSize: 16 }} />
-                  {user.link}
-                </Typography>
-              )}
-            </Box>
-          </Box> */}
-
-          {/* PROFILE */}
           <Box
             sx={{
               mb: "3.5rem",
-              //border: "2px solid red",
               display: "flex",
               flexDirection: {
                 xs: "column",
@@ -334,9 +217,7 @@ function UserProfile() {
                     xs: "16px",
                     md: "40px",
                   },
-
                   flexWrap: "wrap",
-
                   justifyContent: {
                     xs: "center",
                     md: "flex-start",
@@ -382,7 +263,6 @@ function UserProfile() {
                         userSelect: "none",
                         fontSize: "inherit",
                         fontWeight: 400,
-
                         "&:hover": {
                           color: "#555",
                         },
@@ -430,7 +310,6 @@ function UserProfile() {
           <Box
             sx={{
               display: "grid",
-              //gridTemplateColumns: "repeat(3, 1fr)",
               gridTemplateColumns: {
                 xs: "1fr",
                 sm: "repeat(2, 1fr)",

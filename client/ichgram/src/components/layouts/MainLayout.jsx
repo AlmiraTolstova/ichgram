@@ -4,7 +4,6 @@ import Sidebar from "../sidebar";
 import Footer from "../footer";
 import SearchPanel from "../searchPanel";
 import NotificationsPanel from "../notificationsPanel";
-
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect } from "react";
@@ -60,9 +59,7 @@ function MainLayout() {
           overflow: "hidden",
         }}
       >
-        {/* <Sidebar /> */}
         {!isMobile && <Sidebar />}
-        {/* <SearchPanel /> */}
 
         <SearchPanel isMobile={isMobile} />
 
